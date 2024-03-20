@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/03/19 21:00:34 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/03/20 13:55:39 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 #include <sys/wait.h>
 #include "../HDRS/pipex.h"
 #include "../include/libft/libft.h"
-
-
+#include <stdio.h>
 
 int	main(int argc, char **argv, char **env)
 {
@@ -29,14 +28,10 @@ int	main(int argc, char **argv, char **env)
 	all_args.num_cmd = argc - 3;
 	all_args.argv = argv;
 	all_args.env = env;
-	if (pipe(all_args.fd_pipe) == -1)
-		exit (EXIT_FAILURE);
-	all_args.pid = malloc(sizeof(pid_t) * (argc - 3));
+	all_args.pid = malloc(sizeof(pid_t) * all_args.num_cmd);
 	if (!all_args.pid)
-		_error(NULL, -1, all_args.fd_pipe);
+		exit (EXIT_FAILURE);
 	fork_n_exec(&all_args);
-	close(all_args.fd_pipe[0]);
-	close(all_args.fd_pipe[1]);
 	i = 0;
 	while (i < all_args.num_cmd)
 	{

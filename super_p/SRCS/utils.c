@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:49:10 by tmouche           #+#    #+#             */
-/*   Updated: 2024/03/19 19:11:07 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/03/20 14:16:17 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,20 @@
 #include <unistd.h>
 #include "../HDRS/pipex.h"
 #include "../include/libft/libft.h"
+
+void	_pipe_closer(int *pipe, int	*pipe_sec)
+{
+	if (pipe)
+	{
+		close (pipe[0]);
+		close (pipe[1]);
+	}
+	if (pipe_sec)
+	{
+		close (pipe_sec[0]);
+		close (pipe_sec[1]);
+	}
+}
 
 void	_write_error(char *str, char *file)
 {
@@ -35,7 +49,7 @@ void	_freetab(char **tab)
 	free (tab);
 }
 
-void	_error(char **args, int err, int *fd)
+void	_error(t_args *args, char **cmd, int err)
 {
 	if (err > -1)
 		ft_putstr_fd("Error : ", 2);
@@ -49,12 +63,9 @@ void	_error(char **args, int err, int *fd)
 		ft_putstr_fd("Open\n", 2);
 	else if (err == 4)
 		ft_putstr_fd("Execution\n", 2);
-	if (args)
-		_freetab(args);
-	if (fd)
-	{
-		close(fd[0]);
-		close(fd[1]);
-	}
+	_pipe_closer(args->pipe, args->pipe_sec);
+	if (cmd)
+		_freetab(cmd);
+	free (args->pid);
 	exit (EXIT_FAILURE);
 }

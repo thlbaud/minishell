@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:49:18 by thibaud           #+#    #+#             */
-/*   Updated: 2024/03/19 21:02:39 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/03/20 14:27:18 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,70 +16,88 @@
 #include <sys/wait.h>
 #include "../HDRS/pipex.h"
 #include "../include/libft/libft.h"
+#include <stdio.h>
 
-static void	_exec_last(char **argv, int *fd_pipe, char **env, int num_cmd)
+static void	_exec_last(t_args *args, int num_cmd, int *pipe, int *pipe_sec)
 {
-	char	**args;
+	char	**cmd;
 	int		fd;
 
-	_check_file(NULL, argv[num_cmd + 1], fd_pipe, 2);
-	_check_file(NULL, argv[num_cmd], fd_pipe, -1);
-	args = _pathfinder(env, argv[num_cmd], fd_pipe);
-	if (!args)
-		_error(NULL, -2, fd_pipe);
-	fd = open (argv[num_cmd + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	_check_file(args, NULL, args->argv[num_cmd + 1], 2);
+	_check_file(args, NULL, args->argv[num_cmd], -1);
+	cmd = _pathfinder(args, args->argv[num_cmd]);
+	if (!cmd)
+		_error(args, NULL, -1);
+	fd = open (args->argv[num_cmd + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
-		_error(args, 3, fd_pipe);
-	if (dup2(fd_pipe[0], 0) == -1)
-		_error(args, 2, fd_pipe);
+		_error(args, NULL, 3);
+	if (num_cmd % 2 == 0)
+	{
+		if (dup2(args->pipe_sec[0], 0) == -1)
+			_error(args, NULL, 2);
+	}
+	else
+	{
+		if (dup2(args->pipe[0], 0) == -1)
+			_error(args, NULL, 2);
+	}
 	if (dup2(fd, 1) == -1)
-		_error(args, 2, fd_pipe);
-	close(fd_pipe[0]);
-	close(fd_pipe[1]);
+		_error(args, NULL, 2);
+	_pipe_closer(pipe, pipe_sec);
 	close (fd);
-	if (execve(args[0], args, env) == -1)
-		_error(args, 4, NULL);
-}
-static void	_exec_cmd(char **argv, int *fd_pipe, char **env, int num_cmd)
-{
-	char	**args;
+	if (execve(cmd[0], cmd, args->env) == -1)
+		_error(args, NULL, 4);
 
-	_check_file(NULL, argv[num_cmd], fd_pipe, -1);
-	args = _pathfinder(env, argv[num_cmd], fd_pipe);
-	if (!args)
-		_error(NULL, -2, fd_pipe);
-	if (dup2(fd_pipe[0], 0) == -1)
-		_error(args, 2, fd_pipe);
-	if (dup2(fd_pipe[1], 1) == -1)
-		_error(args, 2, fd_pipe);
-	close(fd_pipe[0]);
-	close(fd_pipe[1]);
-	if (execve(args[0], args, env) == -1)
-		_error(args, 4, NULL);
+}
+static void	_exec_cmd(t_args *args, int num_cmd, int *pipe, int *pipe_sec)
+{
+	char	**cmd;
+
+	_check_file(args, NULL, args->argv[num_cmd], -1);
+	cmd = _pathfinder(args, args->argv[num_cmd]);
+	if (!cmd)
+		_error(args, NULL, -1);
+	if (num_cmd % 2 == 0)
+	{
+		if (dup2(args->pipe_sec[0], 0) == -1)
+			_error(args, NULL, 2);
+		if (dup2(args->pipe[1], 1) == -1)
+			_error(args, NULL, 2);
+	}
+	else
+	{
+		if (dup2(args->pipe[0], 0) == -1)
+			_error(args, NULL, 2);
+		if (dup2(args->pipe_sec[1], 1) == -1)
+			_error(args, NULL, 2);
+	}
+	_pipe_closer(pipe, pipe_sec);
+	if (execve(cmd[0], cmd, args->env) == -1)
+		_error(args, NULL, 4);
+
 }
 
-static void	_exec_first(char **argv, int *fd_pipe, char **env)
+static void	_exec_first(t_args *args, int *pipe, int *pipe_sec)
 {
-	char	**args;
+	char	**cmd;
 	int		fd;
 
-	_check_file(NULL, argv[1], fd_pipe, 1);
-	_check_file(NULL, argv[2], fd_pipe, -1);
-	args = _pathfinder(env, argv[2], fd_pipe);
-	if (!args)
-		_error(NULL, -1, fd_pipe);
-	fd = open (argv[1], O_RDONLY);
+	_check_file(args, NULL, args->argv[1], 1);
+	_check_file(args, NULL, args->argv[2], -1);
+	cmd = _pathfinder(args, args->argv[2]);
+	if (!cmd)
+		_error(args, NULL, -1);
+	fd = open (args->argv[1], O_RDONLY);
 	if (fd == -1)
-		_error(args, 3, fd_pipe);
-	if (dup2(fd_pipe[1], 1) == -1)
-		_error(args, 2, fd_pipe);
+		_error(args, NULL, 3);
 	if (dup2(fd, 0) == -1)
-		_error(args, 2, fd_pipe);
-	close(fd_pipe[0]);
-	close(fd_pipe[1]);
+		_error(args, NULL, 2);
+	if (dup2(args->pipe[1], 1) == -1)
+		_error(args, NULL, 2);
+	_pipe_closer(pipe, pipe_sec);
 	close (fd);
-	if (execve(args[0], args, env) == -1)
-		_error(args, 4, NULL);
+	if (execve(cmd[0], cmd, args->env) == -1)
+		_error(args, NULL, 4);
 }
 
 void	fork_n_exec(t_args *args)
@@ -87,17 +105,22 @@ void	fork_n_exec(t_args *args)
 	int	i;
 
 	i = 0;
+	if (pipe(args->pipe) == -1)
+		_error(args, NULL, 0);
+	if (pipe(args->pipe_sec) == -1)
+		_error(args, NULL, 0);
 	while (i < args->num_cmd)
 	{
 		args->pid[i] = fork();
 		if (args->pid[i] == -1)
-			_error(NULL, 1, args->fd_pipe);
+			_error(args, NULL, 1);
 		if (args->pid[i] == 0 && i == 0)
-			_exec_first(args->argv, args->fd_pipe, args->env);
+			_exec_first(args, args->pipe, args->pipe_sec);
 		else if (args->pid[i] == 0 && i == args->num_cmd - 1)
-			_exec_last(args->argv, args->fd_pipe, args->env, i + 2);
+			_exec_last(args, i + 2, args->pipe, args->pipe_sec);
 		else if (args->pid[i] == 0)
-			_exec_cmd(args->argv, args->fd_pipe, args->env, i + 2);
+			_exec_cmd(args, i + 2, args->pipe, args->pipe_sec);
 		++i;
 	}
+	_pipe_closer(args->pipe, args->pipe_sec);
 }
