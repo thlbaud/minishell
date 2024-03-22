@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:49:10 by tmouche           #+#    #+#             */
-/*   Updated: 2024/03/20 14:16:17 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/03/22 18:44:49 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,6 @@ void	_freetab(char **tab)
 
 void	_error(t_args *args, char **cmd, int err)
 {
-	if (err > -1)
-		ft_putstr_fd("Error : ", 2);
-	if (err == 0)
-		ft_putstr_fd("Pipe\n", 2);
-	else if (err == 1)
-		ft_putstr_fd("Fork\n", 2);
-	else if (err == 2)
-		ft_putstr_fd("Dup2\n", 2);
-	else if (err == 3)
-		ft_putstr_fd("Open\n", 2);
-	else if (err == 4)
-		ft_putstr_fd("Execution\n", 2);
 	_pipe_closer(args->pipe, args->pipe_sec);
 	if (cmd)
 		_freetab(cmd);

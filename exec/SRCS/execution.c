@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:49:18 by thibaud           #+#    #+#             */
-/*   Updated: 2024/03/21 16:03:42 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/03/22 23:03:02 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,44 @@ static void	_exec_first(t_data *args, t_exec *cmd, int *pipe, int *pipe_nused)
 		_error(args, NULL, 4);
 }*/
 
-static void	_exec_cmd(t_data *args, t_exec *cmd, int *pipe_w, int *pipe_r)
+static void	_open_file(t_data *args, t_file **file, int *fd_f)
 {
-	if (args->num_cmd == 1)
-		_check_file(cmd, cmd->path_cmd[0]);
-	else
-		_check_file(cmd, "Bash :");
-	_pathfinder(args, cmd->path_cmd);
+	int	i;
+
+	i = 0;
+	while (file[i])
+	{
+		if (fd_f[1] != 0 && file[i]->redirect > 0)
+			close (fd_f[1]);
+		if (fd_f[0] != 0 && file[i]->redirect < 0)
+			close (fd_f[0]);
+		if (file[i]->redirect == 2)
+			fd_f[1] = open(file[i], O_WRONLY | O_CREAT, 0644);
+		else if (file[i]->redirect == 1)
+			fd_f[1] = open(file[i], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		else if (file[i]->redirect == -1)
+			fd_f[0] = open(file[i], O_RDONLY);
+		else if (file[i]->redirect == -2)
+			fd_f[0] = open(STDIN_FILENO, O_RDONLY);
+		if (fd_f[0] == -1 || fd_f[1] == -1)
+		{
+			perror("Bash :");
+			exit (EXIT_FAILURE); //RETOUR ERREUR
+		}
+		++i;
+	}
+}
+
+static void	_exec_cmd(t_data *args, t_exec *s_cmd, int *fd_pw, int *fd_pr)
+{
+	int	fd_f[2];
+
+	fd_f[0] == 0;
+	fd_f[1] == 0;
+	_pathfinder(args, s_cmd->path_cmd);
+	if (s_cmd->file)
+		_open_file(args, s_cmd, fd_f);
+	
 	
 }
 

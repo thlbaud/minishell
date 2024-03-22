@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 16:17:43 by tmouche           #+#    #+#             */
-/*   Updated: 2024/03/21 15:09:23 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/03/22 19:14:54 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ typedef struct s_data
 {
 	char	**env;
 	char	**argv;
-	int		num_cmd;
 	pid_t	*pid;
 	int		pipe[2];
 	int		pipe_sec[2];
+	t_exec	**all_pipe;
 }				t_data;
 
 void	fork_n_exec(t_data *args, t_exec *cmd);
