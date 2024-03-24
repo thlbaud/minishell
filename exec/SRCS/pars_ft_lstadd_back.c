@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   pars_ft_lstadd_back.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:54:00 by avaldin           #+#    #+#             */
-/*   Updated: 2024/03/24 19:44:14 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/03/24 20:21:17 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,15 @@ t_section	*ft_sectadd_back(t_section *lst, t_section *new)
 	{
 		t = ft_sectlast(lst);
 		t->next = new;
+		new->prev = t;
+		new->next = NULL;
 	}
 	else if (!lst)
+	{
 		lst = new;
+		new->prev = NULL;
+		new->next = NULL;
+	}
 	return (lst);
 }
 
@@ -52,6 +58,7 @@ t_file	*ft_redadd_back(t_file *lst, t_file *new)
 	{
 		t = ft_redlast(lst);
 		t->next = new;
+		new->next = NULL;
 	}
 	else if (!lst)
 		lst = new;

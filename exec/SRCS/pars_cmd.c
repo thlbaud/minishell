@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 14:53:12 by avaldin           #+#    #+#             */
-/*   Updated: 2024/03/24 20:08:56 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/03/24 20:30:25 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int cmd_count(char *line)
 		if (line[i] != ' ' && line[i] != '	')
 		{
 			count++;
-			while (line[i] != ' ' && line[i] != '	')
+			while (line[i] && line[i] != ' ' && line[i] != '	')
 			{
 				if (line[i] == '"' || line[i] == 39)
 					i += skip_quote(&line[i]) + 1;

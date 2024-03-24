@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/03/24 20:07:43 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/03/24 20:25:31 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "../HDRS/structure.h"
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
+#include <stdio.h>
 
 /*void	print_pars(t_section *first)
 {
