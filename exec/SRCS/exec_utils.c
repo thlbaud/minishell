@@ -1,39 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:49:10 by tmouche           #+#    #+#             */
-/*   Updated: 2024/03/22 18:44:49 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/03/24 19:50:13 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
-#include "../HDRS/pipex.h"
+#include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
 
-void	_pipe_closer(int *pipe, int	*pipe_sec)
+void	_pipe_closer(int *fd_pipe_r, int *fd_pipe_w, int *fd_files)
 {
-	if (pipe)
+	if (fd_files)
 	{
-		close (pipe[0]);
-		close (pipe[1]);
+		if (fd_files[0] != fd_pipe_r[0] && fd_files[0] != 0)
+			close (fd_files[0]);
+		if (fd_files[1] != fd_pipe_w[1] && fd_files[1] != 1)
+			close (fd_files[1]);
 	}
-	if (pipe_sec)
+	if (fd_pipe_r)
 	{
-		close (pipe_sec[0]);
-		close (pipe_sec[1]);
+		close (fd_pipe_r[0]);
+		close (fd_pipe_r[1]);
+	}
+	if (fd_pipe_w)
+	{
+		close (fd_pipe_w[0]);
+		close (fd_pipe_w[1]);
 	}
 }
 
-void	_write_error(char *str, char *file)
+void	_error_exit(t_data *args)
 {
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd(file, 2);
-	write(2, "\n", 1);
+	(void)args;
+	exit (EXIT_FAILURE);
 }
 
 void	_freetab(char **tab)
@@ -47,13 +53,4 @@ void	_freetab(char **tab)
 		++i;
 	}
 	free (tab);
-}
-
-void	_error(t_args *args, char **cmd, int err)
-{
-	_pipe_closer(args->pipe, args->pipe_sec);
-	if (cmd)
-		_freetab(cmd);
-	free (args->pid);
-	exit (EXIT_FAILURE);
 }

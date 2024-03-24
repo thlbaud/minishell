@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker_path.c                                     :+:      :+:    :+:   */
+/*   exec_checker_path.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:52:42 by tmouche           #+#    #+#             */
-/*   Updated: 2024/03/22 19:31:33 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/03/24 19:49:38 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/wait.h>
-#include "../HDRS/pipex.h"
+#include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
 
 static char	**_env_check(t_data *args)
@@ -30,7 +30,7 @@ static char	**_env_check(t_data *args)
 	{
 		path = ft_split(args->env[i], ':');
 		if (!path)
-			exit (EXIT_FAILURE); //RETOUR ERREUR 
+			_error_exit(args);
 	}
 	return (path);
 }
@@ -44,12 +44,12 @@ static char	*_give_path(t_data *args, char **path, char *cmd)
 	i = 0;
 	temp = ft_strjoin("/", cmd);
 	if (!temp)
-		exit (EXIT_FAILURE); //RETOUR ERREUR
+		_error_exit(args);
 	while (path[i])
 	{
 		path_cmd = ft_strjoin(path[i], temp);
 		if (!path_cmd)
-			exit (EXIT_FAILURE); //RETOUR ERREUR
+			_error_exit(args);
 		if (access(path_cmd, X_OK) == 0)
 			break;
 		free (path_cmd);

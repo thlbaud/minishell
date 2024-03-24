@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checkerold.c                                       :+:      :+:    :+:   */
+/*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/19 19:10:26 by thibaud           #+#    #+#             */
-/*   Updated: 2024/03/21 16:07:15 by tmouche          ###   ########.fr       */
+/*   Created: 2024/02/17 16:17:43 by tmouche           #+#    #+#             */
+/*   Updated: 2024/03/24 19:49:42 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/wait.h>
-#include "../HDRS/pipex.h"
-#include "../include/libft/libft.h"
+#ifndef EXECUTION_H
+# define EXECUTION_H
+#include "../HDRS/structure.h"
 
+void	fork_n_exec(t_data *args, t_section *cmd);
 
+void	_pathfinder(t_data *args, char **cmd);
+
+void	_pipe_closer(int *fd_pipe_r, int *fd_pipe_w, int *fd_files);
+void	_error_exit(t_data *args);
+void	_freetab(char **tab);
+
+#endif
