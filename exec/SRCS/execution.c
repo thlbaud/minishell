@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:49:18 by thibaud           #+#    #+#             */
-/*   Updated: 2024/03/22 23:03:02 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/03/23 19:24:36 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,12 +117,21 @@ static void	_exec_cmd(t_data *args, t_exec *s_cmd, int *fd_pw, int *fd_pr)
 	int	fd_f[2];
 
 	fd_f[0] == 0;
-	fd_f[1] == 0;
+	fd_f[1] == 1;
 	_pathfinder(args, s_cmd->path_cmd);
 	if (s_cmd->file)
 		_open_file(args, s_cmd, fd_f);
-	
-	
+	if (fd_f[0] == 0 && s_cmd->prev)
+		fd_f[0] = fd_pr[0];
+	if (dup2(fd_f[0], 0) == -1)
+		exit (EXIT_FAILURE); //RETOUR ERREUR
+	if (fd_f[1] == 1 && s_cmd->prev)
+		fd_f[1] = fd_pr[1];
+	if (dup2(fd_f[1], 1) == -1)
+		exit (EXIT_FAILURE); //RETOUR ERREUR
+	execve(s_cmd->path_cmd[0], s_cmd->path_cmd, args->env);
+	perror("Bash :");
+	exit (EXIT_FAILURE); //RETOUR ERREUR
 }
 
 void	fork_n_exec(t_data *args, t_exec *cmd)

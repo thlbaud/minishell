@@ -18,4 +18,8 @@ Avec PATH :
 	S'il y a une redirection il faut check systematiquement le file avant de faire la commande, sinon faire la commande dans tous les cas
 	si pas de redirection et file avant cmd faut check avec access s il exite et s il existe et donc pas executable c est perm denied
 
-	si y a un slash on check l exec
+FD :
+
+1er cmd :
+ Si < dup2(fd_in, 0) 
+ Si > dup2(fd_out, 1)

@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 16:17:43 by tmouche           #+#    #+#             */
-/*   Updated: 2024/03/22 19:14:54 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/03/23 18:11:51 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct	s_exec
 {
 	char 			**path_cmd;
 	t_file			**file;
+	struct s_exec	*prev;
 	struct s_exec	*next;
 }				t_exec;
 
