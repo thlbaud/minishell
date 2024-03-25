@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 18:55:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/03/24 20:08:07 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/03/25 13:48:47 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct s_file
 {
 	int				redirect;
 	char			*name;
+	char			*part_env;
 	struct s_file	*next;
 }				t_file;
 
@@ -38,7 +39,5 @@ typedef struct s_data
 	int			pipe_sec[2];
 	t_section	*head;
 }				t_data;
-
-enum special_c {NONE, QUOTE, DOUBLE_QUOTE, LEFT_BRACKET, RIGHT_BRACKET, PIPE, DOUBLE_PIPE, DOUBLE_RIGHT_BRACKET, DOUBLE_LEFT_BRACKET};
 
 #endif

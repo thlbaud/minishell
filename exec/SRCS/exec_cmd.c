@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:49:18 by thibaud           #+#    #+#             */
-/*   Updated: 2024/03/24 19:49:57 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/03/25 13:50:00 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,28 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/wait.h>
+#include <errno.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
+#include <stdio.h>
+
+static void _replace_alias(t_data *args, char *name, int from_redirect)
+{
+	char	*new;
+	int		i;
+	int		i_alias;
+	
+	i = 0;
+	while (ft_strncmp(args->env[i], &name[1], ft_strlen(&name[1], 0)) != 0)
+		++i; 
+	if (from_redirect == 1)
+	{
+		i_alias = ft_strlen(&name[1], 0);
+		while (args->env[i][i_alias + ])
+			
+	}
+
+}
 
 static void	_open_file(t_data *args, t_file *file, int *fd_f)
 {
@@ -25,8 +45,10 @@ static void	_open_file(t_data *args, t_file *file, int *fd_f)
 			close (fd_f[1]);
 		if (fd_f[0] != 0 && file->redirect < 0)
 			close (fd_f[0]);
+		if (file->name[0] == '$')
+			_replace_alias(args, file->name, 1);
 		if (file->redirect == 2)
-			fd_f[1] = open(file->name, O_WRONLY | O_CREAT, 0644);
+			fd_f[1] = open(file->name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		else if (file->redirect == 1)
 			fd_f[1] = open(file->name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		else if (file->redirect == -1)
@@ -35,7 +57,7 @@ static void	_open_file(t_data *args, t_file *file, int *fd_f)
 			fd_f[0] = 0;
 		if (fd_f[0] == -1 || fd_f[1] == -1)
 		{
-			perror("Bash :");
+			perror(ft_strjoin("Bash: ", file->name));
 			_error_exit(args);
 		}
 		file = file->next;

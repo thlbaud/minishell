@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:52:42 by tmouche           #+#    #+#             */
-/*   Updated: 2024/03/24 19:49:38 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/03/25 11:21:47 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ static char	*_give_path(t_data *args, char **path, char *cmd)
 	_freetab(path);
 	if (path[i] != 0)
 		return (path_cmd);
-	free(path_cmd);
 	return (NULL);
 }
 
