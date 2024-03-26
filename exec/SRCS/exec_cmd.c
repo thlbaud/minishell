@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:49:18 by thibaud           #+#    #+#             */
-/*   Updated: 2024/03/25 13:50:00 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/03/26 17:37:45 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,7 @@
 #include <errno.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
-#include <stdio.h>
-
-static void _replace_alias(t_data *args, char *name, int from_redirect)
-{
-	char	*new;
-	int		i;
-	int		i_alias;
-	
-	i = 0;
-	while (ft_strncmp(args->env[i], &name[1], ft_strlen(&name[1], 0)) != 0)
-		++i; 
-	if (from_redirect == 1)
-	{
-		i_alias = ft_strlen(&name[1], 0);
-		while (args->env[i][i_alias + ])
-			
-	}
-
-}
+#include "stdio.h"
 
 static void	_open_file(t_data *args, t_file *file, int *fd_f)
 {
@@ -45,8 +27,8 @@ static void	_open_file(t_data *args, t_file *file, int *fd_f)
 			close (fd_f[1]);
 		if (fd_f[0] != 0 && file->redirect < 0)
 			close (fd_f[0]);
-		if (file->name[0] == '$')
-			_replace_alias(args, file->name, 1);
+		if (ft_strchr(file->name, '$') != NULL)
+			_check_alias(args, file->name);
 		if (file->redirect == 2)
 			fd_f[1] = open(file->name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		else if (file->redirect == 1)
@@ -70,6 +52,7 @@ static void	_exec_cmd(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 
 	fd_f[0] = 0;
 	fd_f[1] = 1;
+	_is_a_buildin(args, s_cmd, fd_pw, fd_pr);
 	_pathfinder(args, s_cmd->path_cmd);
 	if (s_cmd->file)
 		_open_file(args, s_cmd->file, fd_f);

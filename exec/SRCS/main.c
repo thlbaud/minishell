@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/03/24 20:25:31 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/03/26 16:53:12 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	main(int argc, char **argv, char **env)
 	if (!line)
 		exit (EXIT_FAILURE);
 	all_args.head = parsing(line);
-	count =  _how_many_cmd(all_args.head);
+	count =  _how_many_cmd(all_args.head);	
 	if (count == 0)
 		exit (EXIT_FAILURE);
 	all_args.pid = malloc(sizeof(pid_t) * count);

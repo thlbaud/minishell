@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.h                                        :+:      :+:    :+:   */
+/*   exec_buildin_echo.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/17 16:17:43 by tmouche           #+#    #+#             */
-/*   Updated: 2024/03/26 15:52:05 by tmouche          ###   ########.fr       */
+/*   Created: 2024/03/26 17:49:44 by tmouche           #+#    #+#             */
+/*   Updated: 2024/03/26 17:51:11 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTION_H
-# define EXECUTION_H
-#include "../HDRS/structure.h"
+#include "../HDRS/execution.h"
 
-void	fork_n_exec(t_data *args, t_section *cmd);
-
-void	_check_alias(t_data *args, char *name);
-
-void	_pathfinder(t_data *args, char **cmd);
-
-void	_pipe_closer(int *fd_pipe_r, int *fd_pipe_w, int *fd_files);
-void	_error_exit(t_data *args);
-void	_freetab(char **tab);
-
-#endif
+void	_bi_echo(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
+{
+	
+}

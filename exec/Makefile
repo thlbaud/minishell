@@ -6,13 +6,13 @@
 #    By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/18 10:53:51 by tmouche           #+#    #+#              #
-#    Updated: 2024/03/24 20:11:22 by tmouche          ###   ########.fr        #
+#    Updated: 2024/03/26 15:28:22 by tmouche          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 HDRS	:= execution.h parsing.h structure.h
 
-SRCS	:=	main.c pars_cmd.c pars_data_clear.c pars_ft_lstadd_back.c pars_init.c pars_redirect.c pars_tools.c exec_checker_path.c exec_cmd.c exec_utils.c
+SRCS	:=	main.c pars_cmd.c pars_data_clear.c pars_ft_lstadd_back.c pars_init.c pars_redirect.c pars_tools.c exec_checker_path.c exec_cmd.c exec_utils.c exec_alias.c
 
 SRCS_D	:= SRCS/
 HDRS_D	:= HDRS/
