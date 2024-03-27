@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:49:10 by tmouche           #+#    #+#             */
-/*   Updated: 2024/03/24 19:50:13 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/03/27 16:05:27 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ void	_pipe_closer(int *fd_pipe_r, int *fd_pipe_w, int *fd_files)
 	}
 }
 
-void	_error_exit(t_data *args)
+void	_error_exit(t_data *args, char *str)
 {
+	perror(str);
 	(void)args;
 	exit (EXIT_FAILURE);
 }

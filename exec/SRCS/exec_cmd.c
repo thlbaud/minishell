@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:49:18 by thibaud           #+#    #+#             */
-/*   Updated: 2024/03/27 14:14:56 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/03/27 16:57:44 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,7 @@ void	_open_file(t_data *args, t_file *file, int *fd_f)
 		else if (file->redirect == -2)
 			fd_f[0] = 0;
 		if (fd_f[0] == -1 || fd_f[1] == -1)
-		{
-			perror(ft_strjoin("Bash: ", file->name));
-			_error_exit(args);
-		}
+			_error_exit(args, ft_strjoin("Bash: ", file->name));
 		file = file->next;
 	}
 }
@@ -59,15 +56,14 @@ static void	_exec_cmd(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 	if (fd_f[0] == 0 && s_cmd->prev)
 		fd_f[0] = fd_pr[0];
 	if (dup2(fd_f[0], 0) == -1)
-		_error_exit(args);
+		_error_exit(args, NULL);
 	if (fd_f[1] == 1 && s_cmd->next)
 		fd_f[1] = fd_pw[1];
 	if (dup2(fd_f[1], 1) == -1)
-		_error_exit(args);
+		_error_exit(args, NULL);
 	_pipe_closer(fd_pr, fd_pw, fd_f);
 	execve(s_cmd->path_cmd[0], s_cmd->path_cmd, args->env);
-	perror(s_cmd->path_cmd[0]);
-	_error_exit(args);
+	_error_exit(args, s_cmd->path_cmd[0]);
 }
 
 void	fork_n_exec(t_data *args, t_section *cmd)
@@ -76,14 +72,14 @@ void	fork_n_exec(t_data *args, t_section *cmd)
 
 	i = 0;
 	if (pipe(args->pipe) == -1)
-		_error_exit(args);
+		_error_exit(args, NULL);
 	if (pipe(args->pipe_sec) == -1)
-		_error_exit(args);
+		_error_exit(args, NULL);
 	while (cmd)
 	{
 		args->pid[i] = fork();
 		if (args->pid[i] == -1)
-			_error_exit(args);
+			_error_exit(args, NULL);
 		if (args->pid[i] == 0 && i % 2 == 0)
 			_exec_cmd(args, cmd, args->pipe, args->pipe_sec);
 		else if (args->pid[i] == 0)

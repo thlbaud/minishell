@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_alias.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 13:04:53 by tmouche           #+#    #+#             */
-/*   Updated: 2024/03/26 15:51:45 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/03/27 16:07:55 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,6 @@ void	_check_alias(t_data *args, char *name)
 		if (!args->env[i[1]])
 			return ;
 		if (ft_strchr(args->env[i[1]], ' '))
-		{
-			ft_putstr_fd("bash: : ambiguous redirect\n", 2);
-			_error_exit(args);
-		}
+			_error_exit(args, "bash: : ambiguous redirect\n");
 	}
 }
