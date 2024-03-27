@@ -4,6 +4,7 @@
 		"libft.h": "c",
 		"structure.h": "c",
 		"stdio.h": "c",
-		"wait.h": "c"
+		"wait.h": "c",
+		"execution.h": "c"
 	}
 }

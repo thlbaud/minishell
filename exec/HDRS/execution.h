@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 16:17:43 by tmouche           #+#    #+#             */
-/*   Updated: 2024/03/26 15:52:05 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/03/27 14:16:05 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define EXECUTION_H
 #include "../HDRS/structure.h"
 
+void	_open_file(t_data *args, t_file *file, int *fd_f);
 void	fork_n_exec(t_data *args, t_section *cmd);
 
 void	_check_alias(t_data *args, char *name);

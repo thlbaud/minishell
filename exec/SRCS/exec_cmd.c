@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:49:18 by thibaud           #+#    #+#             */
-/*   Updated: 2024/03/26 17:37:45 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/03/27 14:14:56 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include "../include/libft/libft.h"
 #include "stdio.h"
 
-static void	_open_file(t_data *args, t_file *file, int *fd_f)
+void	_open_file(t_data *args, t_file *file, int *fd_f)
 {
 	while (file)
 	{
