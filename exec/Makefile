@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+         #
+#    By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/18 10:53:51 by tmouche           #+#    #+#              #
-#    Updated: 2024/03/27 22:25:33 by thibaud          ###   ########.fr        #
+#    Updated: 2024/03/28 17:08:10 by tmouche          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ HDRS	:= execution.h parsing.h structure.h
 SRCS	:=	main.c \
 			pars_cmd.c pars_data_clear.c pars_ft_lstadd_back.c pars_init.c pars_redirect.c pars_tools.c \
 			exec_checker_path.c exec_cmd.c exec_utils.c exec_alias.c \
-			exec_buildin.c exec_buildin_echo.c exec_buildin_pwd.c
+			exec_buildin.c exec_buildin_echo.c exec_buildin_pwd.c exec_buildin_env.c exec_buildin_unset.c
 
 SRCS_D	:= SRCS/
 HDRS_D	:= HDRS/
@@ -44,6 +44,7 @@ $(OBJS_D):
 
 libft:
 	$(MAKE) -C $(INC_D)libft
+	$(MAKE) bonus -C $(INC_D)libft
 
 clean:
 	$(RM) -r $(OBJS_D)

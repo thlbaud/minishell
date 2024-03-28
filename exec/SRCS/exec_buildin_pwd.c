@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_pwd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:16:16 by thibaud           #+#    #+#             */
-/*   Updated: 2024/03/27 23:44:30 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/03/28 13:32:12 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static inline char *_define_pwd(void)
 void	_bi_pwd(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 {
 	int		fd_f[2];
+	int		res[2];
 	char	*buff;
 	
 	fd_f[0] = 0;
@@ -47,9 +48,11 @@ void	_bi_pwd(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 	buff = _define_pwd();
 	if (!buff)
 		_error_exit(args, NULL);
-	if (write(fd_f[1], buff, ft_strlen(buff, 0)) == -1
-		|| write(fd_f[1], "\n", 1) == -1)
-		_error_exit(args, NULL);
+	res[0] = write(fd_f[1], buff, ft_strlen(buff, 0));
+	if (res[0] != -1)
+		res[1] = write(fd_f[1], "\n", 1);
 	_pipe_closer(fd_pr, fd_pw, fd_f);
-	exit (EXIT_SUCCESS);
+	free (buff);
+	if (res[0] == -1 || res[1] == -1)
+		_error_exit(args, NULL);
 }

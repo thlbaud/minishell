@@ -3,21 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:49:18 by thibaud           #+#    #+#             */
-/*   Updated: 2024/03/27 16:57:44 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/03/28 14:11:03 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <errno.h>
+#include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <fcntl.h>
 #include <sys/wait.h>
-#include <errno.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
-#include "stdio.h"
 
 void	_open_file(t_data *args, t_file *file, int *fd_f)
 {
@@ -38,7 +37,10 @@ void	_open_file(t_data *args, t_file *file, int *fd_f)
 		else if (file->redirect == -2)
 			fd_f[0] = 0;
 		if (fd_f[0] == -1 || fd_f[1] == -1)
+		{
+			_pipe_closer(args->pipe, args->pipe_sec, fd_f);
 			_error_exit(args, ft_strjoin("Bash: ", file->name));
+		}
 		file = file->next;
 	}
 }

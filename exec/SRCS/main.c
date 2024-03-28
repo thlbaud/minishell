@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/03/26 16:53:12 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/03/28 15:01:32 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "../HDRS/structure.h"
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
-#include <stdio.h>
+
 
 /*void	print_pars(t_section *first)
 {
@@ -114,11 +114,13 @@ int	main(int argc, char **argv, char **env)
 	int			i;
 
 	(void)argc;
-	all_args.env = env;
+	all_args.env = _map_cpy(env);
 	line = ft_strdup(argv[1]);
 	if (!line)
 		exit (EXIT_FAILURE);
 	all_args.head = parsing(line);
+	if (!all_args.head->next && _is_a_buildin(&all_args, all_args.head, NULL, NULL) == 1)
+		return (0);
 	count =  _how_many_cmd(all_args.head);	
 	if (count == 0)
 		exit (EXIT_FAILURE);

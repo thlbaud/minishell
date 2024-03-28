@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_cd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:37:51 by thibaud           #+#    #+#             */
-/*   Updated: 2024/03/27 17:38:24 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/03/28 13:11:33 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
 
-void	_is_a_buildin(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
+void	_bi_cd(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 {
 	
 }

@@ -6,14 +6,19 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 18:55:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/03/25 13:48:47 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/03/28 16:55:31 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef	STRUCTURE_H
 # define STRUCTURE_H
-#include "structure.h"
 #include <fcntl.h>
+
+typedef struct s_index
+{
+	int				i;
+	struct s_index	*next;	
+}				t_index;
 
 typedef struct s_file
 {
