@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:49:18 by thibaud           #+#    #+#             */
-/*   Updated: 2024/03/28 14:11:03 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/02 20:38:26 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@
 #include <sys/wait.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
+#include <stdio.h>
+
 
 void	_open_file(t_data *args, t_file *file, int *fd_f)
 {
 	while (file)
 	{
-		if (fd_f[1] != 0 && file->redirect > 0)
+		if (fd_f[1] != 1 && file->redirect > 0)
 			close (fd_f[1]);
 		if (fd_f[0] != 0 && file->redirect < 0)
 			close (fd_f[0]);

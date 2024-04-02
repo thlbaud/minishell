@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:19:58 by tmouche           #+#    #+#             */
-/*   Updated: 2024/03/28 17:20:07 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/02 20:24:50 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,37 +16,72 @@
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
 
-/*t_index	*_lstnew(int content)
+static void	_export_str(t_data *args, t_section *s_cmd, t_index *lst)
 {
-	t_index	*new;
-
-	new = malloc(sizeof(t_index));
-	if (!new)
-		return (NULL);
-	new->i = content;
-	new->next = NULL;
-	return (new);
-}
-
-t_index	*_lstlast(t_index *lst)
-{
-	while (lst->next)
+	char	**new_env;
+	char	*temp;
+	size_t	len;
+	int		i;
+	
+	while (lst)
+	{
+		len = ft_strlen(s_cmd->path_cmd[lst->i], 0);
+		temp = ft_calloc(sizeof(char), len + 1);
+		if (!temp)
+		{
+			//_free_lst(lst);
+			_error_exit(args, s_cmd->path_cmd[0]);
+		}
+		ft_strlcpy(temp, s_cmd->path_cmd[lst->i], len + 1);
+		i = 0;
+		while (args->env[i])
+		{
+			if (ft_strncmp(args->env[i], temp, ft_strlen(temp, '=')) == 0)
+			{
+				free (args->env[i]);
+				args->env[i] = temp;
+				break ;
+			}
+			if (!args->env[++i])
+			{
+				new_env = ft_stradd(args->env, temp);
+				if (!new_env)
+				{
+					free (temp);
+					//_free_lst(lst);
+					_error_exit(args, s_cmd->path_cmd[0]);
+				}
+				args->env = new_env;
+				break ;
+			}
+		}
 		lst = lst->next;
-	return (lst);
+	}
 }
 
-void	_lstadd_back(t_index **lst, t_index *new)
+static int	_check_exist(t_index **lst, char **path_cmd, int i_args)
 {
-	if (*lst)
-		_lstlast(*lst)->next = new;
-	else
-		*lst = new;
-}*/
+	int	i;
+
+	i = 1;
+	while (i < i_args)
+	{
+		if (ft_strncmp(path_cmd[i], path_cmd[i_args], ft_strlen(path_cmd[i_args], '=')) == 0)
+		{
+			while ((*lst)->i != i)
+				(*lst) = (*lst)->next;
+			(*lst)->i = i_args;
+			return (0);
+		}
+		++i;
+	}
+	return (1);
+}
 
 void	_bi_export(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 {
-	t_list	*lst;
-	t_list	*temp;
+	t_index	*lst;
+	t_index	*temp;
 	int		fd_f[2];
 	int		i_args;
 
@@ -61,14 +96,19 @@ void	_bi_export(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 	{
 		if (ft_strrchr(s_cmd->path_cmd[i_args], '='))
 		{
-			temp = ft_lstnew((int)i_args);
-			if (!temp)
+			if (_check_exist(&lst, s_cmd->path_cmd, i_args) == 1)
 			{
-				_free_lst(lst);
-				_error_exit(args, NULL);
+				temp = _lstnew_index(i_args);
+				if (!temp)
+				{
+					//_lstfree_index(lst);
+					_error_exit(args, NULL);
+				}
+				_lstaddback_index(&lst, temp);
 			}
-			ft_lstadd_back(&lst, temp);
 		}
 		++i_args;
 	}
+	_export_str(args, s_cmd, lst);
+	return ;
 }

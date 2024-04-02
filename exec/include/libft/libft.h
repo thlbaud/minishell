@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 10:05:04 by tmouche           #+#    #+#             */
-/*   Updated: 2024/03/14 17:28:06 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/02 20:13:45 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <stdint.h>
 
+char	**ft_stradd(char **map, char *add);
 char	**ft_split(char const *s, char c);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
