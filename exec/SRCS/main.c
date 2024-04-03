@@ -6,10 +6,11 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/03 12:34:02 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/03 15:58:37 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <signal.h>
@@ -96,6 +97,23 @@
 	return (&cmd1);
 }*/
 
+static inline char *_define_cwd(void)
+{
+	char	*buff;
+	size_t	len;
+
+	len = 64;
+	buff = NULL;
+	while (!buff)
+	{ 
+		buff = getcwd(buff, len);
+		if (!buff && errno != ERANGE)
+			return (NULL);
+		len += 64;
+	}
+	return (buff);
+}
+
 static inline int	_how_many_cmd(t_section *cmd)
 {
 	t_section	*temp;
@@ -123,7 +141,7 @@ int	main(int argc, char **argv, char **env)
 	args.env = _map_cpy(env);
 	while (42)
 	{
-		line = readline("minishell/");
+		line = readline(_define_cwd());
 		args.head = parsing(line);
 		if (!args.head->next && _is_a_buildin(&args, args.head, NULL, NULL) == 1)
 			;

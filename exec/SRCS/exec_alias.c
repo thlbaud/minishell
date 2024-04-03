@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_alias.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 13:04:53 by tmouche           #+#    #+#             */
-/*   Updated: 2024/03/27 16:07:55 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/03 13:41:56 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 		name[i_name + i] = 0;
 	new = malloc(sizeof(char) * (name_len - i));
 	if (!new)
-		_error_exit(args);
+		_error_exit(args, NULL);
 	i_name = 0;
 	name_len -= i;
 	i = 0;
@@ -54,7 +54,7 @@ static inline void	_replace_alias(t_data *args, char *name, int *i)
 	_erase_alias(args, name, i[0]);
 	new = malloc(sizeof(char) * (ft_strlen(name, 0) + ft_strlen(&(args->env[i[1]][ft_strlen(args->env[i[1]], '=')]), 0) + 1));
 	if (!new)
-		_error_exit(args);
+		_error_exit(args, NULL);
 	index = -1;
 	while (++index != i[0])
 		new[index] = name[index];
@@ -79,7 +79,6 @@ void	_check_alias(t_data *args, char *name)
 	int		i[2];
 
 	i[0] = 0;
-	
 	while (name[i[0]])
 	{
 		while (name[i[0]] != '$' && name[i[0]])

@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:49:18 by thibaud           #+#    #+#             */
-/*   Updated: 2024/04/02 20:38:26 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/03 15:47:49 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	_open_file(t_data *args, t_file *file, int *fd_f)
 {
 	while (file)
 	{
+		printf("%s\n", file->name);
 		if (fd_f[1] != 1 && file->redirect > 0)
 			close (fd_f[1]);
 		if (fd_f[0] != 0 && file->redirect < 0)
@@ -83,7 +84,10 @@ void	fork_n_exec(t_data *args, t_section *cmd)
 	{
 		args->pid[i] = fork();
 		if (args->pid[i] == -1)
+		{
+			_pipe_closer(args->pipe, args->pipe_sec, NULL);
 			_error_exit(args, NULL);
+		}
 		if (args->pid[i] == 0 && i % 2 == 0)
 			_exec_cmd(args, cmd, args->pipe, args->pipe_sec);
 		else if (args->pid[i] == 0)

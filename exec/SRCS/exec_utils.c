@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:49:10 by tmouche           #+#    #+#             */
-/*   Updated: 2024/03/28 14:55:43 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/03 15:34:00 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	_pipe_closer(int *fd_pipe_r, int *fd_pipe_w, int *fd_files)
 void	_error_exit(t_data *args, char *str)
 {
 	perror(str);
-	(void)args;
+	_freetab(args->env);
 	exit (EXIT_FAILURE);
 }
 

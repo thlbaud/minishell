@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 20:25:47 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/02 20:37:09 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/03 15:55:29 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@ void	_bi_exit(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 	if (s_cmd->file)
 		_open_file(args, s_cmd->file, fd_f);
 	_pipe_closer(fd_pr, fd_pw, fd_f);
-	//FAUT TOUT FREE
+	_freetab(args->env);
 	exit (EXIT_SUCCESS);
 }
