@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 19:31:28 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/02 19:39:29 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/03 20:26:49 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,23 @@
 #include <unistd.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
+
+char *_define_cwd(void)
+{
+	char	*buff;
+	size_t	len;
+
+	len = 64;
+	buff = NULL;
+	while (!buff)
+	{ 
+		buff = getcwd(buff, len);
+		if (!buff && errno != ERANGE)
+			return (NULL);
+		len += 64;
+	}
+	return (buff);
+}
 
 int	_lstsize_index(t_index *lst)
 {

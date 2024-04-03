@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:16:16 by thibaud           #+#    #+#             */
-/*   Updated: 2024/04/03 15:58:14 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/03 20:28:27 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,6 @@
 #include <unistd.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
-
-static inline char *_define_pwd(void)
-{
-	char	*buff;
-	size_t	len;
-
-	len = 64;
-	buff = NULL;
-	while (!buff)
-	{ 
-		buff = getcwd(buff, len);
-		if (!buff && errno != ERANGE)
-			return (NULL);
-		len += 64;
-	}
-	return (buff);
-}
 
 void	_bi_pwd(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 {
@@ -45,7 +28,7 @@ void	_bi_pwd(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 		_open_file(args, s_cmd->file, fd_f);
 	if (fd_f[1] == 1 && s_cmd->next)
 		fd_f[1] = fd_pw[1];
-	buff = _define_pwd();
+	buff = _define_cwd();
 	if (!buff)
 		_error_exit(args, NULL);
 	res[0] = write(fd_f[1], buff, ft_strlen(buff, 0));
