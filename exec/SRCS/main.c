@@ -6,19 +6,24 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/03/28 15:01:32 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/03 12:34:02 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <fcntl.h>
+#include <stdio.h>
+#include <signal.h>
+#include <stdint.h>
+#include <stddef.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <fcntl.h>
 #include <sys/wait.h>
+#include <readline/history.h>
+#include <readline/readline.h>
 #include "../HDRS/parsing.h"
 #include "../HDRS/structure.h"
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
-
 
 /*void	print_pars(t_section *first)
 {
@@ -108,32 +113,37 @@ static inline int	_how_many_cmd(t_section *cmd)
 
 int	main(int argc, char **argv, char **env)
 {
-	t_data		all_args;
+	t_data		args;
 	char		*line;
 	int			count;
 	int			i;
 
 	(void)argc;
-	all_args.env = _map_cpy(env);
-	line = ft_strdup(argv[1]);
-	if (!line)
-		exit (EXIT_FAILURE);
-	all_args.head = parsing(line);
-	if (!all_args.head->next && _is_a_buildin(&all_args, all_args.head, NULL, NULL) == 1)
-		return (0);
-	count =  _how_many_cmd(all_args.head);	
-	if (count == 0)
-		exit (EXIT_FAILURE);
-	all_args.pid = malloc(sizeof(pid_t) * count);
-	if (!all_args.pid)
-		exit (EXIT_FAILURE);
-	fork_n_exec(&all_args, all_args.head);
-	i = 0;
-	while (i < count)
+	(void)argv;
+	args.env = _map_cpy(env);
+	while (42)
 	{
-		waitpid(all_args.pid[i], NULL, 0);
-		++i;
+		line = readline("minishell/");
+		args.head = parsing(line);
+		if (!args.head->next && _is_a_buildin(&args, args.head, NULL, NULL) == 1)
+			;
+		else
+		{
+			count = _how_many_cmd(args.head);	
+			if (count == 0)
+				exit (EXIT_FAILURE);
+			args.pid = malloc(sizeof(pid_t) * count);
+			if (!args.pid)
+				exit (EXIT_FAILURE);
+			fork_n_exec(&args, args.head);
+			i = 0;
+			while (i < count)
+			{
+				waitpid(args.pid[i], NULL, 0);
+				++i;
+			}
+			ft_sectclear(args.head);
+		}
 	}
-	ft_sectclear(all_args.head);
 	return (0);
 }

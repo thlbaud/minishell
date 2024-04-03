@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:11:54 by tmouche           #+#    #+#             */
-/*   Updated: 2024/03/28 16:20:36 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/03 11:34:22 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,44 +16,24 @@
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
 
-static inline void	_cpy_env(t_data *args, char **new_env, int skip)
-{
-	int		i_env;
-	int		size;
-	int		i;
-	
-	i = 0;
-	i_env = 0;
-	while (args->env[i_env])
-	{
-		if (i_env != skip )
-		{
-			size = ft_strlen(args->env[i_env], 0);
-			new_env[i] = ft_calloc(sizeof(char), (size + 1));
-			if (!new_env[i])
-			{
-				_freetab(new_env);
-				_error_exit(args, NULL);
-			}
-			ft_strlcpy(new_env[i], args->env[i_env], size);
-			++i;
-		}
-		++i_env;
-	}
-}
-
 static inline void	_erase_args(t_data *args, int skip)
 {
 	char	**new_env;
-	int		size;
+	int		i;
 
-	size = 0;
-	while (args->env[size])
-		++size;
-	new_env = ft_calloc(sizeof(char *), size);
+	i = 0;
+	while (args->env[i])
+		++i;
+	new_env = ft_calloc(sizeof(char *), i);
 	if (!new_env)
 		_error_exit(args, NULL);
-	_cpy_env(args, new_env, skip);
+	i = 0;
+	while (args->env[i])
+	{
+		if (i != skip)
+			new_env[i] = args->env[i];
+		++i;
+	}
 	_freetab(args->env);
 	args->env = new_env;
 }
