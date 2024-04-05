@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/03 20:44:58 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/05 18:13:24 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ static inline int	_how_many_cmd(t_section *cmd)
 int	main(int argc, char **argv, char **env)
 {
 	t_data		args;
+	char		*pwd;
+	char		*temp;
 	char		*line;
 	int			count;
 	int			i;
@@ -53,7 +55,14 @@ int	main(int argc, char **argv, char **env)
 	args.env = _map_cpy(env);
 	while (42)
 	{
-		line = readline(ft_strjoin (_define_cwd(), "$ "));
+		pwd = _define_cwd();
+		if (pwd)
+		{
+			temp = ft_strjoin (pwd, "$ ");
+			line = readline(temp);
+			free (pwd);
+			free (temp);
+		}
 		args.head = parsing(line);
 		if (!args.head->next && _is_a_buildin(&args, args.head, NULL, NULL) == 1)
 			;
@@ -72,8 +81,8 @@ int	main(int argc, char **argv, char **env)
 				waitpid(args.pid[i], NULL, 0);
 				++i;
 			}
-			ft_sectclear(args.head);
 		}
+		_lstfree(args.head, SECTION_LST);
+		free (args.pid);
 	}
 	return (0);
-}

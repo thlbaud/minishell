@@ -6,7 +6,7 @@
 #    By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/18 10:53:51 by tmouche           #+#    #+#              #
-#    Updated: 2024/04/03 20:43:00 by tmouche          ###   ########.fr        #
+#    Updated: 2024/04/05 17:16:14 by tmouche          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ HDRS	:= execution.h parsing.h structure.h
 
 SRCS	:=	main.c \
 			pars_cmd.c pars_data_clear.c pars_ft_lstadd_back.c pars_init.c pars_redirect.c pars_tools.c \
-			exec_checker_path.c exec_cmd.c exec_utils.c exec_alias.c \
+			exec_checker_path.c exec_cmd.c exec_utils.c \
 			exec_buildin.c exec_buildin_echo.c exec_buildin_pwd.c exec_buildin_env.c exec_buildin_unset.c exec_buildin_export.c exec_buildin_exit.c exec_buildin_cd.c exec_buildin_utils.c
 
 SRCS_D	:= SRCS/

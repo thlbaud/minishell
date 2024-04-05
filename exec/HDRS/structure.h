@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 18:55:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/02 19:32:17 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/05 18:11:31 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ typedef struct s_index
 typedef struct s_file
 {
 	int				redirect;
-	char			*name;
-	char			*part_env;
+	char			**name;
 	struct s_file	*next;
 }				t_file;
 
@@ -44,5 +43,12 @@ typedef struct s_data
 	int			pipe_sec[2];
 	t_section	*head;
 }				t_data;
+
+typedef enum 
+{
+	INDEX_LST,
+	FILE_LST, 
+	SECTION_LST 
+} 				e_type;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 13:04:53 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/03 13:41:56 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/05 17:16:04 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static inline void	_replace_alias(t_data *args, char *name, int *i)
 	}
 	free(name);
 	name = new;
-}*/
+}
 
 void	_check_alias(t_data *args, char *name)
 {
@@ -95,3 +95,4 @@ void	_check_alias(t_data *args, char *name)
 			_error_exit(args, "bash: : ambiguous redirect\n");
 	}
 }
+*/

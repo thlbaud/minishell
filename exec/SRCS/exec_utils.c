@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:49:10 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/03 15:34:00 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/05 18:16:42 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,6 @@ void	_pipe_closer(int *fd_pipe_r, int *fd_pipe_w, int *fd_files)
 		close (fd_pipe_w[0]);
 		close (fd_pipe_w[1]);
 	}
-}
-
-void	_error_exit(t_data *args, char *str)
-{
-	perror(str);
-	_freetab(args->env);
-	exit (EXIT_FAILURE);
 }
 
 void	_freetab(char **tab)

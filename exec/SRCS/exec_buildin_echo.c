@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 17:49:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/03/28 13:32:19 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/05 18:06:07 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,5 @@ void	_bi_echo(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 	result = _write_echo(s_cmd->path_cmd, fd_f[1]);
 	_pipe_closer(fd_pr, fd_pw, fd_f);
 	if (result == -1)
-		_error_exit(args, NULL);
+		_error_exit(args, NULL, 1);
 }

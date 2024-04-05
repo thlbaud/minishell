@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:16:16 by thibaud           #+#    #+#             */
-/*   Updated: 2024/04/03 20:28:27 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/05 18:06:59 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ void	_bi_pwd(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 		fd_f[1] = fd_pw[1];
 	buff = _define_cwd();
 	if (!buff)
-		_error_exit(args, NULL);
+		_error_exit(args, NULL, 1);
 	res[0] = write(fd_f[1], buff, ft_strlen(buff, 0));
 	if (res[0] != -1)
 		res[1] = write(fd_f[1], "\n", 1);
 	_pipe_closer(fd_pr, fd_pw, fd_f);
 	free (buff);
 	if (res[0] == -1 || res[1] == -1)
-		_error_exit(args, NULL);
+		_error_exit(args, NULL, 1);
 }

@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:19:58 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/02 20:24:50 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/05 18:05:55 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	_export_str(t_data *args, t_section *s_cmd, t_index *lst)
 		if (!temp)
 		{
 			//_free_lst(lst);
-			_error_exit(args, s_cmd->path_cmd[0]);
+			_error_exit(args, s_cmd->path_cmd[0], 1);
 		}
 		ft_strlcpy(temp, s_cmd->path_cmd[lst->i], len + 1);
 		i = 0;
@@ -49,7 +49,7 @@ static void	_export_str(t_data *args, t_section *s_cmd, t_index *lst)
 				{
 					free (temp);
 					//_free_lst(lst);
-					_error_exit(args, s_cmd->path_cmd[0]);
+					_error_exit(args, s_cmd->path_cmd[0], 1);
 				}
 				args->env = new_env;
 				break ;
@@ -102,7 +102,7 @@ void	_bi_export(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 				if (!temp)
 				{
 					//_lstfree_index(lst);
-					_error_exit(args, NULL);
+					_error_exit(args, NULL, 1);
 				}
 				_lstaddback_index(&lst, temp);
 			}

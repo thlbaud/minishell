@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:11:54 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/03 11:34:22 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/05 18:07:05 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static inline void	_erase_args(t_data *args, int skip)
 		++i;
 	new_env = ft_calloc(sizeof(char *), i);
 	if (!new_env)
-		_error_exit(args, NULL);
+		_error_exit(args, NULL, 1);
 	i = 0;
 	while (args->env[i])
 	{

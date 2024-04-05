@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 16:17:43 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/03 20:42:43 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/05 18:12:40 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,11 @@
 void	_open_file(t_data *args, t_file *file, int *fd_f);
 void	fork_n_exec(t_data *args, t_section *cmd);
 
-void	_check_alias(t_data *args, char *name);
-
 void	_pathfinder(t_data *args, char **cmd);
 
 void	_pipe_closer(int *fd_pipe_r, int *fd_pipe_w, int *fd_files);
-void	_error_exit(t_data *args, char *str);
+void	_error_exit(t_data *args, char *str, _Bool error);
+void	_lstfree(void *lst, e_type typelst);
 char	**_map_cpy(char **map);
 void	_freetab(char **tab);
 
