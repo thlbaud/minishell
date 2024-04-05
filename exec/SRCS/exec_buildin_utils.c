@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 19:31:28 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/03 20:26:49 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/05 19:08:27 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
 
-char *_define_cwd(void)
+char	*_define_cwd(void)
 {
 	char	*buff;
 	size_t	len;
@@ -24,7 +24,7 @@ char *_define_cwd(void)
 	len = 64;
 	buff = NULL;
 	while (!buff)
-	{ 
+	{
 		buff = getcwd(buff, len);
 		if (!buff && errno != ERANGE)
 			return (NULL);

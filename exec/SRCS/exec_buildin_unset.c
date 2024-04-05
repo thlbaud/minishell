@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:11:54 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/05 18:07:05 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/05 19:08:09 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	_bi_unset(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 		while (args->env[i_env])
 		{
 			if (ft_strncmp(s_cmd->path_cmd[i_args], args->env[i_env],
-				ft_strlen(s_cmd->path_cmd[i_args], 0)) == 0)
+					ft_strlen(s_cmd->path_cmd[i_args], 0)) == 0)
 			{
 				_erase_args(args, i_env);
 				break ;

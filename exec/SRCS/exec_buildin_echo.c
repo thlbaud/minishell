@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 17:49:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/05 18:06:07 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/05 19:00:12 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ static inline int	_write_echo(char **path_cmd, int fd)
 void	_bi_echo(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 {
 	int	fd_f[2];
-	int result;
-	
+	int	result;
+
 	fd_f[0] = 0;
 	fd_f[1] = 1;
 	if (s_cmd->file)

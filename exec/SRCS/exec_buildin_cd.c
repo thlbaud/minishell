@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:37:51 by thibaud           #+#    #+#             */
-/*   Updated: 2024/04/03 20:51:12 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/05 18:59:46 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 void	_bi_cd(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 {
 	int		fd_f[2];
-	
+
 	fd_f[0] = 0;
 	fd_f[1] = 1;
 	if (s_cmd->file)

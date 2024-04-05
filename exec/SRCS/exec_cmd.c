@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:49:18 by thibaud           #+#    #+#             */
-/*   Updated: 2024/04/05 18:04:57 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/05 19:09:06 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,21 @@
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
 
-
 static	void	_check_redirect(t_data *args, char **name, int *fd_f)
 {
 	char	*str_error;
 	char	*str_final;
-	
+
 	if (name[1])
 		return ;
 	_pipe_closer(args->pipe, args->pipe_sec, fd_f);
 	str_error = ft_strjoin("bash : ", name[0]);
 	if (!str_error)
 		_error_exit(args, NULL, 1);
-	str_final = ft_strjoin(str_error, ": ambiguous redirect\n");
+	if (!name[0])
+		str_final = ft_strjoin(str_error, ": No such file directory\n");
+	else
+		str_final = ft_strjoin(str_error, ": ambiguous redirect\n");
 	free (str_error);
 	if (!str_final)
 		_error_exit(args, NULL, 1);

@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:47:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/05 18:14:14 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/05 19:09:22 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 
 void	_lstfree(void *lst, e_type typelst)
 {
-	void *temp;
+	void	*temp;
 
-	while(lst)
+	while (lst)
 	{
 		temp = lst;
 		if (typelst == INDEX_LST)

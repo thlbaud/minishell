@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:52:42 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/05 18:05:13 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/05 19:08:57 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	*_give_path(t_data *args, char **path, char *cmd)
 		if (!path_cmd)
 			_error_exit(args, NULL, 1);
 		if (access(path_cmd, X_OK) == 0)
-			break;
+			break ;
 		free (path_cmd);
 		++i;
 	}
@@ -66,7 +66,7 @@ void	_pathfinder(t_data *args, char **cmd)
 {
 	char	**env_path;
 	char	*path_cmd;
-	
+
 	env_path = _env_check(args);
 	if (access(cmd[0], X_OK) == 0 || !env_path)
 		return ;

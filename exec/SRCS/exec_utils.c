@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:49:10 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/05 18:16:42 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/05 19:10:01 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	**_map_cpy(char **map)
 		ft_strlcpy(new_map[i], map[i], len);
 		++i;
 	}
-	return (new_map);		
+	return (new_map);
 }
 
 void	_pipe_closer(int *fd_pipe_r, int *fd_pipe_w, int *fd_files)

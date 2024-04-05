@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:58:59 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/05 18:06:02 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/05 19:00:27 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	_bi_env(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 {
 	int		fd_f[2];
 	int		res;
-	
+
 	fd_f[0] = 0;
 	fd_f[1] = 1;
 	if (s_cmd->file)

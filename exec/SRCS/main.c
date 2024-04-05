@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/05 18:13:24 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/05 18:38:06 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,3 +86,4 @@ int	main(int argc, char **argv, char **env)
 		free (args.pid);
 	}
 	return (0);
+}

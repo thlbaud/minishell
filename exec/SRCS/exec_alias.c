@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 13:04:53 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/05 17:16:04 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/05 18:58:44 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ static inline void	_replace_alias(t_data *args, char *name, int *i)
 	char	*new;
 	
 	_erase_alias(args, name, i[0]);
-	new = malloc(sizeof(char) * (ft_strlen(name, 0) + ft_strlen(&(args->env[i[1]][ft_strlen(args->env[i[1]], '=')]), 0) + 1));
+	new = malloc(sizeof(char) * (ft_strlen(name, 0) +
+		ft_strlen(&(args->env[i[1]][ft_strlen(args->env[i[1]], '=')]), 0) + 1));
 	if (!new)
 		_error_exit(args, NULL);
 	index = -1;
