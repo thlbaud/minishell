@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:49:18 by thibaud           #+#    #+#             */
-/*   Updated: 2024/04/05 19:26:07 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/07 18:13:20 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,58 +14,10 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <sys/wait.h>
+#include <readline/history.h>
+#include <readline/readline.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
-
-static	void	_check_redirect(t_data *args, char **name, int *fd_f)
-{
-	char	*str_error;
-	char	*str_final;
-
-	if (name[1])
-		return ;
-	_pipe_closer(args->pipe, args->pipe_sec, fd_f);
-	str_error = ft_strjoin("bash : ", name[0]);
-	if (!str_error)
-		_error_exit(args, NULL, 1);
-	if (!name[0])
-		str_final = ft_strjoin(str_error, ": No such file directory\n");
-	else
-		str_final = ft_strjoin(str_error, ": ambiguous redirect\n");
-	free (str_error);
-	if (!str_final)
-		_error_exit(args, NULL, 1);
-	write (2, str_final, ft_strlen(str_final, 0));
-	free (str_final);
-	_error_exit(args, NULL, 0);
-}
-
-void	_open_file(t_data *args, t_file *file, int *fd_f)
-{
-	while (file)
-	{
-		if (fd_f[1] != 1 && file->redirect > 0)
-			close (fd_f[1]);
-		if (fd_f[0] != 0 && file->redirect < 0)
-			close (fd_f[0]);
-		_check_redirect(args, file->name, fd_f);
-		if (file->redirect == 2)
-			fd_f[1] = open(file->name[1], O_WRONLY | O_CREAT | O_APPEND, 0644);
-		else if (file->redirect == 1)
-			fd_f[1] = open(file->name[1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		else if (file->redirect == -1)
-			fd_f[0] = open(file->name[1], O_RDONLY);
-		else if (file->redirect == -2)
-			fd_f[0] = 0;
-		if (fd_f[0] == -1 || fd_f[1] == -1)
-		{
-			_pipe_closer(args->pipe, args->pipe_sec, fd_f);
-			_error_exit(args, ft_strjoin("Bash: ", file->name[1]), 1);
-		}
-		file = file->next;
-	}
-}
 
 static void	_exec_cmd(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 {
