@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:26:32 by tmouche           #+#    #+#             */
-/*   Updated: 2023/11/15 13:41:54 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/15 12:30:20 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static size_t	ft_hmword(const char *s, char c)
 
 	howmanyword = 0;
 	i = 0;
+	if (!s)
+		return (0);
 	while (s[i])
 	{
 		if (s[i] != c)

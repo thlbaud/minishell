@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:37:51 by thibaud           #+#    #+#             */
-/*   Updated: 2024/04/05 18:59:46 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/15 13:09:29 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,31 @@
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
 
+void	_cd_old_pwd(t_data *args, char old_pwd)
+{
+	t_section	temp;
+	char		*s_cmd[3];
+	char		name_cmd[7];
+	char		*args_export;
+
+	temp.next = NULL;
+	temp.prev = NULL;
+	temp.file = NULL;
+	*name_cmd = "EXPORT";
+	s_cmd[0] = name_cmd;
+	s_cmd[1] = ft_strjoin("OLDPWD=", old_pwd);
+	s_cmd[2] = NULL;
+	if (!s_cmd[1])
+		_error_exit(args, NULL, 1);
+	temp.path_cmd = s_cmd;
+	_bi_export(args, s_cmd, NULL, NULL);
+	free (s_cmd[1]);
+}
+
 void	_bi_cd(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 {
+	
+	char	*old_pwd;
 	int		fd_f[2];
 
 	fd_f[0] = 0;
@@ -26,6 +49,11 @@ void	_bi_cd(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 	_pipe_closer(fd_pr, fd_pw, fd_f);
 	if (!s_cmd->path_cmd[1])
 		return ;
+	old_pwd = _define_cwd();
+	if (!old_pwd)
+		_error_exit(args, NULL, 1);
 	if (chdir(s_cmd->path_cmd[1]) == -1)
 		perror(ft_strjoin("bash: ", s_cmd->path_cmd[0]));
+	else
+		_cd_old_pwd(args, old_pwd);
 }
