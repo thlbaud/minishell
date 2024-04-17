@@ -6,10 +6,11 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 12:46:30 by avaldin           #+#    #+#             */
-/*   Updated: 2024/04/17 17:45:43 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/17 18:11:47 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "../HDRS/parsing.h"
 
 void	ft_redclear(t_file *lst)
@@ -62,9 +63,9 @@ void	ft_sectclear(t_section *lst)
 		//printf("lst = %p, lst->pipe = %s, lst->next = %p\n", lst, lst->pipe, lst->next);
 		if (lst->next)
 			ft_sectclear(lst->next);
-		ft_redclear(lst->first_red);
-		if (lst->cmd)
-			cmd_clear(lst->cmd);
+		ft_redclear(lst->file);
+		if (lst->path_cmd)
+			cmd_clear(lst->path_cmd);
 		if (lst->pipe)
 			free(lst->pipe);
 		free(lst);
@@ -74,8 +75,8 @@ void	ft_sectclear(t_section *lst)
 
 void	clean_exit(t_data *data)
 {
-	if (data->first)
-		ft_sectclear(data->first);
+	if (data->head)
+		ft_sectclear(data->head);
 	free(data);
 	exit(66);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_redirect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 10:01:56 by avaldin           #+#    #+#             */
-/*   Updated: 2024/04/17 14:34:41 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/17 18:01:46 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	extract_red(t_file *red, char *line, t_data *data)
 	i = red_count;
 	while (line[i] && (line[i] == ' ' || line[i] == '	'))
 		i++;
-	redirect = ft_strdup(line, i, red_length(&line[red_count]));
+	redirect = _strdup(line, i, red_length(&line[red_count]));
 	red->name[0] = redirect;
 	return (i + red_length(&line[red_count]));
 }

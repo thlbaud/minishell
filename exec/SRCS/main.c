@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/05 18:38:06 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/17 18:10:19 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	args.env = _map_cpy(env);
+	sig_int();
+	sig_quit();
 	while (42)
 	{
 		pwd = _define_cwd();
@@ -63,7 +65,8 @@ int	main(int argc, char **argv, char **env)
 			free (pwd);
 			free (temp);
 		}
-		args.head = parsing(line);
+		add_history(line);
+		parsing(line, args.env, &args);
 		if (!args.head->next && _is_a_buildin(&args, args.head, NULL, NULL) == 1)
 			;
 		else

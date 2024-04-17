@@ -6,21 +6,12 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 08:33:29 by avaldin           #+#    #+#             */
-/*   Updated: 2024/04/17 17:40:55 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/17 18:14:56 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/minishell.h"
-
-static int	skip_space(char *line)
-{
-	int	i;
-
-	i = 1;
-	while (line[i] && line[i] == ' ')
-		i++;
-	return (i);
-}
+#include <stdio.h>
+#include "../HDRS/parsing.h"
 
 static int	paire_of_quote(char *line)
 {
@@ -63,6 +54,16 @@ static int	pipe_syntax(char *line)
 		i++;
 	}
 	return (-1);
+}
+
+int	skip_space(char *line)
+{
+	int	i;
+
+	i = 1;
+	while (line[i] && line[i] == ' ')
+		i++;
+	return (i);
 }
 
 int	checking(char *line)

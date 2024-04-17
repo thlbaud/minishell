@@ -6,11 +6,12 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 13:41:44 by avaldin           #+#    #+#             */
-/*   Updated: 2024/04/17 17:02:42 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/17 18:03:03 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../HDRS/parsing.h"
+#include "../include/libft/libft.h"
 
 int	null_red(t_file *red)
 {
@@ -49,14 +50,14 @@ char	*temp_join(t_file *red)
 		if (!red->temp[i] || !red->temp[i][0])
 			i++;
 		else
-			file = ft_strdup(red->temp[i++], 0, -1);
+			file = _strdup(red->temp[i++], 0, -1);
 	}
 	while (i < red->tmp_len)
 	{
 		if (red->temp[i] && red->temp[i][0])
 		{
-			file = str_modify(file, (int) ft_strlen(file), 0,
-						ft_strdup(red->temp[i], 0, -1));
+			file = str_modify(file, (int) ft_strlen(file, 0), 0,
+						_strdup(red->temp[i], 0, -1));
 		}
 		i++;
 	}

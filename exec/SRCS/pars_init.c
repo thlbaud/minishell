@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:58:26 by avaldin           #+#    #+#             */
-/*   Updated: 2024/04/17 14:04:03 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/17 18:01:59 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	add_section(t_data *data, char *line, int start, int end)
 	sect = ft_calloc(1, sizeof(t_section));
 	if (!sect)
 		clean_exit(data);
-	sect->pipe = ft_strdup(line, start, end - start);
+	sect->pipe = _strdup(line, start, end - start);
 	if (!sect->pipe)
 		clean_exit(data);
 	data->head = ft_sectadd_back(data->head, sect);

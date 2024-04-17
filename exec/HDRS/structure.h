@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 18:55:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/17 17:22:41 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/17 18:08:14 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct	s_section
 	char 				**path_cmd;
 	char				*pipe;
 	t_file				*file;
-	t_data				*data;
+	struct s_data		*data;
 	struct s_section	*prev;
 	struct s_section	*next;
 }				t_section;

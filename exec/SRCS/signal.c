@@ -6,13 +6,14 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 13:07:34 by avaldin           #+#    #+#             */
-/*   Updated: 2024/04/17 17:20:13 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/17 18:12:13 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <signal.h>
-# include <readline/history.h>
-# include <readline/readline.h>
+#include <stdio.h>
+#include <signal.h>
+#include <readline/history.h>
+#include <readline/readline.h>
 #include "../HDRS/parsing.h"
 
 void	handle_sig(int sig)

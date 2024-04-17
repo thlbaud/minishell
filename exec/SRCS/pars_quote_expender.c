@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   pars_quote_expender.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 09:38:27 by avaldin           #+#    #+#             */
-/*   Updated: 2024/04/17 14:41:28 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/17 18:01:52 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../HDRS/parsing.h"
+#include "../include/libft/libft.h"
 
 static int	quote_count(char *line)
 {
@@ -45,7 +46,7 @@ static int	temp_filling(t_file *red)
 		if (red->name[0][i] == '"' || red->name[0][i] == 39)
 		{
 			if (i != j)
-				red->temp[red->tmp_len++] = ft_strdup(red->name[0], j, i - j);
+				red->temp[red->tmp_len++] = _strdup(red->name[0], j, i - j);
 			red->temp[red->tmp_len] = ft_calloc(skip_quote(
 						&red->name[0][i]) + 1, sizeof(char));
 			if (!red->temp[red->tmp_len])
@@ -58,7 +59,7 @@ static int	temp_filling(t_file *red)
 		}
 	}
 	if (i != j)
-		red->temp[red->tmp_len++] = ft_strdup(red->name[0], j, i - j);
+		red->temp[red->tmp_len++] = _strdup(red->name[0], j, i - j);
 	return (1);
 }
 

@@ -6,11 +6,12 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 14:53:12 by avaldin           #+#    #+#             */
-/*   Updated: 2024/04/17 17:08:18 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:59:16 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../HDRS/parsing.h"
+#include "../include/libft/libft.h"
 
 static void	bad_var(t_section *sect)
 {

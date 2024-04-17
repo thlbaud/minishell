@@ -6,11 +6,12 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 11:20:59 by avaldin           #+#    #+#             */
-/*   Updated: 2024/04/17 17:13:11 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/17 18:13:36 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../HDRS/parsing.h"
+#include "../include/libft/libft.h"
 
 static char	*find_var(char *name, char **env, int len)
 {
@@ -21,7 +22,7 @@ static char	*find_var(char *name, char **env, int len)
 		i++;
 	if (!env[i] || !env[i][len + 1])
 		return (NULL);
-	return (ft_strdup(env[i], len + 1, -1));
+	return (_strdup(env[i], len + 1, -1));
 }
 
 static int	ambigous_var(t_file *red, char **env, int i, int j)
@@ -91,8 +92,8 @@ char	*apply_var(char *token, char **env, int *i)
 	var = find_var(&token[*i + 1], env, len_name);
 	if (!var)
 		return (str_cut(token, *i, *i + len_name));
-	*i += ft_strlen(var);
-	token = str_modify(token, *i - ft_strlen(var), len_name + 1, var);
+	*i += ft_strlen(var, 0);
+	token = str_modify(token, *i - ft_strlen(var, 0), len_name + 1, var);
 	return (token);
 }
 

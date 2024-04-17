@@ -6,11 +6,11 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:35:51 by avaldin           #+#    #+#             */
-/*   Updated: 2024/04/17 17:40:19 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:51:39 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/minishell.h"
+#include "../HDRS/parsing.h"
 
 static int	red_syntax_a(char *line, int i)
 {

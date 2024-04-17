@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_export.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:19:58 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/05 19:08:40 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/17 18:16:08 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ static inline void	_export_str(t_data *args, t_section *s_cmd, t_index *lst)
 {
 	char	*temp;
 	size_t	len;
-	int		i;
 
 	while (lst)
 	{
