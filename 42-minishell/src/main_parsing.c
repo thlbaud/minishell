@@ -1,32 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pars_init.c                                        :+:      :+:    :+:   */
+/*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:58:26 by avaldin           #+#    #+#             */
-/*   Updated: 2024/04/17 14:04:03 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/17 14:04:22 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../HDRS/parsing.h"
-#include "../include/libft/libft.h"
+#include "../header/minishell.h"
 
-/*char	*pars_section(char *line, t_section **first)
-{
-	t_section	*new_sect;
-
-	new_sect = ft_calloc(1, sizeof(t_section));
-	if (!new_sect)
-		return (NULL);  // pas ok
-	line = pars_red(line, new_sect);
-	cleaning_cmd(new_sect, line);
-	*first = ft_sectadd_back(*first, new_sect);
-	return (line);
-}*/
-
-static void	add_section(t_data *data, char *line, int start, int end)
+/*void	add_section(t_data *data, char *line, int start, int end)
 {
 	t_section	*sect;
 
@@ -36,18 +22,18 @@ static void	add_section(t_data *data, char *line, int start, int end)
 	sect->pipe = ft_strdup(line, start, end - start);
 	if (!sect->pipe)
 		clean_exit(data);
-	data->head = ft_sectadd_back(data->head, sect);
+	data->first = ft_sectadd_back(data->first, sect);
 	sect->data = data;
 }
 
-static void	create_section(char *line, t_data *data)
+void	create_section(char *line, t_data *data)
 {
 	int			i;
 	int			j;
 
 	i = 0;
 	j = 0;
-	data->head = NULL;
+	data->first = NULL;
 	while (line[i])
 	{
 		if (line[i] == '"' || line[i] == 39)
@@ -66,10 +52,10 @@ void	parsing(char *line, char **env, t_data *data)
 {
 	if (checking(line))
 	{
-		data->head = NULL;
+		data->first = NULL;
 		return ;
 	}
 	create_section(line, data);
 	redirection(data, env);
-	command(data->head, env);
-}
+	command(data->first, env);
+}*/

@@ -3,45 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   structure.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 18:55:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/05 18:11:31 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/17 14:41:02 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef	STRUCTURE_H
 # define STRUCTURE_H
 #include <fcntl.h>
+#include <signal.h>
 
 typedef struct s_index
 {
-	int				i;
-	struct s_index	*next;	
+	int					i;
+	struct s_index		*next;	
 }				t_index;
 
 typedef struct s_file
 {
-	int				redirect;
-	char			**name;
-	struct s_file	*next;
+	int					redirect;
+	int					tmp_len;
+	int					*protection;
+	char				**name;
+	char				**temp;
+	struct s_file		*next;
+
 }				t_file;
 
 typedef struct	s_section
 {
 	char 				**path_cmd;
+	char				*pipe;
 	t_file				*file;
+	t_data				*data;
 	struct s_section	*prev;
 	struct s_section	*next;
 }				t_section;
 
 typedef struct s_data
 {
-	char		**env;
-	pid_t		*pid;
-	int			pipe[2];
-	int			pipe_sec[2];
-	t_section	*head;
+	int					pipe[2];
+	int					pipe_sec[2];
+	char				**env;
+	pid_t				*pid;
+	t_section			*head;
+	struct sigaction	*sa;
+	
 }				t_data;
 
 typedef enum 
