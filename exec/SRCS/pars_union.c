@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   union.c                                            :+:      :+:    :+:   */
+/*   pars_union.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avaldin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 13:41:44 by avaldin           #+#    #+#             */
-/*   Updated: 2024/04/17 10:09:40 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:02:42 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/minishell.h"
+#include "../HDRS/parsing.h"
 
-int	null_red(t_red *red)
+int	null_red(t_file *red)
 {
 	int	i;
 
@@ -28,16 +28,16 @@ int	null_red(t_red *red)
 	{
 		if (red->protection[i])
 		{
-			red->file[1] = ft_calloc(1, sizeof(char));
+			red->name[1] = ft_calloc(1, sizeof(char));
 			return (1);
 		}
 		i++;
 	}
-	red->file[1] = NULL;
+	red->name[1] = NULL;
 	return (1);
 }
 
-char	*temp_join(t_red *red)
+char	*temp_join(t_file *red)
 {
 	int		i;
 	char	*file;
@@ -65,14 +65,14 @@ char	*temp_join(t_red *red)
 
 void	red_union(t_section *sect)
 {
-	t_red	*red;
+	t_file	*red;
 
-	red = sect->first_red;
+	red = sect->file;
 	while (red)
 	{
 		if (red->temp && !null_red(red))
 		{
-			red->file[1] = temp_join(red);
+			red->name[1] = temp_join(red);
 		}
 		red = red->next;
 	}

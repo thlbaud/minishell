@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structure.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 18:55:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/17 14:41:02 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:22:41 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,9 @@ typedef enum
 	FILE_LST, 
 	SECTION_LST 
 } 				e_type;
+
+void	sig_int(void);
+void	sig_quit(void);
+void	handle_sig(int sig);
 
 #endif

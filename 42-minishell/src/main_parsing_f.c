@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:58:26 by avaldin           #+#    #+#             */
-/*   Updated: 2024/04/17 14:04:22 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:04:03 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-/*void	add_section(t_data *data, char *line, int start, int end)
+void	add_section(t_data *data, char *line, int start, int end)
 {
 	t_section	*sect;
 
@@ -58,4 +58,4 @@ void	parsing(char *line, char **env, t_data *data)
 	create_section(line, data);
 	redirection(data, env);
 	command(data->first, env);
-}*/
+}

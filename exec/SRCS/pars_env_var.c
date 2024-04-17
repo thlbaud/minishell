@@ -1,18 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_var.c                                          :+:      :+:    :+:   */
+/*   pars_env_var.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avaldin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 11:20:59 by avaldin           #+#    #+#             */
-/*   Updated: 2024/04/16 17:47:26 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:13:11 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/minishell.h"
+#include "../HDRS/parsing.h"
 
-int	ambigous_var(t_red *red, char **env, int i, int j)
+static char	*find_var(char *name, char **env, int len)
+{
+	int	i;
+
+	i = 0;
+	while (env[i] && ft_strncmp(name, env[i], len))
+		i++;
+	if (!env[i] || !env[i][len + 1])
+		return (NULL);
+	return (ft_strdup(env[i], len + 1, -1));
+}
+
+static int	ambigous_var(t_file *red, char **env, int i, int j)
 {
 	char	*var;
 	int		len;
@@ -40,16 +52,26 @@ int	ambigous_var(t_red *red, char **env, int i, int j)
 	return (0);
 }
 
-char	*find_var(char *name, char **env, int len)
+static void	check_var(t_file *red, char **env, int i)
 {
-	int	i;
+	int		j;
 
-	i = 0;
-	while (env[i] && ft_strncmp(name, env[i], len))
-		i++;
-	if (!env[i] || !env[i][len + 1])
-		return (NULL);
-	return (ft_strdup(env[i], len + 1, -1));
+	j = 0;
+	while (red->temp && red->temp[i] && red->temp[i][j])
+	{
+		if (red->temp[i][j] == '$')
+		{
+			if (!red->temp[i][j + 1] && red->protection[i + 1] != 0
+				&& red->protection[i] == 0)
+				red->temp[i] = str_cut(red->temp[i], j, j + 1);
+			else if (ambigous_var(red, env, i, j))
+				return ;
+			else
+				red->temp[i] = apply_var(red->temp[i], env, &j);
+		}
+		else
+			j++;
+	}
 }
 
 char	*apply_var(char *token, char **env, int *i)
@@ -74,38 +96,16 @@ char	*apply_var(char *token, char **env, int *i)
 	return (token);
 }
 
-void	check_var(t_red *red, char **env, int i)
-{
-	int		j;
-
-	j = 0;
-	while (red->temp && red->temp[i] && red->temp[i][j])
-	{
-		if (red->temp[i][j] == '$')
-		{
-			if (!red->temp[i][j + 1] && red->protection[i + 1] != 0
-				&& red->protection[i] == 0)
-				red->temp[i] = str_cut(red->temp[i], j, j + 1);
-			else if (ambigous_var(red, env, i, j))
-				return ;
-			else
-				red->temp[i] = apply_var(red->temp[i], env, &j);
-		}
-		else
-			j++;
-	}
-}
-
 void	red_process_var(t_section *first, char **env)
 {
 	t_section	*sect;
-	t_red		*red;
+	t_file		*red;
 	int			i;
 
 	sect = first;
 	while (sect)
 	{
-		red = sect->first_red;
+		red = sect->file;
 		while (red)
 		{
 			i = -1;

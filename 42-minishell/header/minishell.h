@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 10:33:07 by avaldin           #+#    #+#             */
-/*   Updated: 2024/04/17 14:17:28 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:16:00 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,24 +53,24 @@
 char		*ft_strdup(const char *s, int start, int len);
 // t_section	*ft_sectadd_back(t_section *lst, t_section *new);
 // t_red		*ft_redadd_back(t_red *lst, t_red *new);
-int			skip_quote(char *line);
+// int			skip_quote(char *line);
 char		*str_cut(char *line, int start, int end);
-int			write_quote(char *line, char *dest);
+// int			write_quote(char *line, char *dest);
 void		ft_sectclear(t_section *lst);
 void		ft_redclear(t_red *lst);
-void		cleaning_cmd(t_section *sect, char *line);
+// void		cleaning_cmd(t_section *sect, char *line);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 void		sig_quit(void);
 void		sig_int(void);
-char		*find_var(char *name, char **env, int len);
+// char		*find_var(char *name, char **env, int len);
 char		*str_modify(char *str, int i, int len, char *add);
-void		redirection(t_data *data, char **env);
-void		red_quote_expender(t_section *sect);
-void		red_process_var(t_section *first, char **env);
-void		red_union(t_section *sect);
-int			checking(char *line);
-int			quote_count(char *line);
-char		*apply_var(char *token, char **env, int *i);
+// void		redirection(t_data *data, char **env);
+// void		red_quote_expender(t_section *sect);
+// void		red_process_var(t_section *first, char **env);
+// void		red_union(t_section *sect);
+// int			checking(char *line);
+// int			quote_count(char *line);
+// char		*apply_var(char *token, char **env, int *i);
 int			skip_space(char *line);
 void		command(t_section *first, char **env);
 int			red_syntax(char *line);
