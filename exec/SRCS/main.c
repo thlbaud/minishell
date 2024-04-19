@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/17 18:10:19 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/19 19:02:46 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,35 @@ static inline int	_how_many_cmd(t_section *cmd)
 	return (counter);
 }
 
+static inline void	_execution(t_data *args)
+{
+	int	i;
+	int	count;
+
+	count = _how_many_cmd(args->head);	
+	if (count == 0)
+		exit (EXIT_FAILURE);
+	args->pid = malloc(sizeof(pid_t) * count);
+	if (!args->pid)
+		exit (EXIT_FAILURE);
+	fork_n_exec(args, args->head);
+	i = 0;
+	while (i < count)
+	{
+		waitpid(args->pid[i], NULL, 0);
+		++i;
+	}
+	if (args->pid)
+		free (args->pid);
+	args->pid = NULL;
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_data		args;
 	char		*pwd;
 	char		*temp;
 	char		*line;
-	int			count;
-	int			i;
 
 	(void)argc;
 	(void)argv;
@@ -67,26 +88,15 @@ int	main(int argc, char **argv, char **env)
 		}
 		add_history(line);
 		parsing(line, args.env, &args);
-		if (!args.head->next && _is_a_buildin(&args, args.head, NULL, NULL) == 1)
-			;
-		else
+		if (!args.head->next)
 		{
-			count = _how_many_cmd(args.head);	
-			if (count == 0)
-				exit (EXIT_FAILURE);
-			args.pid = malloc(sizeof(pid_t) * count);
-			if (!args.pid)
-				exit (EXIT_FAILURE);
-			fork_n_exec(&args, args.head);
-			i = 0;
-			while (i < count)
-			{
-				waitpid(args.pid[i], NULL, 0);
-				++i;
-			}
+			if (_is_a_buildin(&args, args.head, NULL, NULL) == 0)
+				_execution(&args);
 		}
-		_lstfree(args.head, SECTION_LST);
-		free (args.pid);
+		else
+			_execution(&args);
+		/*_lstfree(args.head, SECTION_LST);
+		free (args.pid);*/
 	}
 	return (0);
 }

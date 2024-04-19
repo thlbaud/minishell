@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_checker_path.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:52:42 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/05 19:08:57 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/19 17:20:15 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,9 @@ static char	*_give_path(t_data *args, char **path, char *cmd)
 		++i;
 	}
 	free(temp);
-	_freetab(path);
 	if (path[i] != 0)
-		return (path_cmd);
-	return (NULL);
+		return (_freetab(path), path_cmd);
+	return (_freetab(path), NULL);
 }
 
 void	_pathfinder(t_data *args, char **cmd)

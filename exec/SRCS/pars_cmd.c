@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 14:53:12 by avaldin           #+#    #+#             */
-/*   Updated: 2024/04/17 17:59:16 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/19 18:14:57 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,16 @@ static void	bad_var(t_section *sect)
 static void	cmd_process_var(t_section *sect, char **env)
 {
 	int	i;
+	int	flag;
 
 	i = 0;
+	flag = -1;
 	bad_var(sect);
-	while (sect->pipe[i])
+	while (sect->pipe && sect->pipe[i])
 	{
-		if (sect->pipe[i] == 39)
+		if (sect->pipe[i] == '"')
+			flag = -flag;
+		if (sect->pipe[i] == 39 && flag == -1)
 			i += skip_quote(&sect->pipe[i]) + 2;
 		if (sect->pipe[i] == '$')
 			sect->pipe = apply_var(sect->pipe, env, &i);

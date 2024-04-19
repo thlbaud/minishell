@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_export.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:19:58 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/17 18:16:08 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/19 19:26:19 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static inline void	_search_n_replace(t_data *args, t_section *s_cmd,
 
 static inline void	_export_str(t_data *args, t_section *s_cmd, t_index *lst)
 {
+	t_index	*to_free;
 	char	*temp;
 	size_t	len;
 
@@ -62,7 +63,9 @@ static inline void	_export_str(t_data *args, t_section *s_cmd, t_index *lst)
 		}
 		ft_strlcpy(temp, s_cmd->path_cmd[lst->i], len + 1);
 		_search_n_replace(args, s_cmd, lst, temp);
-		lst = lst->next;
+		to_free = lst->next;
+		free(lst);
+		lst = to_free;
 	}
 }
 

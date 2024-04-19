@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_tools.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 10:00:55 by avaldin           #+#    #+#             */
-/*   Updated: 2024/04/17 18:02:56 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/19 16:42:55 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*_strdup(const char *s, int start, int len)
 	int		i;
 	char	*str;
 
-	if (!s || !len)
+	if (!s || len == 0)
 		return (NULL);
 	if (len == -1)
 		str = ft_calloc((ft_strlen((char *)s, 0) - start + 1), sizeof(char));
