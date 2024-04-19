@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:19:58 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/19 19:26:19 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/19 20:50:26 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,9 @@ void	_bi_export(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 	if (s_cmd->file)
 		_open_file(args, s_cmd->file, fd_f);
 	_pipe_closer(fd_pr, fd_pw, fd_f);
-	_set_export(args, s_cmd);
+	if (!s_cmd->path_cmd[1])
+		_write_env();
+	else
+		_set_export(args, s_cmd);
 	return ;
 }
