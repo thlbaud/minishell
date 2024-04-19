@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:49:10 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/05 19:10:01 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/19 04:36:16 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	**_map_cpy(char **map)
 		new_map[i] = ft_calloc(sizeof(char), len + 1);
 		if (!new_map)
 			return (_freetab(new_map), NULL);
-		ft_strlcpy(new_map[i], map[i], len);
+		ft_strlcpy(new_map[i], map[i], len + 1);
 		++i;
 	}
 	return (new_map);
