@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_export.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:19:58 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/19 20:50:26 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/21 05:25:55 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static inline void	_search_n_replace(t_data *args, t_section *s_cmd,
 			{
 				free (temp);
 				_lstfree(lst, INDEX_LST);
-				_error_exit(args, s_cmd->path_cmd[0], 1);
+				_error_exit(args, s_cmd, s_cmd->path_cmd[0], 1);
 			}
 			args->env = new_env;
 			return ;
@@ -59,7 +59,7 @@ static inline void	_export_str(t_data *args, t_section *s_cmd, t_index *lst)
 		if (!temp)
 		{
 			_lstfree(lst, INDEX_LST);
-			_error_exit(args, s_cmd->path_cmd[0], 1);
+			_error_exit(args, s_cmd, s_cmd->path_cmd[0], 1);
 		}
 		ft_strlcpy(temp, s_cmd->path_cmd[lst->i], len + 1);
 		_search_n_replace(args, s_cmd, lst, temp);
@@ -107,7 +107,7 @@ static inline void	_set_export(t_data *args, t_section *s_cmd)
 				if (!temp)
 				{
 					_lstfree(lst, INDEX_LST);
-					_error_exit(args, NULL, 1);
+					_error_exit(args, s_cmd, NULL, 1);
 				}
 				_lstaddback_index(&lst, temp);
 			}
@@ -124,11 +124,10 @@ void	_bi_export(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 	fd_f[0] = 0;
 	fd_f[1] = 1;
 	if (s_cmd->file)
-		_open_file(args, s_cmd->file, fd_f);
+		_open_file(args, s_cmd, s_cmd->file, fd_f);
 	_pipe_closer(fd_pr, fd_pw, fd_f);
-	if (!s_cmd->path_cmd[1])
-		_write_env();
-	else
-		_set_export(args, s_cmd);
+	// if (!s_cmd->path_cmd[1])
+	// 	_write_env();
+	_set_export(args, s_cmd);
 	return ;
 }

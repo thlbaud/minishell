@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_env.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:58:59 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/19 20:38:06 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/21 05:25:47 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ void	_bi_env(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 	fd_f[0] = 0;
 	fd_f[1] = 1;
 	if (s_cmd->file)
-		_open_file(args, s_cmd->file, fd_f);
+		_open_file(args, s_cmd, s_cmd->file, fd_f);
 	if (fd_f[1] == 1 && s_cmd->next)
 		fd_f[1] = fd_pw[1];
 	res = _write_env(args->env, fd_f[1]);
 	_pipe_closer(fd_pr, fd_pw, fd_f);
 	if (res == -1)
-		_error_exit(args, NULL, 1);
+		_error_exit(args, s_cmd, NULL, 1);
 }

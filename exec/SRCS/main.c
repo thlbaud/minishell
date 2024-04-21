@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/19 19:02:46 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/21 05:11:27 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,39 +64,44 @@ static inline void	_execution(t_data *args)
 	args->pid = NULL;
 }
 
+void	_looper(t_data *args)
+{
+	char				*pwd;
+	char				*temp;
+	char				*line;
+	
+	pwd = _define_cwd();
+	if (pwd)
+	{
+		temp = ft_strjoin (pwd, "$ ");
+		line = readline(temp);
+		free (pwd);
+		free (temp);
+	}
+	add_history(line);
+	parsing(line, args->env, args);
+	if (!args->head->next)
+	{
+		if (_is_a_buildin(args, args->head, NULL, NULL) == 0)
+			_execution(args);
+	}
+	else
+		_execution(args);
+	/*_lstfree(args.head, SECTION_LST);
+	free (args.pid);*/
+}
+
 int	main(int argc, char **argv, char **env)
 {
-	t_data		args;
-	char		*pwd;
-	char		*temp;
-	char		*line;
-
+	t_data	args;
+	
 	(void)argc;
 	(void)argv;
 	args.env = _map_cpy(env);
 	sig_int();
 	sig_quit();
 	while (42)
-	{
-		pwd = _define_cwd();
-		if (pwd)
-		{
-			temp = ft_strjoin (pwd, "$ ");
-			line = readline(temp);
-			free (pwd);
-			free (temp);
-		}
-		add_history(line);
-		parsing(line, args.env, &args);
-		if (!args.head->next)
-		{
-			if (_is_a_buildin(&args, args.head, NULL, NULL) == 0)
-				_execution(&args);
-		}
-		else
-			_execution(&args);
-		/*_lstfree(args.head, SECTION_LST);
-		free (args.pid);*/
-	}
+		_looper(&args);
 	return (0);
 }
+ 

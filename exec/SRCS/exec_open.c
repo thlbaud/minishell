@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 18:12:53 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/19 04:47:26 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/21 05:23:38 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static	int	_heredoc_handling(char **name)
 	return (pipe_heredoc[0]);
 }
 
-static	void	_check_redirect(t_data *args, char **name, int *fd_f)
+static	void	_check_redirect(t_data *args, t_section *s_cmd, char **name, int *fd_f)
 {
 	char	*str_error;
 	char	*str_final;
@@ -56,20 +56,20 @@ static	void	_check_redirect(t_data *args, char **name, int *fd_f)
 	_pipe_closer(args->pipe, args->pipe_sec, fd_f);
 	str_error = ft_strjoin("bash : ", name[0]);
 	if (!str_error)
-		_error_exit(args, NULL, 1);
+		_error_exit(args, s_cmd, NULL, 1);
 	if (!name[0])
 		str_final = ft_strjoin(str_error, ": No such file directory\n");
 	else
 		str_final = ft_strjoin(str_error, ": ambiguous redirect\n");
 	free (str_error);
 	if (!str_final)
-		_error_exit(args, NULL, 1);
+		_error_exit(args, s_cmd, NULL, 1);
 	write (2, str_final, ft_strlen(str_final, 0));
 	free (str_final);
-	_error_exit(args, NULL, 0);
+	_error_exit(args, s_cmd, NULL, 0);
 }
 
-void	_open_file(t_data *args, t_file *file, int *fd_f)
+void	_open_file(t_data *args, t_section *s_cmd, t_file *file, int *fd_f)
 {
 	while (file)
 	{
@@ -77,7 +77,7 @@ void	_open_file(t_data *args, t_file *file, int *fd_f)
 			close (fd_f[1]);
 		if (fd_f[0] != 0 && file->redirect < 0)
 			close (fd_f[0]);
-		_check_redirect(args, file->name, fd_f);
+		_check_redirect(args, s_cmd, file->name, fd_f);
 		if (file->redirect == 2)
 			fd_f[1] = open(file->name[1], O_WRONLY | O_CREAT | O_APPEND, 0644);
 		else if (file->redirect == 1)
@@ -89,7 +89,7 @@ void	_open_file(t_data *args, t_file *file, int *fd_f)
 		if (fd_f[0] == -1 || fd_f[1] == -1)
 		{
 			_pipe_closer(args->pipe, args->pipe_sec, fd_f);
-			_error_exit(args, ft_strjoin("Bash: ", file->name[1]), 1);
+			_error_exit(args, s_cmd, ft_strjoin("Bash: ", file->name[1]), 1);
 		}
 		file = file->next;
 	}

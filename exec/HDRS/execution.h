@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 16:17:43 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/19 20:38:10 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/21 05:37:56 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 # define EXECUTION_H
 #include "../HDRS/structure.h"
 
-void	_open_file(t_data *args, t_file *file, int *fd_f);
+void	_open_file(t_data *args, t_section *s_cmd, t_file *file, int *fd_f);
+void	_error_exit(t_data *args, t_section *s_cmd, char *str, int error);
 void	fork_n_exec(t_data *args, t_section *cmd);
 
 void	_pathfinder(t_data *args, char **cmd);
 
 void	_pipe_closer(int *fd_pipe_r, int *fd_pipe_w, int *fd_files);
-void	_error_exit(t_data *args, char *str, _Bool error);
+void	_error_exit(t_data *args, t_section *s_cmd, char *str, int error);
 void	_lstfree(void *lst, e_type typelst);
 char	**_map_cpy(char **map);
 void	_freetab(char **tab);
