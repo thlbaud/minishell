@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:49:10 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/19 16:58:45 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/22 05:33:22 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,22 @@
 #include <unistd.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
+
+int	_str_no_spe_char(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!(str[i] >= 48 && str[i] <= 57) 
+			|| !(str[i] >= 65 && str[i] <=90) 
+			|| !(str[i] >= 97 && str[i] <= 122))
+			return (0);
+		++i;
+	}
+	return (1);
+}
 
 char	**_map_cpy(char **map)
 {
@@ -46,9 +62,9 @@ void	_pipe_closer(int *fd_pipe_r, int *fd_pipe_w, int *fd_files)
 {
 	if (fd_files)
 	{
-		if (fd_files[0] != 0) // && fd_files[0] != fd_pipe_r[0]
+		if (fd_files[0] != 0 && fd_files[0] != fd_pipe_r[0] && fd_files[0] != -1)
 			close (fd_files[0]);
-		if (fd_files[1] != 1) // && fd_files[1] != fd_pipe_w[1]
+		if (fd_files[1] != 1 && fd_files[1] != fd_pipe_w[1] && fd_files[1] != -1)
 			close (fd_files[1]);
 	}
 	if (fd_pipe_r)

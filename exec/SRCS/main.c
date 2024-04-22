@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/21 05:11:27 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/22 06:05:27 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,49 @@
 #include "../HDRS/structure.h"
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
+
+int	g_err;
+
+static inline void	_add_history(t_data *args, char *line)
+{
+	int	fd;
+
+	if (!line || !line[0])
+		return ;
+	add_history(line);
+	fd = open(args->path_history, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (fd == -1)
+		_error_exit(args, NULL, 1);
+	if (write(fd, line, ft_strlen(line, '0')) == -1 
+		|| write(fd, "\n", 1) == -1)
+		_error_exit(args, NULL, 1);
+}
+
+static inline int	_get_path_history(t_data *args)
+{
+	char	*temp;
+	char	*path;
+	int		i;
+
+	temp = _define_cwd();
+	if (!temp)
+		return (-1);
+	i = 2;
+	i += ft_strlen(&temp[i], '/');
+	++i;
+	i += ft_strlen(&temp[i], '/');
+	++i;
+	path = ft_calloc(sizeof(char), i + 1);
+	if (!path)
+		return (-1);
+	ft_strlcpy(path, temp, ++i);
+	if (!path)
+		return (-1);
+	args->path_history = ft_strjoin(path, ".minishell-history");
+	if (!args->path_history)
+		return (-1);
+	return (0);
+}
 
 static inline int	_how_many_cmd(t_section *cmd)
 {
@@ -70,15 +113,20 @@ void	_looper(t_data *args)
 	char				*temp;
 	char				*line;
 	
+	args->pid = NULL;
 	pwd = _define_cwd();
 	if (pwd)
 	{
 		temp = ft_strjoin (pwd, "$ ");
-		line = readline(temp);
 		free (pwd);
+		line = readline(temp);
+		if (line[0] == 0)
+			return ;	
 		free (temp);
 	}
-	add_history(line);
+	else
+		return ;
+	_add_history(args, line);
 	parsing(line, args->env, args);
 	if (!args->head->next)
 	{
@@ -97,7 +145,12 @@ int	main(int argc, char **argv, char **env)
 	
 	(void)argc;
 	(void)argv;
+	g_err = 0;
 	args.env = _map_cpy(env);
+	if (!args.env)
+		return (-1);
+	if (_get_path_history(&args) == -1)
+		return (-1);
 	sig_int();
 	sig_quit();
 	while (42)

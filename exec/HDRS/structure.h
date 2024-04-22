@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structure.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 18:55:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/21 05:11:44 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/22 05:34:42 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include <fcntl.h>
 #include <signal.h>
 #include <stdio.h>
+
+extern int	g_err;
 
 typedef struct s_index
 {
@@ -48,6 +50,7 @@ typedef struct s_data
 	int					pipe[2];
 	int					pipe_sec[2];
 	char				**env;
+	char				*path_history;
 	pid_t				*pid;
 	t_section			*head;
 	struct sigaction	*sa;

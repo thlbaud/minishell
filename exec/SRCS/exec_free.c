@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   exec_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:47:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/21 05:24:28 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/21 23:36:46 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <errno.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
+#include <stdio.h>
 
 void	_lstfree(void *lst, e_type typelst)
 {
@@ -39,17 +41,18 @@ void	_lstfree(void *lst, e_type typelst)
 	}
 }
 
-void	_error_exit(t_data *args, t_section *s_cmd, char *str, int error)
+void	_error_exit(t_data *args, char *str, int id)
 {
-	if (error >= 1)
+	g_err = errno;
+	if (id >= 1)
 		perror(str);
 	else
 		write(2, str, ft_strlen(str, 0));
 	_freetab(args->env);
 	_lstfree(args->head, SECTION_LST);
-	if (error == 2)
+	if (id == 2)
 		exit (EXIT_FAILURE);
-	if (s_cmd->next || s_cmd->prev)
+	if (args->pid)
 		exit (EXIT_FAILURE);
 	else
 		_looper(args);

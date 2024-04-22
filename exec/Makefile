@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+         #
+#    By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/18 10:53:51 by tmouche           #+#    #+#              #
-#    Updated: 2024/04/17 18:20:56 by thibaud          ###   ########.fr        #
+#    Updated: 2024/04/22 04:35:25 by tmouche          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRCS	:=	main.c \
 			pars_tools.c pars_union.c \
 			exec_checker_path.c exec_cmd.c exec_utils.c \
 			exec_buildin.c exec_buildin_echo.c exec_buildin_pwd.c exec_buildin_env.c exec_buildin_unset.c exec_buildin_export.c exec_buildin_exit.c exec_buildin_cd.c \
-			exec_buildin_utils.c exec_free.c exec_open.c \
+			exec_buildin_history.c exec_buildin_utils.c exec_free.c exec_open.c \
 			signal.c \
 
 SRCS_D	:= SRCS/
