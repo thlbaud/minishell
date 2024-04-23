@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/23 05:35:47 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/23 16:55:59 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ static inline void	_add_history(t_data *args, char *line)
 	add_history(line);
 	fd = open(args->path_history, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
-		_error_exit(args, NULL, 1);
+		_exit_failure(args);
 	if (write(fd, line, ft_strlen(line, '0')) == -1 
 		|| write(fd, "\n", 1) == -1)
-		_error_exit(args, NULL, 1);
+		_exit_failure(args);
 }
 
 static inline int	_get_path_history(t_data *args)
@@ -132,8 +132,7 @@ void	_looper(t_data *args)
 			exit (24);
 		}
 		if (line[0] == 0)
-			return ;	
-		free (temp);
+			return ;
 	}
 	else
 		return ;

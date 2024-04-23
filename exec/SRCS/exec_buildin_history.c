@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 00:45:01 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/22 06:06:18 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/23 13:33:01 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,14 @@ static inline int   _get_history(int fd_out, char *path)
 void	_bi_history(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 {
     int fd_f[2];
+	int	res;
 
 	fd_f[0] = 0;
 	fd_f[1] = 1;
 	if (s_cmd->file)
 		_open_file(args, s_cmd->file, fd_f);
-	_get_history(fd_f[1], args->path_history);
+	res = _get_history(fd_f[1], args->path_history);
 	_pipe_closer(fd_pr, fd_pw, fd_f);
+	if ( res == 0)
+		_exit_failure(args);
 }

@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:52:42 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/21 22:47:38 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/23 08:53:38 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void	_pathfinder(t_data *args, char **cmd)
 	char	**env_path;
 	char	*path_cmd;
 
+	if (!cmd)
+		return ;
 	env_path = _env_check(args);
 	if (access(cmd[0], X_OK) == 0 || !env_path)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:53:46 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/22 04:35:46 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/23 08:52:43 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@
 
 int	_is_a_buildin(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 {
-	if (ft_strncmp("echo", s_cmd->path_cmd[0], 4) == 0)
+	if (!s_cmd->path_cmd)
+		return (0);
+	else if (ft_strncmp("echo", s_cmd->path_cmd[0], 4) == 0)
 		_bi_echo(args, s_cmd, fd_pw, fd_pr);
 	else if (ft_strncmp("cd", s_cmd->path_cmd[0], 2) == 0)
 		_bi_cd(args, s_cmd, fd_pw, fd_pr);

@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:49:10 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/22 05:33:22 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/23 17:10:52 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,19 @@
 #include <unistd.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
+#include <stdio.h>
 
-int	_str_no_spe_char(char *str)
+_Bool	_str_no_spe_char(char *str, size_t n)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (str[i])
+	while (str[i] && i < n - 1)
 	{
 		if (!(str[i] >= 48 && str[i] <= 57) 
 			|| !(str[i] >= 65 && str[i] <=90) 
-			|| !(str[i] >= 97 && str[i] <= 122))
+			|| !(str[i] >= 97 && str[i] <= 122) 
+			|| !(str[i] == '='))
 			return (0);
 		++i;
 	}
@@ -48,11 +50,9 @@ char	**_map_cpy(char **map)
 	i = 0;
 	while (map[i])
 	{
-		len = ft_strlen(map[i], 0);
-		new_map[i] = ft_calloc(sizeof(char), len + 1);
-		if (!new_map)
+		new_map[i] = ft_strdup(map[i]);
+		if (!new_map[i])
 			return (_freetab(new_map), NULL);
-		ft_strlcpy(new_map[i], map[i], len + 1);
 		++i;
 	}
 	return (new_map);
@@ -69,25 +69,12 @@ void	_pipe_closer(int *fd_pipe_r, int *fd_pipe_w, int *fd_files)
 	}
 	if (fd_pipe_r)
 	{
-		close (fd_pipe_r[0]);
-		close (fd_pipe_r[1]);
+			close (fd_pipe_r[0]);
+			close (fd_pipe_r[1]);
 	}
 	if (fd_pipe_w)
 	{
-		close (fd_pipe_w[0]);
-		close (fd_pipe_w[1]);
+			close (fd_pipe_w[0]);
+			close (fd_pipe_w[1]);
 	}
-}
-
-void	_freetab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free (tab[i]);
-		++i;
-	}
-	free (tab);
 }

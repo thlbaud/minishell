@@ -90,6 +90,8 @@ LEAAAAAAAAKS :
 - redirection leak / segfault --> c'est quand y a pas de cmd je crois
 - espace plante, peut etre a cause du manque de cmd
 
-
+COMMENTAIRE 23/04;
+j ai change pas mal de chose, je suis entrain de faire le retour d erreurs et la gestion memoire sur la partie exec ce qui devrait regler la masse de pb et de leaks,
+quasiment tous les fichiers avec exec_ ont ete touches, je me suis concentre sur le buildin ajf, je ferais la suite demain, ca compile pplus c est normal
 A TEST :
 env -i ./minishell
