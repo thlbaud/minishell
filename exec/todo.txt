@@ -1,15 +1,4 @@
 
-changement :
-
--̶d̶a̶n̶s̶ g̶i̶v̶e̶ p̶a̶t̶h̶,̶ t̶u̶ t̶e̶s̶t̶ p̶a̶t̶h̶[̶i̶]̶ a̶l̶o̶r̶s̶ a̶u̶e̶ t̶u̶ v̶g̶i̶e̶n̶s̶ d̶e̶ l̶e̶ f̶r̶e̶e̶.̶
-
--cmd_pars process, ajout d'un flag pour savoir si on est dans des guillemet pour skip les simnple quote *{pas compris}
-
-- secu sur le fail d'execve *{pas compris}
-
-- redirect est directement cree dans red->name[0] *{pas compris}
-
-- s̶i̶g̶n̶a̶u̶x̶,̶ m̶e̶m̶s̶e̶t̶ p̶o̶u̶r̶ s̶i̶l̶e̶n̶t̶ l̶e̶s̶ l̶e̶a̶k̶s̶
 
 changement par ligne :
 
@@ -25,6 +14,23 @@ changement par ligne :
 -̶p̶a̶r̶s̶_̶r̶e̶d̶i̶r̶e̶c̶t̶ -̶>̶ d̶a̶n̶s̶ e̶x̶t̶r̶a̶c̶t̶_̶r̶e̶d̶,̶ c̶h̶a̶n̶g̶e̶m̶e̶n̶t̶ d̶e̶ t̶o̶u̶t̶ l̶e̶s̶ r̶e̶d̶i̶r̶e̶c̶t̶ p̶a̶r̶ r̶e̶d̶-̶>̶r̶e̶d̶i̶r̶e̶c̶t̶
 -̶s̶i̶g̶n̶a̶l̶ -̶>̶ a̶j̶o̶u̶t̶ d̶u̶ m̶e̶m̶s̶e̶t̶.̶
 
+-̶ d̶a̶n̶s̶ _̶g̶e̶t̶_̶p̶a̶t̶h̶_̶h̶i̶s̶t̶o̶r̶y̶ f̶r̶e̶e̶ p̶a̶t̶h̶ e̶t̶ t̶e̶m̶p̶;̶
+- d̶a̶n̶s̶ e̶x̶e̶c̶_̶f̶r̶e̶e̶ l̶5̶5̶ e̶t̶ 5̶6̶,̶ a̶d̶d̶ :̶
+	                                ft_sectclear(args->head);
+                                    free(args->pid);
+                                	free(args->path_history);
+
+- apres readline, on check !line et pas line[0]; *{tes sur ? de mémoire j ai fait des tests et je check line[0] pour le retour a la line justement}
+
+- quand ctrl-d = !line : rl_clear_history, free map_cpy, args->env, pid freepath_history
+- f̶r̶e̶e̶ t̶e̶m̶p̶ a̶v̶a̶n̶t̶ d̶e̶ c̶h̶e̶c̶k̶ !̶l̶i̶n̶e̶
+-̶ a̶j̶o̶u̶t̶e̶r̶ a̶ e̶x̶i̶t̶ :̶ f̶t̶_̶s̶e̶c̶t̶c̶l̶e̶a̶r̶,̶ f̶r̶e̶e̶ p̶a̶t̶h̶_̶h̶i̶s̶t̶o̶r̶y̶
+
+-pars_init ligne 70, on remplace le return par _looper
+
+-̶ p̶a̶r̶s̶_̶e̶n̶v̶_̶v̶a̶r̶ -̶>̶ l̶ 8̶4̶ a̶j̶o̶u̶t̶ d̶e̶ 2̶ l̶i̶g̶n̶e̶s̶ p̶o̶u̶r̶ $̶?̶
+
+- pars_init l 67, check si line[0] est null *{autant le faire direct dans looper nan ?}
 
 
 
@@ -32,12 +38,17 @@ A CHANGER :
 
 - si il y a pas de cmd, je r'envoie cmd[0] NULL,  ca donne ca : *{pas compris chef j pense c est deja gere mais j ai add des trucs}
 
+
+!!!!!!!!!!!
+NEW ----> en gros, si y a pas de cmd genre au'une redirect, ca fous la merde psk tu check cmd[0] alors qu'il est pas malloc, faut gerer ca;
+!!!!!!!!!!!!!
+
+
 ==71418==Hint: address points to the zero page.
     #0 0x4dc137 in ft_strjoin (/home/avaldin/422/git_42/minishell-merge/exec/minishell+0x4dc137)
     #1 0x4d531d in _give_path /home/avaldin/422/git_42/minishell-merge/exec/SRCS/exec_checker_path.c:45:9
     #2 0x4d5035 in _pathfinder /home/avaldin/422/git_42/minishell-merge/exec/SRCS/exec_checker_path.c:76:13
     faut check si cmd[0] != NULL et agir si c'est le cas
-
 
 
 
@@ -55,8 +66,30 @@ error :
 
 A̶T̶T̶E̶N̶T̶I̶O̶N̶ :̶ L̶e̶ n̶o̶m̶ d̶'̶u̶n̶e̶ v̶-̶e̶n̶v̶ n̶e̶ p̶e̶u̶t̶ p̶a̶s̶ c̶o̶n̶t̶e̶n̶i̶r̶ n̶ i̶m̶p̶o̶r̶t̶e̶ q̶u̶e̶l̶ c̶a̶r̶a̶c̶t̶e̶r̶e̶ t̶y̶p̶e̶ ?̶
 
+- env var pete un plomb quand on met un $
+
+- entree quite si la ligne est vide (mon pb )
+- ctr-c sur cat creer un double prompte (mon pb)
+- ctrl \ ne stop pas l'exec (mon pb )
+- ctrl \ avec un prompt n'exit pas (mon pb)
+
 COMMENTAIRE ;
 
 J ai add un historique lisible, si tu fais "history" ca te le disp normalement, si ca marche pas c est que jai fail le path.
 J ai modifie bc de fonctions et split le main, faut que je fasse mes retours d erreurs de facon clean, on se mettra d accord pour une fonction qui free tout c est le mieux imo 
 normalement j ai corrige pas mal de bug ou de retour d erreur qui ne fonctionnait pas, te prend pas la tete avec la norm je la ferai. J ai cree la global mais elle est pas link.
+
+mec dans la correction ca parle d'argument pour exit, faut check ca. *{c est ecrit exit wit no option}
+   echo ca parle du -n *{c est ok ca -n c est jsute enlever le \n}
+
+
+
+LEAAAAAAAAKS :
+
+- ls <a
+- redirection leak / segfault --> c'est quand y a pas de cmd je crois
+- espace plante, peut etre a cause du manque de cmd
+
+
+A TEST :
+env -i ./minishell

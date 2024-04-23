@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:47:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/21 23:36:46 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/23 05:31:54 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ void	_error_exit(t_data *args, char *str, int id)
 	else
 		write(2, str, ft_strlen(str, 0));
 	_freetab(args->env);
-	_lstfree(args->head, SECTION_LST);
+	//_lstfree(args->head, SECTION_LST);
+	ft_sectclear(args->head);
+	free(args->pid);
+	free(args->path_history);
 	if (id == 2)
 		exit (EXIT_FAILURE);
 	if (args->pid)

@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 11:20:59 by avaldin           #+#    #+#             */
-/*   Updated: 2024/04/17 18:13:36 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/23 05:38:29 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ char	*apply_var(char *token, char **env, int *i)
 	int		len_name;
 
 	len_name = 0;
+	if (token[*i + 1] == '?')
+		return (str_modify(token, *i, 2, ft_itoa(g_err)));
 	while ((token[*i + len_name + 1] < 91 && token[*i + len_name + 1] > 64)
 		|| (token[*i + len_name + 1] < 123 && token[*i + len_name + 1] > 96)
 		|| (token[*i + len_name + 1] < 58 && token[*i + len_name + 1] > 47))

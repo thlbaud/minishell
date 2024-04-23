@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/22 06:05:27 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/23 05:35:47 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,13 @@ static inline int	_get_path_history(t_data *args)
 	++i;
 	path = ft_calloc(sizeof(char), i + 1);
 	if (!path)
-		return (-1);
+		return (free (temp), -1);
 	ft_strlcpy(path, temp, ++i);
 	if (!path)
 		return (-1);
+	free (temp);
 	args->path_history = ft_strjoin(path, ".minishell-history");
+	free (path);
 	if (!args->path_history)
 		return (-1);
 	return (0);
@@ -120,6 +122,15 @@ void	_looper(t_data *args)
 		temp = ft_strjoin (pwd, "$ ");
 		free (pwd);
 		line = readline(temp);
+		free (temp);
+		if (!line)
+		{
+			rl_clear_history();
+			free(args->pid);
+			free(args->path_history);
+			_freetab(args->env);
+			exit (24);
+		}
 		if (line[0] == 0)
 			return ;	
 		free (temp);
