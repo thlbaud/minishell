@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_history.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 00:45:01 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/23 13:33:01 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/24 00:55:09 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static inline int   _get_file_size(char *path)
     close (fd);
     return (size);
 }
-static inline int   _write_history(int fd_out, char *history)
+static inline _Bool   _write_history(int fd_out, char *history)
 {
     int count;
     int size;
@@ -50,13 +50,13 @@ static inline int   _write_history(int fd_out, char *history)
     while (history[i])
     {
         if (write(fd_out, " ", 1) == -1)
-			return (-1);
+			return (0);
 		ft_putnbr_fd(count, fd_out);
 		if (write(fd_out, " ", 1) == -1)
-            return (-1);
+            return (0);
         size = ft_strlen(&history[i], '\n');
         if (write(fd_out, &history[i], size + 1) == -1)
-            return (-1);
+            return (0);
         i += size + 1;
 		++count;
     }
@@ -80,7 +80,7 @@ static inline int   _get_history(int fd_out, char *path)
         return (free (buff), 0);
     if (read(fd, buff, size) == -1)
         return (close (fd), free (buff), 0);
-    if (_write_history(fd_out, buff) == -1)
+    if (_write_history(fd_out, buff) == 0)
         return (close (fd), free (buff), 0);
     return (close (fd), free (buff), 1);
 }
@@ -96,6 +96,6 @@ void	_bi_history(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 		_open_file(args, s_cmd->file, fd_f);
 	res = _get_history(fd_f[1], args->path_history);
 	_pipe_closer(fd_pr, fd_pw, fd_f);
-	if ( res == 0)
+	if (res == 0)
 		_exit_failure(args);
 }

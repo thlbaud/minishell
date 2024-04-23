@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_export.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:19:58 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/23 17:26:22 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/24 01:00:07 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,16 @@ static inline void	_set_export(t_data *args, t_section *s_cmd)
 {
 	t_index	*lst;
 	int		i_args;
-	char	*str_err;
 
 	i_args = 1;
 	lst = NULL;
 	while (s_cmd->path_cmd[i_args])
 	{
 		if (ft_strrchr(s_cmd->path_cmd[i_args], '='))
+		{
 			if (_egal_present(args, s_cmd, lst, i_args) == 0)
 				return ;
+		}
 		else
 			if (_egal_notpresent(args, s_cmd, lst, i_args) == 0)
 				return ;
@@ -102,12 +103,12 @@ void	_bi_export(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 		if (_open_file(args, s_cmd->file, fd_f) == 0)
 			return ;
 	if (!s_cmd->path_cmd[1])
+	{
 	 	res = _write_env(args->env, "declare -x", fd_f[1]);
-	_pipe_closer(fd_pr, fd_pw, fd_f);
-	if (res == 0)
-		_exit_failure(args);
-	if (res == 1)
+		_pipe_closer(fd_pr, fd_pw, fd_f);
+		if (res == 0)
+			_exit_failure(args);
 		_on_success(args, s_cmd, BUILDIN);
-	if (res == 2)
-		_set_export(args, s_cmd);
+	}
+	_set_export(args, s_cmd);
 }

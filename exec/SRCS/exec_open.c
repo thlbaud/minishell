@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_open.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 18:12:53 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/23 16:54:49 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/24 01:06:15 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static _Bool	_check_redirect(t_data *args, char **name, int *fd_f)
 	_pipe_closer(args->pipe, args->pipe_sec, fd_f);
 	str_error = ft_strjoin("bash : ", name[0]);
 	if (!str_error)
-		_error_exit(args, NULL, 1);
+		_exit_failure(args);
 	if (!name[0])
 		str_final = ft_strjoin(str_error, ": No such file directory\n");
 	else
@@ -69,7 +69,7 @@ static int	_heredoc_handling(t_data *args, char **name)
 	return (pipe_heredoc[0]);
 }
 
-static inline void	_open_file(t_data *args, t_file *file, int *fd_f)
+static inline void	_opener(t_data *args, t_file *file, int *fd_f)
 {
 	if (file->redirect == 2)
 		fd_f[1] = open(file->name[1], O_WRONLY | O_CREAT | O_APPEND, 0644);
@@ -93,7 +93,7 @@ _Bool	_open_file(t_data *args, t_file *file, int *fd_f)
 			close (fd_f[1]);
 		if (_check_redirect(args, file->name, fd_f) == 0)
 			return (0);
-		_open_file(args, file, fd_f);
+		_opener(args, file, fd_f);
 		if (fd_f[0] == -1 || fd_f[1] == -1)
 		{
 			_pipe_closer(args->pipe, args->pipe_sec, fd_f);
@@ -105,4 +105,5 @@ _Bool	_open_file(t_data *args, t_file *file, int *fd_f)
 		}
 		file = file->next;
 	}
+	return (1);
 }

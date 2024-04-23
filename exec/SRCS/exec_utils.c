@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:49:10 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/23 17:10:52 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/24 01:32:58 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,12 @@ _Bool	_str_no_spe_char(char *str, size_t n)
 	size_t	i;
 
 	i = 0;
-	while (str[i] && i < n - 1)
+	while (str[i] && i < n)
 	{
-		if (!(str[i] >= 48 && str[i] <= 57) 
-			|| !(str[i] >= 65 && str[i] <=90) 
-			|| !(str[i] >= 97 && str[i] <= 122) 
-			|| !(str[i] == '='))
+		if ((str[i] >= 48 && str[i] <= 57) || (str[i] >= 65 && str[i] <= 90) || (str[i] >= 97 && str[i] <= 122))
+			++i;
+		else
 			return (0);
-		++i;
 	}
 	return (1);
 }
@@ -36,7 +34,6 @@ _Bool	_str_no_spe_char(char *str, size_t n)
 char	**_map_cpy(char **map)
 {
 	char	**new_map;
-	int		len;
 	int		i;
 
 	if (!map)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_cd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:37:51 by thibaud           #+#    #+#             */
-/*   Updated: 2024/04/23 16:58:34 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/24 01:03:49 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static inline void	_export_oldpwd(t_data *args, char *old_pwd)
 		}
 	}
 }
-static inline	_change_directory(t_data *args, t_section *s_cmd, char	*old_pwd)
+static inline void	_change_directory(t_data *args, t_section *s_cmd, char	*old_pwd)
 {
 	char	*temp;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_export_utils.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 17:13:48 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/23 17:23:17 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/24 01:03:27 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,24 @@
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
 
-static inline char	*_give_strerror(t_data *args, char *str)
+static inline char	*_give_strerror(t_data *args, t_index *lst, char *str)
 {
 	char	*res;
 	char	*temp;
 	
 	temp = ft_strjoin("bash: export: '", str);
 	if (!temp)
-		_exit_failure(args); 
+	{
+		_lstfree(lst, INDEX_LST);
+		_exit_failure(args);
+	}
 	res = ft_strjoin(temp, "': not a valid identifier\n");
 	free (temp);
 	if (!res)
+	{
+		_lstfree(lst, INDEX_LST);
 		_exit_failure(args);
+	}
 	return (res);
 }
 
@@ -37,7 +43,7 @@ _Bool	_egal_notpresent(t_data *args, t_section *s_cmd, t_index *lst, int i_args)
 	
 	if (_str_no_spe_char(s_cmd->path_cmd[i_args], ft_strlen(s_cmd->path_cmd[i_args], 0)) == 0)
 	{
-		str_err = _give_strerror(args, s_cmd->path_cmd[i_args]);
+		str_err = _give_strerror(args, lst, s_cmd->path_cmd[i_args]);
 		_on_error(args, str_err, WRITE);
 		return (0);
 	}
@@ -71,7 +77,7 @@ _Bool	_egal_present(t_data *args, t_section *s_cmd, t_index *lst, int i_args)
 	
 	if (_str_no_spe_char(s_cmd->path_cmd[i_args], ft_strlen(s_cmd->path_cmd[i_args], '=')) == 0)
 	{
-		str_err = _give_strerror(args, s_cmd->path_cmd[i_args]);
+		str_err = _give_strerror(args, lst, s_cmd->path_cmd[i_args]);
 		_on_error(args, str_err, WRITE);
 		return (0);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_unset.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:11:54 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/21 22:52:14 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/24 00:57:09 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static inline void	_erase_args(t_data *args, int skip)
 		++i;
 	new_env = ft_calloc(sizeof(char *), i);
 	if (!new_env)
-		_error_exit(args, NULL, 1);
+		_exit_failure(args);
 	i = 0;
 	while (args->env[i])
 	{

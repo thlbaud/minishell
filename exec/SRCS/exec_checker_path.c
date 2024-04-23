@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_checker_path.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:52:42 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/23 08:53:38 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/24 00:57:34 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	**_env_check(t_data *args)
 	{
 		path = ft_split(args->env[i], ':');
 		if (!path)
-			_error_exit(args, NULL, 2);
+			_exit_failure(args);
 	}
 	return (path);
 }
@@ -44,12 +44,12 @@ static char	*_give_path(t_data *args, char **path, char *cmd)
 	i = 0;
 	temp = ft_strjoin("/", cmd);
 	if (!temp)
-		_error_exit(args, NULL, 2);
+		_exit_failure(args);
 	while (path[i])
 	{
 		path_cmd = ft_strjoin(path[i], temp);
 		if (!path_cmd)
-			_error_exit(args, NULL, 2);
+			_exit_failure(args);
 		if (access(path_cmd, X_OK) == 0)
 			break ;
 		free (path_cmd);
