@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:49:10 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/25 03:17:47 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/25 13:41:09 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,16 @@ void	_pipe_closer(int *fd_pipe_r, int *fd_pipe_w, int *fd_files)
 {
 	if (fd_files)
 	{
-		if (fd_files[0] != 0 /*&& fd_files[0] != fd_pipe_r[0]*/ && fd_files[0] != -1)
+		if (fd_files[0] != 0 && fd_files[0] != -1 && !fd_pipe_r)
 			close (fd_files[0]);
-		if (fd_files[1] != 1 /*&& fd_files[1] != fd_pipe_w[1]*/ && fd_files[1] != -1)
+		else if (fd_pipe_r)
+			if (fd_files[0] != 0 && fd_files[0] != fd_pipe_r[0] && fd_files[0] != -1)
+				close (fd_files[0]);
+		if (fd_files[1] != 1 && fd_files[1] != -1 && !fd_pipe_w)
 			close (fd_files[1]);
+		else if (fd_pipe_w)
+			if (fd_files[1] != 1 && fd_files[1] != fd_pipe_w[1] && fd_files[1] != -1)
+				close (fd_files[1]);
 	}
 	if (fd_pipe_r)
 	{

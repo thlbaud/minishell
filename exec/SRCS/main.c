@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/25 02:38:24 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/25 13:33:52 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,8 @@ void	_looper(t_data *args)
 	char				*line;
 	
 	args->pid = NULL;
+	args->pipe = NULL;
+	args->pipe_sec = NULL;
 	pwd = _define_cwd();
 	if (!pwd)
 		_exit_failure(args);

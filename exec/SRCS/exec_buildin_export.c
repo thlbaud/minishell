@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:19:58 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/25 02:34:07 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/25 13:30:36 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,24 +49,20 @@ static inline void	_export_str(t_data *args, t_section *s_cmd, t_index *lst)
 {
 	t_index	*to_free;
 	char	*temp;
-	size_t	len;
 
 	while (lst)
 	{
-		len = ft_strlen(s_cmd->path_cmd[lst->i], 0);
-		temp = ft_calloc(sizeof(char), len + 1);
+		temp = ft_strdup(s_cmd->path_cmd[lst->i]);
 		if (!temp)
 		{
 			_lstfree(lst, INDEX_LST);
 			_exit_failure(args);
 		}
-		ft_strlcpy(temp, s_cmd->path_cmd[lst->i], len + 1);
 		_search_n_replace(args, lst, temp);
 		to_free = lst->next;
 		free(lst);
 		lst = to_free;
 	}
-	_on_success(args, s_cmd, PARENT);
 }
 
 static inline void	_set_export(t_data *args, t_section *s_cmd)
@@ -80,7 +76,7 @@ static inline void	_set_export(t_data *args, t_section *s_cmd)
 	{
 		if (ft_strrchr(s_cmd->path_cmd[i_args], '='))
 		{
-			if (_egal_present(args, s_cmd, lst, i_args) == 0)
+			if (_egal_present(args, s_cmd, &lst, i_args) == 0)
 				return ;
 		}
 		else
@@ -108,7 +104,6 @@ void	_bi_export(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 		_pipe_closer(fd_pr, fd_pw, fd_f);
 		if (res == 0)
 			_exit_failure(args);
-		_on_success(args, s_cmd, PARENT);
 	}
 	_set_export(args, s_cmd);
 }

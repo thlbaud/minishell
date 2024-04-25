@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_export_utils.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 17:13:48 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/24 01:03:27 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/25 13:10:41 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <unistd.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
+#include <stdio.h>
 
 static inline char	*_give_strerror(t_data *args, t_index *lst, char *str)
 {
@@ -70,26 +71,28 @@ static inline int	_check_exist(t_index **lst, char **path_cmd, int i_args)
 	return (1);
 }
 
-_Bool	_egal_present(t_data *args, t_section *s_cmd, t_index *lst, int i_args)
+_Bool	_egal_present(t_data *args, t_section *s_cmd, t_index **lst, int i_args)
 {
 	t_index	*temp;
 	char	*str_err;
 	
-	if (_str_no_spe_char(s_cmd->path_cmd[i_args], ft_strlen(s_cmd->path_cmd[i_args], '=')) == 0)
+	temp = NULL;
+	if (_str_no_spe_char(s_cmd->path_cmd[i_args], ft_strlen(s_cmd->path_cmd[i_args], '=')) == 0
+		|| s_cmd->path_cmd[i_args][0] == '=')
 	{
-		str_err = _give_strerror(args, lst, s_cmd->path_cmd[i_args]);
+		str_err = _give_strerror(args, *lst, s_cmd->path_cmd[i_args]);
 		_on_error(args, str_err, WRITE);
 		return (0);
 	}
-	if (_check_exist(&lst, s_cmd->path_cmd, i_args) == 1)
+	if (_check_exist(lst, s_cmd->path_cmd, i_args) == 1)
 	{
 		temp = _lstnew_index(i_args);
 		if (!temp)
 		{
-			_lstfree(lst, INDEX_LST);
+			_lstfree(*lst, INDEX_LST);
 			_exit_failure(args);
 		}
-		_lstaddback_index(&lst, temp);
+		_lstaddback_index(lst, temp);
 	}
 	return (1);
 }

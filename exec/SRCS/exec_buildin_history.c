@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_history.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 00:45:01 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/24 00:55:09 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/25 14:12:05 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ void	_bi_history(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 	fd_f[0] = 0;
 	fd_f[1] = 1;
 	if (s_cmd->file)
-		_open_file(args, s_cmd->file, fd_f);
+		if (_open_file(args, s_cmd->file, fd_f) == 0)
+			return ;
 	res = _get_history(fd_f[1], args->path_history);
 	_pipe_closer(fd_pr, fd_pw, fd_f);
 	if (res == 0)

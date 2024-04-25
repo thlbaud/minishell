@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_unset.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:11:54 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/24 00:57:09 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/25 14:15:47 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,11 @@ static inline void	_erase_args(t_data *args, int skip)
 	{
 		if (i != skip)
 			new_env[i] = args->env[i];
+		else
+			_free(args->env[i]);
 		++i;
 	}
-	_freetab(args->env);
+	_free(args->env);
 	args->env = new_env;
 }
 
@@ -47,7 +49,8 @@ void	_bi_unset(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 	fd_f[0] = 0;
 	fd_f[1] = 1;
 	if (s_cmd->file)
-		_open_file(args, s_cmd->file, fd_f);
+		if (_open_file(args, s_cmd->file, fd_f) == 0)
+			return ;
 	_pipe_closer(fd_pr, fd_pw, fd_f);
 	i_args = 1;
 	while (s_cmd->path_cmd[i_args])

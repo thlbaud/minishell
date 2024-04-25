@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 16:17:43 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/23 17:23:54 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/25 13:02:39 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "../HDRS/structure.h"
 
 _Bool	_egal_notpresent(t_data *args, t_section *s_cmd, t_index *lst, int i_args);
-_Bool	_egal_present(t_data *args, t_section *s_cmd, t_index *lst, int i_args);
+_Bool	_egal_present(t_data *args, t_section *s_cmd, t_index **lst, int i_args);
 
 _Bool	_open_file(t_data *args, t_file *file, int *fd_f);
 void	fork_n_exec(t_data *args, t_section *cmd);

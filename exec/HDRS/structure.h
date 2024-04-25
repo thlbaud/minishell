@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 18:55:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/25 02:38:06 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/25 14:44:15 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ typedef struct	s_section
 
 typedef struct s_data
 {
-	int					pipe[2];
-	int					pipe_sec[2];
+	int					*pipe;
+	int					*pipe_sec;
 	char				*path_history;
 	char				**env;
 	pid_t				*pid;
@@ -78,8 +78,8 @@ typedef enum
 
 typedef enum
 {
-	CHILDREN,
-	PARENT	
+	ALL,
+	PARTIAL	
 }				e_from;
 
 void	sig_int(int mode);

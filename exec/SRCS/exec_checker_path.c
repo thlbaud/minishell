@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_checker_path.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:52:42 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/24 00:57:34 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/25 14:40:59 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <sys/wait.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
+#include <stdio.h>
 
 static char	**_env_check(t_data *args)
 {
@@ -66,7 +67,7 @@ void	_pathfinder(t_data *args, char **cmd)
 	char	**env_path;
 	char	*path_cmd;
 
-	if (!cmd)
+	if (!cmd[0])
 		return ;
 	env_path = _env_check(args);
 	if (access(cmd[0], X_OK) == 0 || !env_path)
