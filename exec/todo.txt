@@ -94,6 +94,11 @@ quelques modifs sur la gestion des pipes pour eviter de close de la merde,
 export est fix ainsi que unset,
 normalement sauf exit aucun buildin ne leak et le retour d erreur est carre dessus.	
 
+EDIT :
+Le Buildin exit est termine, on peut rentrer dans la phase de tests ou normalement il ny a pas de leaks ni de crash
+
+il me reste a ratacher les bons codes erreur a la global et ca sera ok	
+
 
 
 A TEST :

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_open.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 18:12:53 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/24 01:06:15 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/25 16:17:55 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static _Bool	_check_redirect(t_data *args, char **name, int *fd_f)
 	free (str_error);
 	if (!str_final)
 		_exit_failure(args);
-	_on_error(args, str_final, WRITE);
+	_on_error(args, str_final, 1, WRITE);
 	return (0);
 }
 
@@ -100,7 +100,7 @@ _Bool	_open_file(t_data *args, t_file *file, int *fd_f)
 			str_error = ft_strjoin("Bash: ", file->name[1]);
 			if (!str_error)
 				_exit_failure(args);
-			_on_error(args, str_error, AUTO);
+			_on_error(args, str_error, 1, AUTO);
 			return (0);
 		}
 		file = file->next;

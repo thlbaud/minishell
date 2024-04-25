@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 16:17:43 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/25 13:02:39 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/25 15:41:37 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ _Bool	_write_env(char **env, char *pre_str, int fd);
 void	_pathfinder(t_data *args, char **cmd);
 
 void	_pipe_closer(int *fd_pipe_r, int *fd_pipe_w, int *fd_files);
-void	_on_error(t_data *args, char *str, e_write write_id);
+void	_on_error(t_data *args, char *str, int err, e_write write_id);
 char	**_on_success(t_data *args, t_section *s_cmd, e_from from_id);
 _Bool	_str_no_spe_char(char *str, size_t n);
 char	**_map_cpy(char **map);

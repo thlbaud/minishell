@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 17:13:48 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/25 13:10:41 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/25 16:17:20 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ _Bool	_egal_notpresent(t_data *args, t_section *s_cmd, t_index *lst, int i_args)
 	if (_str_no_spe_char(s_cmd->path_cmd[i_args], ft_strlen(s_cmd->path_cmd[i_args], 0)) == 0)
 	{
 		str_err = _give_strerror(args, lst, s_cmd->path_cmd[i_args]);
-		_on_error(args, str_err, WRITE);
+		_on_error(args, str_err, 1, WRITE);
 		return (0);
 	}
 	return (1);
@@ -81,7 +81,7 @@ _Bool	_egal_present(t_data *args, t_section *s_cmd, t_index **lst, int i_args)
 		|| s_cmd->path_cmd[i_args][0] == '=')
 	{
 		str_err = _give_strerror(args, *lst, s_cmd->path_cmd[i_args]);
-		_on_error(args, str_err, WRITE);
+		_on_error(args, str_err, 1, WRITE);
 		return (0);
 	}
 	if (_check_exist(lst, s_cmd->path_cmd, i_args) == 1)

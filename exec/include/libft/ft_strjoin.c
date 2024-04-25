@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 11:27:24 by tmouche           #+#    #+#             */
-/*   Updated: 2024/02/19 16:57:28 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/25 16:34:39 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (!dest)
 		return (NULL);
 	index = 0;
-	while (s1[index])
+	while (s1 && s1[index])
 	{
 		dest[index] = s1[index];
 		index++;
 	}
 	index2 = 0;
-	while (s2[index2])
+	while (s2 && s2[index2])
 	{
 		dest[index] = s2[index2];
 		index2++;

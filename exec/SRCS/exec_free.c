@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:47:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/25 14:44:49 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/25 15:28:55 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 #include "../include/libft/libft.h"
 #include <stdio.h>
 
-void	_on_error(t_data *args, char *str, e_write write_id)
+void	_on_error(t_data *args, char *str, int err, e_write write_id)
 {
 	int	err_handling;
 	
-	g_err = 1;
+	g_err = err;
 	err_handling = 1;
 	if (write_id == WRITE)
 		err_handling = write(2, str, ft_strlen(str, 0));
@@ -41,7 +41,7 @@ void	_on_error(t_data *args, char *str, e_write write_id)
 		_free (args->path_history);
 	if (args->env)
 		_freetab(args->env);
-	exit (EXIT_FAILURE);
+	exit (g_err);
 }
 
 

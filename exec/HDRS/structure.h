@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 18:55:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/25 14:44:15 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/25 16:06:21 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <fcntl.h>
 #include <signal.h>
 #include <stdio.h>
+#define EXIT_ERROR 360
 
 extern int	g_err;
 
@@ -66,12 +67,6 @@ typedef enum
 
 typedef enum
 {
-	EXIT,
-	NO_EXIT	
-}				e_exit;
-
-typedef enum
-{
 	WRITE,
 	AUTO	
 }				e_write;
@@ -81,6 +76,12 @@ typedef enum
 	ALL,
 	PARTIAL	
 }				e_from;
+
+typedef enum
+{
+	TOO_MANY,
+	NOT_NUMERIC
+}				e_err;
 
 void	sig_int(int mode);
 void	sig_quit(int mode);
