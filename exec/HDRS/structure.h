@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 18:55:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/23 16:34:43 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/25 02:38:06 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,17 +78,17 @@ typedef enum
 
 typedef enum
 {
-	BUILDIN,
-	SHELL	
+	CHILDREN,
+	PARENT	
 }				e_from;
 
-void	sig_int(void);
-void	sig_quit(void);
-void	handle_sig(int sig);
+void	sig_int(int mode);
+void	sig_quit(int mode);
 
 void	_looper(t_data *args);
 
 void	_freetab(char **tab);
+void	_free(void *allocated);
 void	_lstfree(void *lst, e_type typelst);
 void	_exit_failure(t_data *args);
 

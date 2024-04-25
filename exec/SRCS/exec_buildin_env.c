@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:58:59 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/23 17:01:54 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/25 02:34:21 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,5 @@ void	_bi_env(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 	_pipe_closer(fd_pr, fd_pw, fd_f);
 	if (res == -1)
 		_exit_failure(args);
-	_on_success(args, s_cmd, BUILDIN);
+	_on_success(args, s_cmd, PARENT);
 }

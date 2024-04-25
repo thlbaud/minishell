@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/23 16:55:59 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/25 02:38:24 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,9 @@ static inline void	_execution(t_data *args)
 {
 	int	i;
 	int	count;
+	int wstatus;
 
+	wstatus = 0;
 	count = _how_many_cmd(args->head);	
 	if (count == 0)
 		exit (EXIT_FAILURE);
@@ -98,46 +100,59 @@ static inline void	_execution(t_data *args)
 	if (!args->pid)
 		exit (EXIT_FAILURE);
 	fork_n_exec(args, args->head);
-	i = 0;
-	while (i < count)
+	i = -1;
+	while (++i < count)
+		waitpid(args->pid[i], &wstatus, 0);
+	if (WIFSIGNALED(wstatus) && WTERMSIG(wstatus))
 	{
-		waitpid(args->pid[i], NULL, 0);
-		++i;
+		if (write(2, "Quit (core         dumped)\n", 28) == -1)
+			_exit_failure(args);
 	}
 	if (args->pid)
 		free (args->pid);
 	args->pid = NULL;
 }
 
+static inline char	*prompt(char *pwd, t_data *args)
+{
+	char	*temp;
+	char	*line;
+
+	sig_int(0);
+	sig_quit(0);
+	temp = ft_strjoin (pwd, "$ ");
+	free (pwd);
+	line = readline(temp);
+	sig_int(1);
+	free (temp);
+	if (!line)
+	{
+		rl_clear_history();
+		free(args->pid);
+		free(args->path_history);
+		_freetab(args->env);
+		if (write (2, "exit\n", 6) == -1)
+			_exit_failure(args);
+		exit (24);
+	}
+	if (line[0])
+		_add_history(args, line);
+	return (line);
+}
+
 void	_looper(t_data *args)
 {
 	char				*pwd;
-	char				*temp;
 	char				*line;
 	
 	args->pid = NULL;
 	pwd = _define_cwd();
-	if (pwd)
-	{
-		temp = ft_strjoin (pwd, "$ ");
-		free (pwd);
-		line = readline(temp);
-		free (temp);
-		if (!line)
-		{
-			rl_clear_history();
-			free(args->pid);
-			free(args->path_history);
-			_freetab(args->env);
-			exit (24);
-		}
-		if (line[0] == 0)
-			return ;
-	}
-	else
-		return ;
-	_add_history(args, line);
+	if (!pwd)
+		_exit_failure(args);
+	line = prompt(pwd, args);
 	parsing(line, args->env, args);
+	if (!args->head)
+		return ;
 	if (!args->head->next)
 	{
 		if (_is_a_buildin(args, args->head, NULL, NULL) == 0)
@@ -145,8 +160,10 @@ void	_looper(t_data *args)
 	}
 	else
 		_execution(args);
-	/*_lstfree(args.head, SECTION_LST);
-	free (args.pid);*/
+	if (args->pid)
+		_free(args->pid);
+	if (args->head)
+		_lstfree(args->head, SECTION_LST);
 }
 
 int	main(int argc, char **argv, char **env)
@@ -161,8 +178,6 @@ int	main(int argc, char **argv, char **env)
 		return (-1);
 	if (_get_path_history(&args) == -1)
 		return (-1);
-	sig_int();
-	sig_quit();
 	while (42)
 		_looper(&args);
 	return (0);

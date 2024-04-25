@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:06:50 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/23 15:32:23 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/25 02:44:53 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,30 @@
 
 static void	_stctfree(void *stct, e_type typelst)
 {
-	if (typelst == SECTION_LST)
+	if (typelst == SECTION_LST && stct)
 	{
 		if (((t_section *)stct)->path_cmd)
 			_freetab(((t_section *)stct)->path_cmd);
 		if (((t_section *)stct)->pipe)
-			free(((t_section *)stct)->pipe);
+			_free(((t_section *)stct)->pipe);
 		if (((t_section *)stct)->file)
 			_lstfree(((t_section *)stct)->file, FILE_LST);
 	}
-	else if (typelst == FILE_LST)
+	else if (typelst == FILE_LST && stct)
 	{
 		if (((t_file *)stct)->protection)
-			free (((t_file *)stct)->protection);
+			_free (((t_file *)stct)->protection);
 		if (((t_file *)stct)->name)
 			_freetab(((t_file *)stct)->name);
 		if (((t_file *)stct)->temp)
 			_freetab(((t_file *)stct)->temp);
 	}
+}
+
+void	_free(void *allocated)
+{
+	free (allocated);
+	allocated = NULL;
 }
 
 void	_freetab(char **tab)
@@ -45,10 +51,10 @@ void	_freetab(char **tab)
 	i = 0;
 	while (tab[i])
 	{
-		free (tab[i]);
+		_free (tab[i]);
 		++i;
 	}
-	free (tab);
+	_free (tab);
 }
 
 void	_lstfree(void *lst, e_type typelst)
@@ -70,18 +76,18 @@ void	_lstfree(void *lst, e_type typelst)
 			_stctfree((t_section *)lst, SECTION_LST);
 			lst = ((t_section *)lst)->next;
 		}
-		free (temp);
+		_free (temp);
 	}
 }
 
 void	_exit_failure(t_data *args)
 {
 	if (args->pid)
-		free (args->pid);
+		_free (args->pid);
 	if (args->head)
 		_lstfree(args->head, SECTION_LST);
 	if (args->path_history)
-		free (args->path_history);
+		_free (args->path_history);
 	if (args->env)
 		_freetab(args->env);
 	perror(NULL);

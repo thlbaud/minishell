@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:53:46 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/23 08:52:43 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/25 01:50:27 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,5 @@ int	_is_a_buildin(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 		_bi_history(args, s_cmd, fd_pw, fd_pr);
 	else
 		return (0);
-	if (!s_cmd->prev && !s_cmd->next)
-		return (1);
-	s_cmd = s_cmd->next;
-	return (0);
+	return (1);
 }

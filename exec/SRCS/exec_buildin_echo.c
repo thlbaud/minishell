@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 17:49:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/23 16:59:52 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/25 03:12:06 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static inline _Bool	_write_echo(char **path_cmd, int fd)
 	int	i;
 
 	i = 1;
-	if (ft_strncmp(path_cmd[i], "-n", 2) == 0)
+	if (ft_strncmp(path_cmd[i], "-n", 3) == 0)
 		++i;
 	while (path_cmd[i])
 	{
@@ -30,7 +30,7 @@ static inline _Bool	_write_echo(char **path_cmd, int fd)
 			if (write(fd, " ", 1) == -1)
 				return (0);
 	}
-	if (ft_strncmp(path_cmd[1], "-n", 2) != 0 || !path_cmd[1])
+	if (ft_strncmp(path_cmd[1], "-n", 3) != 0 || !path_cmd[1])
 		if (write(fd, "\n", 1) == -1)
 			return (0);
 	return (1);
@@ -52,5 +52,4 @@ void	_bi_echo(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 	_pipe_closer(fd_pr, fd_pw, fd_f);
 	if (err_handling == 0)
 		_exit_failure(args);
-	_on_success(args, s_cmd, BUILDIN);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:49:10 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/24 01:32:58 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/25 03:17:47 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ void	_pipe_closer(int *fd_pipe_r, int *fd_pipe_w, int *fd_files)
 {
 	if (fd_files)
 	{
-		if (fd_files[0] != 0 && fd_files[0] != fd_pipe_r[0] && fd_files[0] != -1)
+		if (fd_files[0] != 0 /*&& fd_files[0] != fd_pipe_r[0]*/ && fd_files[0] != -1)
 			close (fd_files[0]);
-		if (fd_files[1] != 1 && fd_files[1] != fd_pipe_w[1] && fd_files[1] != -1)
+		if (fd_files[1] != 1 /*&& fd_files[1] != fd_pipe_w[1]*/ && fd_files[1] != -1)
 			close (fd_files[1]);
 	}
 	if (fd_pipe_r)

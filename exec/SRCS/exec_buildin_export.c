@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_export.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:19:58 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/24 01:00:07 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/25 02:34:07 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static inline void	_export_str(t_data *args, t_section *s_cmd, t_index *lst)
 		free(lst);
 		lst = to_free;
 	}
-	_on_success(args, s_cmd, BUILDIN);
+	_on_success(args, s_cmd, PARENT);
 }
 
 static inline void	_set_export(t_data *args, t_section *s_cmd)
@@ -108,7 +108,7 @@ void	_bi_export(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 		_pipe_closer(fd_pr, fd_pw, fd_f);
 		if (res == 0)
 			_exit_failure(args);
-		_on_success(args, s_cmd, BUILDIN);
+		_on_success(args, s_cmd, PARENT);
 	}
 	_set_export(args, s_cmd);
 }
