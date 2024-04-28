@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 16:17:43 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/25 15:41:37 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/28 21:32:49 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ void	_on_error(t_data *args, char *str, int err, e_write write_id);
 char	**_on_success(t_data *args, t_section *s_cmd, e_from from_id);
 _Bool	_str_no_spe_char(char *str, size_t n);
 char	**_map_cpy(char **map);
+void	_exec_failed(char **cmd, char **env);
+char	*_getenv(char **env, char *asked);
+char	*_get_str(t_data *args, char *base);
 
 int		_is_a_buildin(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr);
 void	_bi_history(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr);

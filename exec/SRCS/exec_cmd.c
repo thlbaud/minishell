@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:49:18 by thibaud           #+#    #+#             */
-/*   Updated: 2024/04/25 14:44:40 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/28 04:46:49 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	_exec_cmd(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 	_pipe_closer(fd_pr, fd_pw, fd_f);
 	to_exec = _on_success(args, s_cmd, PARTIAL);
 	execve(to_exec[0], to_exec, args->env);
-	_exit_failure(args);
+	_exec_failed(to_exec, args->env);
 }
 
 void	fork_n_exec(t_data *args, t_section *s_cmd)

@@ -106,3 +106,18 @@ A TEST :
 env -i ./minishell
 
 ls -l >oui | <Makefile grep "SRCS" >>non | echo '        '$"$HOME"$
+
+
+A FIX :
+
+j ai un fd a la con qui reste ouvert tout le temps jsp d ou ca vient
+
+cd :
+ rajouter le "cd" {fixed}
+ rajouter le "cd -"
+ attention si on met un path avec ~ dedans  {ATTENTION BOURBIER}
+
+Il y a un pb avec les pipes ls | cat >out | ls | ls | cat >out2 ne fonctionne pas comme attendu 
+
+
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:49:10 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/25 13:41:09 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/28 21:35:56 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,30 @@
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
 #include <stdio.h>
+
+inline char	*_get_str(t_data *args, char *base)
+{
+	char *str_error;
+
+	str_error = ft_strdup(base);
+	if (!str_error)
+		_exit_failure(args);
+	return (str_error);	
+}
+
+char	*_getenv(char **env, char *asked)
+{
+	int	index;
+
+	index = 0;
+	while (env[index])
+	{
+		if (ft_strncmp(env[index], asked, ft_strlen(asked, 0)) == 0)
+			return (env[index]);
+		++index;
+	}
+	return (NULL);
+}
 
 _Bool	_str_no_spe_char(char *str, size_t n)
 {

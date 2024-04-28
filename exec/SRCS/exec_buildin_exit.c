@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_exit.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 20:25:47 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/25 16:37:57 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/28 05:07:00 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ void	_bi_exit(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 	_pipe_closer(fd_pr, fd_pw, fd_f);
 	if (_check_args(args, s_cmd) == EXIT_ERROR)
 		return ;
+	if (write(2, "exit\n", 6) == -1)
+		_exit_failure(args);
 	if (args->pid)
 		free (args->pid);
 	if (args->head)

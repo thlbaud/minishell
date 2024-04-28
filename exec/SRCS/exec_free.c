@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:47:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/25 15:28:55 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/28 04:48:00 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,15 @@
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
 #include <stdio.h>
+
+void	_exec_failed(char **cmd, char **env)
+{
+	perror (cmd[0]);
+	_freetab(cmd);
+	_freetab(env);
+	g_err = 127;
+	exit (127);
+}
 
 void	_on_error(t_data *args, char *str, int err, e_write write_id)
 {
@@ -65,5 +74,7 @@ char	**_on_success(t_data *args, t_section *s_cmd, e_from from_id)
 	new = _map_cpy(s_cmd->path_cmd);
 	if (!new)
 		_exit_failure(args);
+	if (args->head)
+		_lstfree(args->head, SECTION_LST);
 	return (new);
 }
