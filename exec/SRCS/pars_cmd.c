@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 14:53:12 by avaldin           #+#    #+#             */
-/*   Updated: 2024/04/19 18:14:57 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/29 16:19:35 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	cmd_process_var(t_section *sect, char **env)
 			flag = -flag;
 		if (sect->pipe[i] == 39 && flag == -1)
 			i += skip_quote(&sect->pipe[i]) + 2;
-		if (sect->pipe[i] == '$')
+		else if (sect->pipe[i] == '$')
 			sect->pipe = apply_var(sect->pipe, env, &i);
 		else
 			i++;

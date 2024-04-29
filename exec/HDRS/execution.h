@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 16:17:43 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/29 04:46:02 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/29 19:16:50 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,8 @@ t_index	*_lstlast_index(t_index *lst);
 int		_lstsize_index(t_index *lst);
 t_index	*_lstnew_index(int content);
 char 	*_define_cwd(void);
+
+void	_close_pipe(t_data *args);
+void	_close_file(int *fd);
 
 #endif

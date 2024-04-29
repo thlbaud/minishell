@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:49:10 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/29 00:25:43 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/29 19:45:12 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,34 @@ void	_pipe_closer(int *fd_pipe_r, int *fd_pipe_w, int *fd_files)
 	}
 	if (fd_pipe_r)
 	{
-			close (fd_pipe_r[0]);
-			close (fd_pipe_r[1]);
+		close (fd_pipe_r[0]);
+		close (fd_pipe_r[1]);
 	}
 	if (fd_pipe_w)
 	{
-			close (fd_pipe_w[0]);
-			close (fd_pipe_w[1]);
+		close (fd_pipe_w[0]);
+		close (fd_pipe_w[1]);
+	}
+}
+
+inline void	_close_file(int *fd)
+{
+	if (fd[0] != 0 && fd[0] != -1)
+		close (fd[0]);
+	if (fd[1] != 1 && fd[1] != -1)
+		close (fd[1]);
+}
+
+inline void	_close_pipe(t_data *args)
+{
+	if (args->pipe)
+	{
+		close (args->pipe[0]);
+		close (args->pipe[1]);
+	}
+	if (args->pipe_sec)
+	{
+		close (args->pipe_sec[0]);
+		close (args->pipe_sec[1]);
 	}
 }
