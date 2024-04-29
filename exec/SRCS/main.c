@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/29 04:54:47 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/29 07:26:34 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,6 @@ static inline void	_execution(t_data *args)
 
 	wstatus = 0;
 	count = _how_many_cmd(args->head);	
-	if (count == 0)
-		exit (EXIT_FAILURE);
 	args->pid = malloc(sizeof(pid_t) * count);
 	if (!args->pid)
 		exit (EXIT_FAILURE);
@@ -150,8 +148,6 @@ void	_looper(t_data *args)
 	char				*line;
 	
 	args->pid = NULL;
-	args->pipe = NULL;
-	args->pipe_sec = NULL;
 	pwd = _define_cwd();
 	if (!pwd)
 		_exit_failure(args);

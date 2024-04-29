@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:52:42 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/28 03:15:47 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/29 07:28:38 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static char	*_give_path(t_data *args, char **path, char *cmd)
 		free (path_cmd);
 		++i;
 	}
-	free(temp);
+	free (temp);
 	if (path[i] != 0)
 		return (_freetab(path), path_cmd);
 	return (_freetab(path), NULL);

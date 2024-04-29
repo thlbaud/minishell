@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:49:18 by thibaud           #+#    #+#             */
-/*   Updated: 2024/04/28 04:46:49 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/29 07:31:09 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,12 @@ static void	_exec_cmd(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 
 void	fork_n_exec(t_data *args, t_section *s_cmd)
 {
-	int	pipe_first[2];
-	int	pipe_sec[2];
 	int	i;
 
 	i = 0;
-	args->pipe = pipe_first;
-	args->pipe_sec = pipe_sec;
-	if (pipe(pipe_first) == -1)
+	if (pipe(args->pipe) == -1)
 		_exit_failure(args);
-	if (pipe(pipe_sec) == -1)
+	if (pipe(args->pipe_sec) == -1)
 		_exit_failure(args);
 	while (s_cmd)
 	{
