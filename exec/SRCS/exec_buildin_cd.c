@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:37:51 by thibaud           #+#    #+#             */
-/*   Updated: 2024/04/28 22:09:22 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/29 04:48:57 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,50 +14,73 @@
 #include <unistd.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
-#include <stdio.h>
 
-static inline void	_export_oldpwd(t_data *args, char *old_pwd)
+static inline void	_home_case(t_data *args, t_section *s_cmd, char **new_path, char *search)
 {
-	char	**new_env;
-	int		i;
-
-	if (!old_pwd)
-		_exit_failure(args);
-	i = 0;
-	while (args->env[i])
+	char	*strhome;
+	char	*temp;
+	
+	if (!s_cmd->path_cmd[1])
+			new_path[1] = _get_str(args, search);
+	else
 	{
-		if (ft_strncmp(old_pwd, args->env[i], 7) == 0)
+		if (s_cmd->path_cmd[1][1] != '/')
 		{
-			free (args->env[i]);
-			args->env[i] = old_pwd;
-			break ;
-		}
-		if (!args->env[++i])
-		{
-			new_env = ft_stradd(args->env, old_pwd);
-			if (!new_env)
+			temp = ft_strjoin(search, "/");
+			if (!temp)
 			{
-				free (old_pwd);
+				_freetab(new_path);
 				_exit_failure(args);
 			}
-			args->env = new_env;
 		}
+		strhome = ft_strjoin(temp, &s_cmd->path_cmd[1][1]);
+		free (temp);
+		if (!strhome)
+			_exit_failure(args);
+		new_path[1] = strhome;
 	}
 }
-static inline void	_change_dir(t_data *args, t_section *s_cmd, char	*old_pwd)
-{
-	char	*temp;
 
-	if (chdir(s_cmd->path_cmd[1]) == -1)
+static inline _Bool	_spe_case(t_data *args, t_section *s_cmd, char *search, e_cdenv id_search)
+{
+	char	**new_path;
+
+	if (!search)
 	{
-		temp = ft_strjoin("bash: cd: ", s_cmd->path_cmd[1]);
-		free (old_pwd);
-		if (!temp)
-			_exit_failure(args);
-		_on_error(args, temp, 1, AUTO);
+		if (id_search == HOME)
+			_on_error(args, _get_str(args, "bash: cd: HOME not set\n"), 1, WRITE);
+		else if (id_search == OLDPWD)
+			_on_error(args, _get_str(args, "bash: cd: OLDPWD not set\n"), 1, WRITE);
+		return (0);
 	}
-	else
-		_export_oldpwd(args, ft_strjoin("OLDPWD=", old_pwd));
+	new_path = ft_calloc(sizeof(char *), 3);
+	if (!new_path)
+		_exit_failure(args);
+	new_path[0] = _get_str(args, s_cmd->path_cmd[0]);
+	if (id_search == OLDPWD)
+		new_path[1] = _get_str(args, search);
+	else if (id_search == HOME)
+		_home_case(args, s_cmd, new_path, search);
+	_freetab(s_cmd->path_cmd);
+	s_cmd->path_cmd = new_path;
+	return (1);
+}
+
+static inline _Bool	_handling_spe(t_data *args, t_section *s_cmd)
+{
+	if (ft_strncmp(s_cmd->path_cmd[1], "~", 2) == 0 
+		|| ft_strncmp(s_cmd->path_cmd[1], "~/", 2) == 0
+		|| !s_cmd->path_cmd[1])
+	{
+		if (_spe_case(args, s_cmd, _getenv(args->env, "HOME="), HOME) == 0)
+			return (0);
+	}
+	else if (ft_strncmp(s_cmd->path_cmd[1], "-", 2) == 0)
+	{
+		if (_spe_case(args, s_cmd, _getenv(args->env, "OLDPWD="), OLDPWD) == 0)
+			return (0);
+	}
+	return (1);
 }
 
 static inline _Bool	_check_args(t_data *args, t_section *s_cmd)
@@ -71,40 +94,6 @@ static inline _Bool	_check_args(t_data *args, t_section *s_cmd)
 		return (1);
 	_on_error(args, _get_str(args, "bash: cd: too many args\n"), 1, WRITE);
 	return (0);
-}
-
-static inline _Bool	_handle_home(t_data *args, t_section *s_cmd, char *home)
-{
-	char	**new_path;
-	char	*strhome;
-	char	*temp;
-
-	if (!home)
-	{
-		_on_error(args, _get_str(args, "bash: cd: HOME not set\n"), 1, WRITE);
-		return (0);
-	}
-	new_path = ft_calloc(sizeof(char *), 3);
-	if (!new_path)
-		_exit_failure(args);
-	new_path[0] = _get_str(args, s_cmd->path_cmd[0]);
-	temp = _get_str(args, &home[ft_strlen(home, '=') + 1]);
-	strhome = ft_strjoin(temp, "/");
-	free(temp);
-	if (!strhome)
-		_exit_failure(args);
-	if (!s_cmd->path_cmd[1])
-		new_path[1] = strhome;
-	else
-	{
-		temp = ft_strjoin(strhome, s_cmd->path_cmd[1]);
-		free (strhome);
-		if (!temp)
-			_exit_failure(args);
-	}
-	_freetab(s_cmd->path_cmd);
-	s_cmd->path_cmd = new_path;
-	return (1);
 }
 
 void	_bi_cd(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
@@ -123,8 +112,7 @@ void	_bi_cd(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
 	old_pwd = _define_cwd();
 	if (!old_pwd)
 		_exit_failure(args);
-	if (!s_cmd->path_cmd[1] || s_cmd->path_cmd[1][0] == '~')
-		if (_handle_home(args, s_cmd, _getenv(args->env, "HOME=")) == 0)
-			return ;
+	if (_handling_spe(args, s_cmd) == 0)
+		return ;
 	_change_dir(args, s_cmd, old_pwd);
 }

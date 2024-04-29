@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 16:17:43 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/28 21:32:49 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/29 04:46:02 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ void	_bi_echo(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr);
 void	_bi_pwd(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr);
 void	_bi_env(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr);
 void	_bi_cd(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr);
+
+void	_change_dir(t_data *args, t_section *s_cmd, char *old_pwd);
+void	_export_oldpwd(t_data *args, char *old_pwd);
 
 void	_lstaddback_index(t_index **lst, t_index *new);
 t_index	*_lstlast_index(t_index *lst);

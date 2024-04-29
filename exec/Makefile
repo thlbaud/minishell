@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+         #
+#    By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/18 10:53:51 by tmouche           #+#    #+#              #
-#    Updated: 2024/04/23 17:24:26 by tmouche          ###   ########.fr        #
+#    Updated: 2024/04/29 04:42:01 by thibaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRCS	:=	main.c main_free.c\
 			pars_checking.c pars_cmd_split.c pars_cmd.c pars_data_clear.c pars_env_var.c pars_ft_lstadd_back.c pars_init.c pars_quote_expender.c pars_red_syntax.c pars_redirect.c \
 			pars_tools.c pars_union.c \
 			exec_checker_path.c exec_cmd.c exec_utils.c \
-			exec_buildin.c exec_buildin_echo.c exec_buildin_pwd.c exec_buildin_env.c exec_buildin_unset.c exec_buildin_export.c exec_buildin_export_utils.c exec_buildin_exit.c exec_buildin_cd.c \
+			exec_buildin.c exec_buildin_echo.c exec_buildin_pwd.c exec_buildin_env.c exec_buildin_unset.c exec_buildin_export.c exec_buildin_export_utils.c exec_buildin_exit.c exec_buildin_cd.c exec_buildin_cd_utils.c\
 			exec_buildin_history.c exec_buildin_utils.c exec_free.c exec_open.c \
 			signal.c \
 

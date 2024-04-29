@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 18:55:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/28 04:24:01 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/29 04:53:25 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,18 @@ typedef enum
 	NOT_NUMERIC
 }				e_err;
 
+typedef enum
+{
+	HOME,
+	OLDPWD
+}				e_cdenv;
+
 void	sig_int(int mode);
 void	sig_quit(int mode);
 
 void	_looper(t_data *args);
 
 void	_freetab(char **tab);
-void	_free(void *allocated);
 void	_lstfree(void *lst, e_type typelst);
 void	_exit_failure(t_data *args);
 

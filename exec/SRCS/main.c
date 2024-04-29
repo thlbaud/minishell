@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/28 20:57:24 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/29 04:54:47 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,8 @@ static inline char	*prompt(char *pwd, t_data *args)
 	if (!line)
 	{
 		rl_clear_history();
-		free(args->pid);
-		free(args->path_history);
+		free (args->pid);
+		free (args->path_history);
 		_freetab(args->env);
 		if (write (2, "exit\n", 6) == -1)
 			_exit_failure(args);
@@ -167,7 +167,7 @@ void	_looper(t_data *args)
 	else
 		_execution(args);
 	if (args->pid)
-		_free(args->pid);
+		free (args->pid);
 	if (args->head)
 		_lstfree(args->head, SECTION_LST);
 }

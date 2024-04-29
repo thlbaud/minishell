@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:49:10 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/28 21:35:56 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/29 00:25:43 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*_getenv(char **env, char *asked)
 	while (env[index])
 	{
 		if (ft_strncmp(env[index], asked, ft_strlen(asked, 0)) == 0)
-			return (env[index]);
+			return (&env[index][ft_strlen(env[index], '=') + 1]);
 		++index;
 	}
 	return (NULL);

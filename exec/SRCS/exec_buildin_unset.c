@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_unset.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:11:54 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/25 14:15:47 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/29 04:55:23 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ static inline void	_erase_args(t_data *args, int skip)
 		if (i != skip)
 			new_env[i] = args->env[i];
 		else
-			_free(args->env[i]);
+			free (args->env[i]);
 		++i;
 	}
-	_free(args->env);
+	free (args->env);
 	args->env = new_env;
 }
 
