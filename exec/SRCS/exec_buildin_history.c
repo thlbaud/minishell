@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 00:45:01 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/25 14:12:05 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/30 20:14:20 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,29 @@ static inline int   _get_file_size(char *path)
     close (fd);
     return (size);
 }
-static inline _Bool   _write_history(int fd_out, char *history)
+static inline _Bool   _write_history(char *history, int limit)
 {
     int count;
     int size;
     int i;
     
-    i = 0;
     count = 1;
+	size = -1;
+	while (history[++size])
+		++count;
+    i = size - limit;
+	if (i < 0)
+		i = 0;
+	count = i + 1;
     while (history[i])
     {
-        if (write(fd_out, " ", 1) == -1)
+        if (write(1, " ", 1) == -1)
 			return (0);
-		ft_putnbr_fd(count, fd_out);
-		if (write(fd_out, " ", 1) == -1)
+		ft_putnbr_fd(count, 1);
+		if (write(1, " ", 1) == -1)
             return (0);
         size = ft_strlen(&history[i], '\n');
-        if (write(fd_out, &history[i], size + 1) == -1)
+        if (write(1, &history[i], size + 1) == -1)
             return (0);
         i += size + 1;
 		++count;
@@ -63,7 +69,7 @@ static inline _Bool   _write_history(int fd_out, char *history)
     return (1);
 }
 
-static inline int   _get_history(int fd_out, char *path)
+static inline int   _get_history(char *path, int limit)
 {
     char	*buff;
     int     size;
@@ -80,23 +86,16 @@ static inline int   _get_history(int fd_out, char *path)
         return (free (buff), 0);
     if (read(fd, buff, size) == -1)
         return (close (fd), free (buff), 0);
-    if (_write_history(fd_out, buff) == 0)
+    if (_write_history(buff, limit) == 0)
         return (close (fd), free (buff), 0);
     return (close (fd), free (buff), 1);
 }
 
-void	_bi_history(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
+void	_bi_history(t_data *args, t_section *s_cmd)
 {
-    int fd_f[2];
 	int	res;
-
-	fd_f[0] = 0;
-	fd_f[1] = 1;
-	if (s_cmd->file)
-		if (_open_file(args, s_cmd->file, fd_f) == 0)
-			return ;
-	res = _get_history(fd_f[1], args->path_history);
-	_pipe_closer(fd_pr, fd_pw, fd_f);
+	
+	res = _get_history(args->path_history, ft_atoi(s_cmd->path_cmd[1]));
 	if (res == 0)
 		_exit_failure(args);
 }

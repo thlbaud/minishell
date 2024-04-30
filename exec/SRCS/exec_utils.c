@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:49:10 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/29 19:45:12 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/30 19:53:13 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,24 +106,44 @@ void	_pipe_closer(int *fd_pipe_r, int *fd_pipe_w, int *fd_files)
 	}
 }
 
-inline void	_close_file(int *fd)
+inline void	_close_file(t_data *args, int *fd, int id)
 {
-	if (fd[0] != 0 && fd[0] != -1)
-		close (fd[0]);
-	if (fd[1] != 1 && fd[1] != -1)
-		close (fd[1]);
+	if (args->pipe && args->count > 1)
+	{
+		if (fd[0] != 0 && fd[0] != -1 && fd[0] != args->pipe[id - 1][0])  
+			close (fd[0]);
+		if (fd[1] != 1 && fd[1] != -1 && fd[1] != args->pipe[id][1])
+			close (fd[1]);
+	}
+	else if (args->pipe)
+	{
+		if (fd[0] != 0 && fd[0] != -1)  
+			close (fd[0]);
+		if (fd[1] != 1 && fd[1] != -1 && fd[1] != args->pipe[id][1])
+			close (fd[1]);
+	}
+	else
+	{
+		if (fd[0] != 0 && fd[0] != -1)  
+			close (fd[0]);
+		if (fd[1] != 1 && fd[1] != -1)
+			close (fd[1]);
+	}
 }
 
 inline void	_close_pipe(t_data *args)
 {
-	if (args->pipe)
+	int	index;
+
+	index = 0;
+	if (!args->pipe)
+		return ;
+	while (index < args->count - 1)
 	{
-		close (args->pipe[0]);
-		close (args->pipe[1]);
-	}
-	if (args->pipe_sec)
-	{
-		close (args->pipe_sec[0]);
-		close (args->pipe_sec[1]);
+		if (args->pipe[index][0] != 0)
+			close (args->pipe[index][0]);
+		if (args->pipe[index][1] != 0)
+			close (args->pipe[index][1]);	
+		++index;
 	}
 }

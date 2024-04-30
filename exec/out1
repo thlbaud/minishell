@@ -1,0 +1,10 @@
+HDRS
+include
+Makefile
+minishell
+OBJS
+out
+out1
+SRCS
+supp.supp
+todo.txt

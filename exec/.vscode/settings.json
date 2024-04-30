@@ -12,6 +12,10 @@
 		"signal.h": "c",
 		"stddef.h": "c",
 		"fcntl.h": "c",
-		"stdint.h": "c"
+		"stdint.h": "c",
+		"thread": "c",
+		"bitset": "c",
+		"chrono": "c",
+		"algorithm": "c"
 	}
 }

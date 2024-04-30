@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:49:18 by thibaud           #+#    #+#             */
-/*   Updated: 2024/04/29 23:24:45 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/30 20:01:59 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,63 +18,56 @@
 #include <readline/readline.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
-
-static void	_fd_handler(t_data *args, t_section *s_cmd, int id)
-{
-	int		fd_f[2];
-	int		res[2];
-
-	fd_f[0] = 0;
-	fd_f[1] = 1;
-	res[0] = 0;
-	res[1] = 0;
-	if (s_cmd->file)
-		_open_file(args, s_cmd->file, fd_f);
-	if (fd_f[0] != 0)
-		res[0] = dup2(fd_f[0], 0);
-	else if (s_cmd->prev)
-		res[0] = dup2(args->pipe[0], 0);
-	else if (s_cmd->prev && id % 2 == 0)
-		res[0] = dup2(args->pipe_sec[0], 0);
-	if (fd_f[1] != 1)
-		res[1] = dup2(fd_f[1], 1);
-	else if (s_cmd->next && id % 2 == 0)
-		res[1] = dup2(args->pipe[1], 1);
-	else if (s_cmd->next)
-		res[1] = dup2(args->pipe_sec[1], 1);
-	_close_pipe(args);
-	_close_file(fd_f);
-	if (res[0] == -1|| res[1] == -1)
-		_exit_failure(args);
-}
+#include <stdio.h>
 
 static void	_exec_cmd(t_data *args, t_section *s_cmd, int id)
 {
 	char	**to_exec;
 
-	/*if (_is_a_buildin(args, s_cmd, fd_pw, fd_pr) == 1)
-		_on_success(args, s_cmd, ALL);*/
+	_fd_handler(args, s_cmd, id);
+	if (_is_a_buildin(s_cmd) == 1)
+		_on_success(args, s_cmd, ALL);
 	_pathfinder(args, s_cmd->path_cmd);
 	if (!s_cmd->path_cmd[0])
 		_on_success(args, s_cmd, ALL);
-	_fd_handler(args, s_cmd, id);
 	to_exec = _on_success(args, s_cmd, PARTIAL);
 	execve(to_exec[0], to_exec, args->env);
 	_exec_failed(to_exec, args->env);
+}
+
+static void	_open_pipe(t_data *args)
+{
+	int	index;
+
+	index = 0;
+	args->pipe = ft_calloc(sizeof(int *), args->count - 1);
+	if (!args->pipe)
+		_exit_failure(args);
+	while (index < args->count - 1)
+	{
+		args->pipe[index] = ft_calloc(sizeof(int), 2);
+		// if (!args->pipe[index])
+		// 	_freetab(args->pipe);
+		++index;
+	}
+	index = 0;
+	while (index < args->count - 1)
+	{
+		if (pipe(args->pipe[index]) == -1)
+		{
+			_close_pipe(args);
+			_exit_failure(args);
+		}
+		++index;
+	}
 }
 
 void	fork_n_exec(t_data *args, t_section *s_cmd)
 {
 	int	i;
 
-	if (pipe(args->pipe) == -1)
-		_exit_failure(args);
-	if (pipe(args->pipe_sec) == -1)
-	{
-		_close_pipe(args);
-		_exit_failure(args);
-	}
 	i = 0;
+	_open_pipe(args);
 	while (s_cmd)
 	{
 		args->pid[i] = fork();
@@ -88,5 +81,4 @@ void	fork_n_exec(t_data *args, t_section *s_cmd)
 		s_cmd = s_cmd->next;
 		++i;
 	}
-	_close_pipe(args);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_exit.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 20:25:47 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/28 05:07:00 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/30 19:32:58 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ static inline int	_check_args(t_data *args, t_section *s_cmd)
 	res = EXIT_ERROR;
 	while (s_cmd->path_cmd[i_args])
 	{
-		printf("%s\n", s_cmd->path_cmd[i_args]);
 		res = _numeric_args(args, s_cmd->path_cmd[i_args]);
 		if (res != EXIT_ERROR && s_cmd->path_cmd[++i_args])
 		{
@@ -82,18 +81,11 @@ static inline int	_check_args(t_data *args, t_section *s_cmd)
 	}
 	if (res != EXIT_ERROR)
 		g_err = res;
-	return (res);	
+	return (res);
 }
 
-void	_bi_exit(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)	
+void	_bi_exit(t_data *args, t_section *s_cmd)	
 {
-	int		fd_f[2];
-
-	fd_f[0] = 0;
-	fd_f[1] = 1;
-	if (s_cmd->file)
-		_open_file(args, s_cmd->file, fd_f);
-	_pipe_closer(fd_pr, fd_pw, fd_f);
 	if (_check_args(args, s_cmd) == EXIT_ERROR)
 		return ;
 	if (write(2, "exit\n", 6) == -1)

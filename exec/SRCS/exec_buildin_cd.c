@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_cd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:37:51 by thibaud           #+#    #+#             */
-/*   Updated: 2024/04/29 04:48:57 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/30 19:29:02 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static inline void	_home_case(t_data *args, t_section *s_cmd, char **new_path, c
 	char	*strhome;
 	char	*temp;
 	
+	temp = NULL;
 	if (!s_cmd->path_cmd[1])
 			new_path[1] = _get_str(args, search);
 	else
@@ -34,7 +35,8 @@ static inline void	_home_case(t_data *args, t_section *s_cmd, char **new_path, c
 			}
 		}
 		strhome = ft_strjoin(temp, &s_cmd->path_cmd[1][1]);
-		free (temp);
+		if (temp)
+			free (temp);
 		if (!strhome)
 			_exit_failure(args);
 		new_path[1] = strhome;
@@ -96,17 +98,10 @@ static inline _Bool	_check_args(t_data *args, t_section *s_cmd)
 	return (0);
 }
 
-void	_bi_cd(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
+void	_bi_cd(t_data *args, t_section *s_cmd)
 {
 	char	*old_pwd;
-	int		fd_f[2];
 
-	fd_f[0] = 0;
-	fd_f[1] = 1;
-	if (s_cmd->file)
-		if (_open_file(args, s_cmd->file, fd_f) == 0)
-			return ;
-	_pipe_closer(fd_pr, fd_pw, fd_f);
 	if (_check_args(args, s_cmd) == 0)
 		return ;
 	old_pwd = _define_cwd();

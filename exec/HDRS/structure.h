@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structure.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 18:55:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/29 07:26:07 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/30 20:00:56 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <fcntl.h>
 #include <signal.h>
 #include <stdio.h>
+#include "structure.h"
 #define EXIT_ERROR 360
 
 extern int	g_err;
@@ -36,27 +37,29 @@ typedef struct s_file
 
 }				t_file;
 
+typedef struct s_data
+{
+	int					**pipe;
+	int					count;
+	char				*path_history;
+	char				**env;
+	pid_t				*pid;
+	struct s_section	*head;
+	struct sigaction	*sa;
+	
+}				t_data;
+
 typedef struct	s_section
 {
+	int					fd_f[2];
 	char 				**path_cmd;
 	char				*pipe;
 	t_file				*file;
+	void				(*function_ptr)(t_data *, struct s_section *);
 	struct s_data		*data; //sert a rien 
 	struct s_section	*prev;
 	struct s_section	*next;
 }				t_section;
-
-typedef struct s_data
-{
-	int					pipe[2];
-	int					pipe_sec[2];
-	char				*path_history;
-	char				**env;
-	pid_t				*pid;
-	t_section			*head;
-	struct sigaction	*sa;
-	
-}				t_data;
 
 typedef enum 
 {

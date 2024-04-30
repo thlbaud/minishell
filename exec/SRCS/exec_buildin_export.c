@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:19:58 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/25 13:30:36 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/30 19:33:25 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static inline void	_search_n_replace(t_data *args, t_index *lst, char *temp)
 	i = 0;
 	while (args->env[i])
 	{
-		if (ft_strncmp(args->env[i], temp, ft_strlen(temp, '=')) == 0)
+		if (ft_strncmp(args->env[i], temp, ft_strlen(temp, '=') + 1) == 0)
 		{
 			free (args->env[i]);
 			args->env[i] = temp;
@@ -87,21 +87,15 @@ static inline void	_set_export(t_data *args, t_section *s_cmd)
 	_export_str(args, s_cmd, lst);
 }
 
-void	_bi_export(t_data *args, t_section *s_cmd, int *fd_pw, int *fd_pr)
+void	_bi_export(t_data *args, t_section *s_cmd)
 {
-	int		fd_f[2];
 	int		res;
 
-	fd_f[0] = 0;
-	fd_f[1] = 1;
 	res = 2;
-	if (s_cmd->file)
-		if (_open_file(args, s_cmd->file, fd_f) == 0)
-			return ;
 	if (!s_cmd->path_cmd[1])
 	{
-	 	res = _write_env(args->env, "declare -x", fd_f[1]);
-		_pipe_closer(fd_pr, fd_pw, fd_f);
+	 	res = _write_env(args->env, "declare -x");
+		_close_pipe(args);
 		if (res == 0)
 			_exit_failure(args);
 	}

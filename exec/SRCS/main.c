@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/29 07:26:34 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/30 20:01:44 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,17 +93,17 @@ static inline int	_how_many_cmd(t_section *cmd)
 static inline void	_execution(t_data *args)
 {
 	int	i;
-	int	count;
 	int wstatus;
 
 	wstatus = 0;
-	count = _how_many_cmd(args->head);	
-	args->pid = malloc(sizeof(pid_t) * count);
+	args->count = _how_many_cmd(args->head);	
+	args->pid = malloc(sizeof(pid_t) * args->count);
 	if (!args->pid)
 		exit (EXIT_FAILURE);
 	fork_n_exec(args, args->head);
+	_close_pipe(args);
 	i = -1;
-	while (++i < count)
+	while (++i < args->count)
 		waitpid(args->pid[i], &wstatus, 0);
 	if (WIFSIGNALED(wstatus) && WTERMSIG(wstatus))
 	{
@@ -155,10 +155,10 @@ void	_looper(t_data *args)
 	parsing(line, args->env, args);
 	if (!args->head)
 		return ;
-	if (!args->head->next)
+	if (!args->head->next && _is_a_buildin(args->head) == 1)
 	{
-		if (_is_a_buildin(args, args->head, NULL, NULL) == 0)
-			_execution(args);
+		if (_fd_handler(args, args->head, 0) == 1)
+			args->head->function_ptr(args, args->head);
 	}
 	else
 		_execution(args);
@@ -175,6 +175,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	g_err = 0;
+	args.pipe = NULL;
 	args.env = _map_cpy(env);
 	if (!args.env)
 		return (-1);

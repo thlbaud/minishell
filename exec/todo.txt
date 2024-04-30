@@ -119,5 +119,5 @@ Il y a un pb avec les pipes ls | cat >out | ls | ls | cat >out2 ne fonctionne pa
 mais j ai l impression que les fds des pipes changent a un moment et ca met le bordel de partout
 
 
-
+Ajout dans pars_init : l39,40 initialisation d une variable
  
