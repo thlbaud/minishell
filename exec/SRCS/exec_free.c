@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:47:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/29 04:52:04 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/04/30 23:44:06 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,19 @@
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
 #include <stdio.h>
+
+void	_freeint(int **tab, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size - 1 && tab[i])
+	{
+		free (tab[i]);
+		++i;
+	}
+	free (tab);
+}
 
 void	_exec_failed(char **cmd, char **env)
 {
@@ -40,6 +53,8 @@ void	_on_error(t_data *args, char *str, int err, e_write write_id)
 		free (str);
 	if (err_handling == -1)
 		_exit_failure(args);
+	if (args->pipe)
+		_freeint(args->pipe, args->count);
 	if (args->pid)
 		free (args->pid);
 	else
@@ -59,6 +74,8 @@ char	**_on_success(t_data *args, t_section *s_cmd, e_from from_id)
 	char	**new;
 	
 	g_err = 0;
+	if (args->pipe)
+		_freeint(args->pipe, args->count);
 	if (args->pid)
 		free (args->pid);
 	if (args->path_history)

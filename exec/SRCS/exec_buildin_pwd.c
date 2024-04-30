@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_pwd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:16:16 by thibaud           #+#    #+#             */
-/*   Updated: 2024/04/30 20:06:50 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/30 23:41:09 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	_bi_pwd(t_data *args, t_section *s_cmd)
 	char	*buff;
 
 	if (s_cmd)
-		;
+		s_cmd->fd_f[0] = s_cmd->fd_f[0];
 	buff = _define_cwd();
 	if (!buff)
 		_exit_failure(args);

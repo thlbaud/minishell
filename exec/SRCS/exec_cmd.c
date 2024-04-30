@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:49:18 by thibaud           #+#    #+#             */
-/*   Updated: 2024/04/30 20:01:59 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/04/30 23:24:20 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ static void	_open_pipe(t_data *args)
 	while (index < args->count - 1)
 	{
 		args->pipe[index] = ft_calloc(sizeof(int), 2);
-		// if (!args->pipe[index])
-		// 	_freetab(args->pipe);
+		if (!args->pipe[index])
+			_exit_failure(args);
 		++index;
 	}
 	index = 0;
