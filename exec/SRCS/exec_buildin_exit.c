@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_exit.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche < tmouche@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 20:25:47 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/30 19:32:58 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/01 23:18:19 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include <unistd.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
-#include <stdio.h>
 
 static inline void	_exit_error(t_data *args, char *error, char *bad_args, e_err id_error)
 {
@@ -48,7 +47,7 @@ static inline int	_numeric_args(t_data *args, char *str)
 	result = 0;
 	while ((str[++i] >= 9 && str[i] <= 13) || str[i] == 32)
 		;
-	if (str[i] == 45 || str[i] == 43)
+	if ((str[i] == 45 || str[i] == 43) && str[i + 1] != 0)
 		if (str[i++] == 45)
 			sign *= -1;
 	while (str[i] >= 48 && str[i] <= 57)

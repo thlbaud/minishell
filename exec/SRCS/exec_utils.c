@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche < tmouche@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:49:10 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/30 19:53:13 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/01 22:11:45 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,33 +77,6 @@ char	**_map_cpy(char **map)
 		++i;
 	}
 	return (new_map);
-}
-
-void	_pipe_closer(int *fd_pipe_r, int *fd_pipe_w, int *fd_files)
-{
-	if (fd_files)
-	{
-		if (fd_files[0] != 0 && fd_files[0] != -1 && !fd_pipe_r)
-			close (fd_files[0]);
-		else if (fd_pipe_r)
-			if (fd_files[0] != 0 && fd_files[0] != fd_pipe_r[0] && fd_files[0] != -1)
-				close (fd_files[0]);
-		if (fd_files[1] != 1 && fd_files[1] != -1 && !fd_pipe_w)
-			close (fd_files[1]);
-		else if (fd_pipe_w)
-			if (fd_files[1] != 1 && fd_files[1] != fd_pipe_w[1] && fd_files[1] != -1)
-				close (fd_files[1]);
-	}
-	if (fd_pipe_r)
-	{
-		close (fd_pipe_r[0]);
-		close (fd_pipe_r[1]);
-	}
-	if (fd_pipe_w)
-	{
-		close (fd_pipe_w[0]);
-		close (fd_pipe_w[1]);
-	}
 }
 
 inline void	_close_file(t_data *args, int *fd, int id)

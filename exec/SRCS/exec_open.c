@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_open.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche < tmouche@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 18:12:53 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/01 00:52:10 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/01 22:44:47 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	_heredoc_handling(t_data *args, char **name)
 		line = readline("> ");
 		if (!line)
 			_exit_failure(args);
-		if (ft_strncmp(line, name[1], name_len) == 0)
+		if (ft_strncmp(line, name[1], name_len + 1) == 0)
 			break ;
 		if (write(pipe_heredoc[1], line, ft_strlen(line, 0)) == -1 
 			|| write(pipe_heredoc[1], "\n", 1) == -1)
@@ -125,38 +125,10 @@ _Bool	_fd_handler(t_data *args, t_section *s_cmd, int id)
 		res[0] = dup2(s_cmd->fd_f[0], STDIN_FILENO);
 	if (s_cmd->fd_f[1] != 1)
 		res[1] = dup2(s_cmd->fd_f[1], STDOUT_FILENO);
-	// if (args->pid)
-	// 	_close_file(args, s_cmd->fd_f, id);
+	if (s_cmd->file)
+		_close_file(args, s_cmd->fd_f, id);
 	_close_pipe(args);
 	if (res[0] == -1|| res[1] == -1)
 		_exit_failure(args);
 	return (1);
 }
-
-/*_Bool	_fd_handler(t_data *args, t_section *s_cmd, int id)
-{
-	int		res[2];
-
-	res[0] = 0;
-	res[1] = 0;
-	if (s_cmd->file)
-		if (_open_file(args, s_cmd->file, s_cmd->fd_f) == 0);
-			return ;
-	if (s_cmd->fd_f[0] != 0)
-		res[0] = dup2(s_cmd->fd_f[0], 0);
-	else if (s_cmd->prev && id % 2 == 0)
-		res[0] = dup2(args->pipe[id - 1][0], 0);
-	else if (s_cmd->prev)
-		res[0] = dup2(args->pipe[id - 1][0], 0);	
-	if (s_cmd->fd_f[1] != 1)
-		res[1] = dup2(s_cmd->fd_f[1], 1);
-	else if (s_cmd->next && id % 2 == 0)
-		res[1] = dup2(args->pipe[id][1], 1);
-	else if (s_cmd->next)
-		res[1] = dup2(args->pipe[id][1], 1);
-	_close_pipe(args);
-	_close_file(s_cmd->fd_f);
-	if (res[0] == -1|| res[1] == -1)
-		_exit_failure(args);
-	return (1);
-}*/

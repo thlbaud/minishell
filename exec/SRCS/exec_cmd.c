@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche < tmouche@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:49:18 by thibaud           #+#    #+#             */
-/*   Updated: 2024/04/30 23:24:20 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/02 17:48:09 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void	_exec_cmd(t_data *args, t_section *s_cmd, int id)
 {
 	char	**to_exec;
 
+	sig_quit(1);
 	_fd_handler(args, s_cmd, id);
 	if (_is_a_buildin(s_cmd) == 1)
 		_on_success(args, s_cmd, ALL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_history.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche < tmouche@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 00:45:01 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/30 20:14:20 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/02 17:34:33 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,38 +39,37 @@ static inline int   _get_file_size(char *path)
     close (fd);
     return (size);
 }
-static inline _Bool   _write_history(char *history, int limit)
+static inline _Bool   _write_history(char **history, int limit)
 {
-    int count;
-    int size;
     int i;
     
-    count = 1;
-	size = -1;
-	while (history[++size])
-		++count;
-    i = size - limit;
-	if (i < 0)
-		i = 0;
-	count = i + 1;
+    i = 0;
+    if (limit != -2)
+    {
+        while (history[i])
+            ++i;
+        i -= limit;
+    }
     while (history[i])
     {
         if (write(1, " ", 1) == -1)
 			return (0);
-		ft_putnbr_fd(count, 1);
+		ft_putnbr_fd(i + 1, 1);
 		if (write(1, " ", 1) == -1)
             return (0);
-        size = ft_strlen(&history[i], '\n');
-        if (write(1, &history[i], size + 1) == -1)
+        if (write(1, history[i], ft_strlen(history[i], 0)) == -1)
             return (0);
-        i += size + 1;
-		++count;
+        if (write(1, "\n", 1) == -1)
+            return (0);
+        ++i;
     }
+    _freetab(history);
     return (1);
 }
 
 static inline int   _get_history(char *path, int limit)
 {
+    char    **history;
     char	*buff;
     int     size;
     int     fd;
@@ -86,16 +85,25 @@ static inline int   _get_history(char *path, int limit)
         return (free (buff), 0);
     if (read(fd, buff, size) == -1)
         return (close (fd), free (buff), 0);
-    if (_write_history(buff, limit) == 0)
-        return (close (fd), free (buff), 0);
-    return (close (fd), free (buff), 1);
+    history = ft_split(buff, '\n');
+    close (fd);
+    free (buff);
+    if (!history)
+        return (0);
+    if (_write_history(history, limit) == 0)
+        return (_freetab(history), 0);
+    return (_freetab(history) ,1);
 }
 
 void	_bi_history(t_data *args, t_section *s_cmd)
 {
 	int	res;
 	
-	res = _get_history(args->path_history, ft_atoi(s_cmd->path_cmd[1]));
-	if (res == 0)
+    res = _check_args_history(args, s_cmd);
+    if (res == -1)
+    {
+        return ;
+    }
+	if (_get_history(args->path_history, res) == 0)
 		_exit_failure(args);
 }

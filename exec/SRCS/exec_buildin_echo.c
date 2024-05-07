@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_echo.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche < tmouche@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 17:49:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/01 00:54:33 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/01 22:03:52 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,6 @@ void	_bi_echo(t_data *args, t_section *s_cmd)
 	int	err_handling;
 
 	err_handling = _write_echo(s_cmd->path_cmd);
-	if (!args->pid && s_cmd->file)
-	{
-		dup2(STDIN_FILENO, 0);
-		dup2(STDERR_FILENO, 1);
-	}
 	if (err_handling == 0)
 		_exit_failure(args);
 }

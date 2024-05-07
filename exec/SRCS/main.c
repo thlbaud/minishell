@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche < tmouche@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/30 20:01:44 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/01 22:05:27 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,11 @@ static inline void	_execution(t_data *args)
 	{
 		if (write(2, "Quit (core         dumped)\n", 28) == -1)
 			_exit_failure(args);
+	}
+	if (!args->pid && args->head->file)
+	{
+		dup2(STDIN_FILENO, 0);
+		dup2(STDERR_FILENO, 1);
 	}
 	if (args->pid)
 		free (args->pid);

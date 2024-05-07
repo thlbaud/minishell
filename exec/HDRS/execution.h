@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche < tmouche@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 16:17:43 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/30 20:01:34 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/02 17:01:24 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ _Bool	_write_env(char **env, char *pre_str);
 
 void	_pathfinder(t_data *args, char **cmd);
 
-void	_pipe_closer(int *fd_pipe_r, int *fd_pipe_w, int *fd_files);
 void	_on_error(t_data *args, char *str, int err, e_write write_id);
 char	**_on_success(t_data *args, t_section *s_cmd, e_from from_id);
 _Bool	_str_no_spe_char(char *str, size_t n);
@@ -53,5 +52,7 @@ char 	*_define_cwd(void);
 
 void	_close_pipe(t_data *args);
 void	_close_file(t_data *args, int *fd, int id);
+
+int	_check_args_history(t_data *args, t_section *s_cmd);
 
 #endif
