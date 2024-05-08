@@ -113,10 +113,7 @@ J ai ajouté a cd :
 
 A FIX :
 
-j ai un fd a la con qui reste ouvert tout le temps jsp d ou ca vient
-
-Il y a un pb avec les pipes ls | cat >out | ls | ls | cat >out2 ne fonctionne pas comme attendu, bug de con je finirai par le trouver 
-mais j ai l impression que les fds des pipes changent a un moment et ca met le bordel de partout
+PB avec la protection dans les heredocs : que ca soit "$HOME", '$HOME' ou $HOME le delimiteur est $HOME et pas sa version expand
 
 
 Ajout dans pars_init : l39,40 initialisation d une variable

@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:37:51 by thibaud           #+#    #+#             */
-/*   Updated: 2024/04/30 19:29:02 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/08 17:33:40 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,15 @@
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
 
-static inline void	_home_case(t_data *args, t_section *s_cmd, char **new_path, char *search)
+static inline void	_home_case(t_data *args, t_section *s_cmd, char **new_path,
+	char *search)
 {
 	char	*strhome;
 	char	*temp;
-	
+
 	temp = NULL;
 	if (!s_cmd->path_cmd[1])
-			new_path[1] = _get_str(args, search);
+		new_path[1] = _get_str(args, search);
 	else
 	{
 		if (s_cmd->path_cmd[1][1] != '/')
@@ -43,16 +44,19 @@ static inline void	_home_case(t_data *args, t_section *s_cmd, char **new_path, c
 	}
 }
 
-static inline _Bool	_spe_case(t_data *args, t_section *s_cmd, char *search, e_cdenv id_search)
+static inline _Bool	_spe_case(t_data *args, t_section *s_cmd, char *search,
+	e_cdenv id_search)
 {
 	char	**new_path;
 
 	if (!search)
 	{
 		if (id_search == HOME)
-			_on_error(args, _get_str(args, "bash: cd: HOME not set\n"), 1, WRITE);
+			_on_error(args, _get_str(args, "bash: cd: HOME not set\n"),
+				1, WRITE);
 		else if (id_search == OLDPWD)
-			_on_error(args, _get_str(args, "bash: cd: OLDPWD not set\n"), 1, WRITE);
+			_on_error(args, _get_str(args, "bash: cd: OLDPWD not set\n"),
+				1, WRITE);
 		return (0);
 	}
 	new_path = ft_calloc(sizeof(char *), 3);
@@ -70,7 +74,7 @@ static inline _Bool	_spe_case(t_data *args, t_section *s_cmd, char *search, e_cd
 
 static inline _Bool	_handling_spe(t_data *args, t_section *s_cmd)
 {
-	if (ft_strncmp(s_cmd->path_cmd[1], "~", 2) == 0 
+	if (ft_strncmp(s_cmd->path_cmd[1], "~", 2) == 0
 		|| ft_strncmp(s_cmd->path_cmd[1], "~/", 2) == 0
 		|| !s_cmd->path_cmd[1])
 	{

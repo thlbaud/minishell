@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_open.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche < tmouche@student.42lyon.fr>       +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 18:12:53 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/01 22:44:47 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/08 19:07:34 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static int	_heredoc_handling(t_data *args, char **name)
 		line = readline("> ");
 		if (!line)
 			_exit_failure(args);
+		if (name)
 		if (ft_strncmp(line, name[1], name_len + 1) == 0)
 			break ;
 		if (write(pipe_heredoc[1], line, ft_strlen(line, 0)) == -1 

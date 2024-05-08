@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_exit.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche < tmouche@student.42lyon.fr>       +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 20:25:47 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/01 23:18:19 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/08 17:40:44 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
 
-static inline void	_exit_error(t_data *args, char *error, char *bad_args, e_err id_error)
+static inline void	_exit_error(t_data *args, char *error, char *bad_args,
+	e_err id_error)
 {
 	char	*res;
 	char	*temp;
-	
+
 	temp = ft_strjoin("bash: exit: ", bad_args);
 	if (!temp)
 		_exit_failure(args);
@@ -59,8 +60,8 @@ static inline int	_numeric_args(t_data *args, char *str)
 
 static inline int	_check_args(t_data *args, t_section *s_cmd)
 {
-	int		i_args;
-	int 	res;
+	int	i_args;
+	int	res;
 
 	i_args = 1;
 	res = EXIT_ERROR;

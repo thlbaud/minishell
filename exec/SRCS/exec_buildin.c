@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:53:46 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/30 20:01:29 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/08 17:30:42 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	_is_a_buildin(t_section *s_cmd)
 		s_cmd->function_ptr = _bi_export;
 	else if (ft_strncmp("unset", s_cmd->path_cmd[0], 6) == 0)
 		s_cmd->function_ptr = _bi_unset;
-	else if (ft_strncmp("env", s_cmd->path_cmd[0],46) == 0)
+	else if (ft_strncmp("env", s_cmd->path_cmd[0], 46) == 0)
 		s_cmd->function_ptr = _bi_env;
 	else if (ft_strncmp("exit", s_cmd->path_cmd[0], 5) == 0)
 		s_cmd->function_ptr = _bi_exit;
