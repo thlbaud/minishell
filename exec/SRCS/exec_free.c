@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:47:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/30 23:44:06 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/09 05:10:56 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,15 @@ void	_freeint(int **tab, int size)
 	free (tab);
 }
 
-void	_exec_failed(char **cmd, char **env)
+void	_exec_failed(char **cmd, char **env, char *not_found)
 {
-	perror (cmd[0]);
+	if (write(2, not_found, ft_strlen(not_found, 0)) == -1 ||
+		write(2, ": command not found\n", 21) == -1)
+	{
+		_freetab(cmd);
+		_freetab(env);
+		exit (1);
+	}
 	_freetab(cmd);
 	_freetab(env);
 	g_err = 127;

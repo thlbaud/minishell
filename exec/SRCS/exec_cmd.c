@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche < tmouche@student.42lyon.fr>       +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:49:18 by thibaud           #+#    #+#             */
-/*   Updated: 2024/05/02 17:48:09 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/09 05:10:37 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 #include <readline/readline.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
-#include <stdio.h>
 
 static void	_exec_cmd(t_data *args, t_section *s_cmd, int id)
 {
@@ -33,7 +32,7 @@ static void	_exec_cmd(t_data *args, t_section *s_cmd, int id)
 		_on_success(args, s_cmd, ALL);
 	to_exec = _on_success(args, s_cmd, PARTIAL);
 	execve(to_exec[0], to_exec, args->env);
-	_exec_failed(to_exec, args->env);
+	_exec_failed(to_exec, args->env, to_exec[0]);
 }
 
 static void	_open_pipe(t_data *args)

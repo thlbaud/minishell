@@ -115,6 +115,9 @@ A FIX :
 
 PB avec la protection dans les heredocs : que ca soit "$HOME", '$HOME' ou $HOME le delimiteur est $HOME et pas sa version expand
 
+echo ne fonctionne pas avec les pipes
+Il faut se pencher sur les \
+
 
 Ajout dans pars_init : l39,40 initialisation d une variable
  

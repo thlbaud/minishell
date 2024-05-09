@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche < tmouche@student.42lyon.fr>       +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 16:17:43 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/02 17:01:24 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/09 05:09:28 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	_on_error(t_data *args, char *str, int err, e_write write_id);
 char	**_on_success(t_data *args, t_section *s_cmd, e_from from_id);
 _Bool	_str_no_spe_char(char *str, size_t n);
 char	**_map_cpy(char **map);
-void	_exec_failed(char **cmd, char **env);
+void	_exec_failed(char **cmd, char **env, char *not_found);
 char	*_getenv(char **env, char *asked);
 char	*_get_str(t_data *args, char *base);
 
@@ -53,6 +53,6 @@ char 	*_define_cwd(void);
 void	_close_pipe(t_data *args);
 void	_close_file(t_data *args, int *fd, int id);
 
-int	_check_args_history(t_data *args, t_section *s_cmd);
+int		_check_args_history(t_data *args, t_section *s_cmd);
 
 #endif

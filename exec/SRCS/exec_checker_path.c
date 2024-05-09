@@ -6,17 +6,33 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:52:42 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/29 07:28:38 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/09 04:58:25 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/types.h>
+#include <sys/wait.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <dirent.h>
 #include <fcntl.h>
-#include <sys/wait.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
-#include <stdio.h>
+
+static inline char	*_give_strerror(t_data *args, char *str)
+{
+	char	*res;
+	char	*temp;
+	
+	temp = ft_strjoin("bash: ", str);
+	if (!temp)
+		_exit_failure(args);
+	res = ft_strjoin(temp, ": Is a directory\n");
+	free (temp);
+	if (!res)
+		_exit_failure(args);
+	return (res);
+}
 
 static char	**_env_check(t_data *args)
 {
@@ -66,10 +82,18 @@ void	_pathfinder(t_data *args, char **cmd)
 {
 	char	**env_path;
 	char	*path_cmd;
+	DIR		*dir_path;
 
 	if (!cmd[0])
 		return ;
 	env_path = _env_check(args);
+	dir_path = opendir(cmd[0]);
+	if (dir_path != NULL)
+	{
+		if (closedir(dir_path) == -1)
+			_exit_failure(args);
+		_on_error(args, _give_strerror(args, cmd[0]), 126, WRITE);
+	}
 	if (access(cmd[0], X_OK) == 0 || !env_path)
 		return ;
 	path_cmd = _give_path(args, env_path, cmd[0]);
