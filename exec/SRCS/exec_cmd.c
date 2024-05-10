@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:49:18 by thibaud           #+#    #+#             */
-/*   Updated: 2024/05/09 05:10:37 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/10 06:15:22 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ static void	_open_pipe(t_data *args)
 	int	index;
 
 	index = 0;
-	args->pipe = ft_calloc(sizeof(int *), args->count - 1);
+	args->pipe = ft_calloc(sizeof(int *), args->count);
 	if (!args->pipe)
 		_exit_failure(args);
-	while (index < args->count - 1)
+	while (index < args->count)
 	{
 		args->pipe[index] = ft_calloc(sizeof(int), 2);
 		if (!args->pipe[index])
@@ -51,7 +51,7 @@ static void	_open_pipe(t_data *args)
 		++index;
 	}
 	index = 0;
-	while (index < args->count - 1)
+	while (index < args->count)
 	{
 		if (pipe(args->pipe[index]) == -1)
 		{
@@ -66,7 +66,7 @@ void	fork_n_exec(t_data *args, t_section *s_cmd)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
 	_open_pipe(args);
 	while (s_cmd)
 	{

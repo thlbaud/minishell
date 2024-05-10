@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_open.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 18:12:53 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/08 19:07:34 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/10 06:07:56 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ _Bool	_fd_handler(t_data *args, t_section *s_cmd, int id)
 		s_cmd->fd_f[1] = args->pipe[id][1];
 	if (s_cmd->fd_f[0] != 0)
 		res[0] = dup2(s_cmd->fd_f[0], STDIN_FILENO);
-	if (s_cmd->fd_f[1] != 1)
+	if (s_cmd->fd_f[1] != 1 && res[0] != -1)
 		res[1] = dup2(s_cmd->fd_f[1], STDOUT_FILENO);
 	if (s_cmd->file)
 		_close_file(args, s_cmd->fd_f, id);
