@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_env.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:58:59 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/30 19:31:37 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/11 04:49:39 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ _Bool	_write_env(char **env, char *pre_str)
 	while (env[i])
 	{
 		if (pre_str)
-			if (write(1, pre_str, ft_strlen(pre_str, 0)) == -1
-				|| write(1, " ", 1) == -1)
+			if (write(STDOUT_FILENO, pre_str, ft_strlen(pre_str, 0)) == -1
+				|| write(STDOUT_FILENO, " ", 1) == -1)
 				return (0);
-		if (write(1, env[i], ft_strlen(env[i], 0)) == -1
-			|| write(1, "\n", 1) == -1)
+		if (write(STDOUT_FILENO, env[i], ft_strlen(env[i], 0)) == -1
+			|| write(STDOUT_FILENO, "\n", 1) == -1)
 			return (0);
 		++i;
 	}

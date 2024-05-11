@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche < tmouche@student.42lyon.fr>       +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/01 22:05:27 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/11 05:57:38 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,11 +110,6 @@ static inline void	_execution(t_data *args)
 		if (write(2, "Quit (core         dumped)\n", 28) == -1)
 			_exit_failure(args);
 	}
-	if (!args->pid && args->head->file)
-	{
-		dup2(STDIN_FILENO, 0);
-		dup2(STDERR_FILENO, 1);
-	}
 	if (args->pid)
 		free (args->pid);
 	args->pid = NULL;
@@ -149,6 +144,8 @@ static inline char	*prompt(char *pwd, t_data *args)
 
 void	_looper(t_data *args)
 {
+	int					temp_stdin;
+	int					temp_stdout;
 	char				*pwd;
 	char				*line;
 	
@@ -160,10 +157,17 @@ void	_looper(t_data *args)
 	parsing(line, args->env, args);
 	if (!args->head)
 		return ;
-	if (!args->head->next && _is_a_buildin(args->head) == 1)
+	if (args->count == 1 && _is_a_buildin(args->head) == 1)
 	{
+		temp_stdin = dup(0);
+		temp_stdout = dup(1);
 		if (_fd_handler(args, args->head, 0) == 1)
 			args->head->function_ptr(args, args->head);
+		if (args->head->file)
+		{
+			dup2(temp_stdin, 0);
+			dup2(temp_stdout, 1);
+		}
 	}
 	else
 		_execution(args);
