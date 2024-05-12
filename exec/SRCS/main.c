@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/11 05:57:38 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/12 23:39:22 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void	_looper(t_data *args)
 	parsing(line, args->env, args);
 	if (!args->head)
 		return ;
-	if (args->count == 1 && _is_a_buildin(args->head) == 1)
+	if (!args->head->next && _is_a_buildin(args->head) == 1)
 	{
 		temp_stdin = dup(0);
 		temp_stdout = dup(1);
