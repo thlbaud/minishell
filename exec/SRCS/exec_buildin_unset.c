@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:11:54 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/30 20:07:19 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/13 21:43:41 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,38 @@
 #include <unistd.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
+#include <stdio.h>
+static inline int	_size_map(char **map)
+{
+	int	i;
+
+	i = 0;
+	while (map[i])
+		++i;
+	return (i);
+}
 
 static inline void	_erase_args(t_data *args, int skip)
 {
 	char	**new_env;
-	int		i;
+	int		i_new;
+	int		i_old;
 
-	i = 0;
-	while (args->env[i])
-		++i;
-	new_env = ft_calloc(sizeof(char *), i);
+	new_env = ft_calloc(sizeof(char *), _size_map(args->env));
 	if (!new_env)
 		_exit_failure(args);
-	i = 0;
-	while (args->env[i])
+	i_new = 0;
+	i_old = 0;
+	while (args->env[i_old])
 	{
-		if (i != skip)
-			new_env[i] = args->env[i];
+		if (i_old != skip)
+		{
+			new_env[i_new] = args->env[i_old];
+			++i_old;
+			++i_new;
+		}
 		else
-			free (args->env[i]);
-		++i;
+			free (args->env[i_old++]);
 	}
 	free (args->env);
 	args->env = new_env;

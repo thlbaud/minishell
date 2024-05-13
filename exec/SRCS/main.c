@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/13 06:41:08 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/13 22:44:24 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ void	_looper(t_data *args)
 		return ;
 	if (!args->head->next && _is_a_buildin(args->head) == 1)
 	{
+		args->count = 1;
 		temp_stdin = dup(0);
 		temp_stdout = dup(1);
 		if (_fd_handler(args, args->head, 0) == 1)

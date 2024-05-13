@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_checker_path.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:52:42 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/13 06:28:53 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/14 00:38:38 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,13 @@
 static inline char	*_give_strerror_cmd(t_data *args, char *str)
 {
 	char	*res;
+	char	*temp;
 	
-	res = ft_strjoin(str, ": command not found\n");
+	temp = ft_strjoin("bash: ", str);
+	if (!temp)
+		_exit_failure(args);
+	res = ft_strjoin(temp, ": command not found\n");
+	free (temp);
 	if (!res)
 		_exit_failure(args);
 	return (res);
@@ -37,7 +42,7 @@ static inline char	*_give_strerror_dir(t_data *args, char *str)
 	temp = ft_strjoin("bash: ", str);
 	if (!temp)
 		_exit_failure(args);
-	res = ft_strjoin(str, ": Is a directory\n");
+	res = ft_strjoin(temp, ": Is a directory\n");
 	free (temp);
 	if (!res)
 		_exit_failure(args);
@@ -76,14 +81,17 @@ static char	*_give_path(t_data *args, char **path, char *cmd)
 	{
 		path_cmd = ft_strjoin(path[i], temp);
 		if (!path_cmd)
+		{
+			free (temp);
 			_exit_failure(args);
+		}
 		if (access(path_cmd, X_OK) == 0)
 			break ;
 		free (path_cmd);
 		++i;
 	}
 	free (temp);
-	if (path[i] != 0)
+	if (path[i] != 0 && cmd[0])
 		return (_freetab(path), path_cmd);
 	_freetab(path);
 	_on_error(args, _give_strerror_cmd(args, cmd), 127, WRITE);
