@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_cd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:37:51 by thibaud           #+#    #+#             */
-/*   Updated: 2024/05/08 17:33:40 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/13 04:30:12 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ static inline _Bool	_check_args(t_data *args, t_section *s_cmd)
 		++index;
 	if (index <= 2)
 		return (1);
-	_on_error(args, _get_str(args, "bash: cd: too many args\n"), 1, WRITE);
+	_on_error(args, _get_str(args, "bash: cd: too many arguments\n"), 1, WRITE);
 	return (0);
 }
 

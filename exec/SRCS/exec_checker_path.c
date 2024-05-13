@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:52:42 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/09 04:58:25 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/13 06:28:53 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,17 @@
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
 
-static inline char	*_give_strerror(t_data *args, char *str)
+static inline char	*_give_strerror_cmd(t_data *args, char *str)
+{
+	char	*res;
+	
+	res = ft_strjoin(str, ": command not found\n");
+	if (!res)
+		_exit_failure(args);
+	return (res);
+}
+
+static inline char	*_give_strerror_dir(t_data *args, char *str)
 {
 	char	*res;
 	char	*temp;
@@ -27,7 +37,7 @@ static inline char	*_give_strerror(t_data *args, char *str)
 	temp = ft_strjoin("bash: ", str);
 	if (!temp)
 		_exit_failure(args);
-	res = ft_strjoin(temp, ": Is a directory\n");
+	res = ft_strjoin(str, ": Is a directory\n");
 	free (temp);
 	if (!res)
 		_exit_failure(args);
@@ -75,7 +85,9 @@ static char	*_give_path(t_data *args, char **path, char *cmd)
 	free (temp);
 	if (path[i] != 0)
 		return (_freetab(path), path_cmd);
-	return (_freetab(path), NULL);
+	_freetab(path);
+	_on_error(args, _give_strerror_cmd(args, cmd), 127, WRITE);
+	return (NULL);
 }
 
 void	_pathfinder(t_data *args, char **cmd)
@@ -84,21 +96,17 @@ void	_pathfinder(t_data *args, char **cmd)
 	char	*path_cmd;
 	DIR		*dir_path;
 
-	if (!cmd[0])
-		return ;
 	env_path = _env_check(args);
 	dir_path = opendir(cmd[0]);
 	if (dir_path != NULL)
 	{
 		if (closedir(dir_path) == -1)
 			_exit_failure(args);
-		_on_error(args, _give_strerror(args, cmd[0]), 126, WRITE);
+		_on_error(args, _give_strerror_dir(args, cmd[0]), 126, WRITE);
 	}
 	if (access(cmd[0], X_OK) == 0 || !env_path)
 		return ;
 	path_cmd = _give_path(args, env_path, cmd[0]);
-	if (!path_cmd)
-		return ;
 	free (cmd[0]);
 	cmd[0] = path_cmd;
 }

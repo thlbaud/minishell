@@ -115,7 +115,6 @@ A FIX :
 
 PB avec la protection dans les heredocs : que ca soit "$HOME", '$HOME' ou $HOME le delimiteur est $HOME et pas sa version expand
 
-echo ne fonctionne pas avec les pipes (les buildins en general)
 Il faut se pencher sur les \
 Unset supprime trop de choses
 rajouter une option d erreur pour l exec sans env 
