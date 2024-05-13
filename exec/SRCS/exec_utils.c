@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche < tmouche@student.42lyon.fr>       +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:49:10 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/01 22:11:45 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/13 04:13:46 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,10 @@ inline void	_close_pipe(t_data *args)
 		if (args->pipe[index][0] != 0)
 			close (args->pipe[index][0]);
 		if (args->pipe[index][1] != 0)
-			close (args->pipe[index][1]);	
+			close (args->pipe[index][1]);
+		free (args->pipe[index]);
 		++index;
 	}
+	free (args->pipe);
+	args->pipe = NULL;
 }

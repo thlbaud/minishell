@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 18:12:53 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/12 04:51:46 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/13 04:00:22 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ _Bool	_fd_handler(t_data *args, t_section *s_cmd, int id)
 		if (_open_file(args, s_cmd->file, s_cmd->fd_f) == 0)
 			return (0);
 	if (s_cmd->fd_f[0] == 0 && s_cmd->prev)
-		s_cmd->fd_f[0] = args->pipe[id - 1][0];	
+		s_cmd->fd_f[0] = args->pipe[id - 1][0];
 	if (s_cmd->fd_f[1] == 1 && s_cmd->next)
 		s_cmd->fd_f[1] = args->pipe[id][1];
 	if (s_cmd->fd_f[0] != 0)
