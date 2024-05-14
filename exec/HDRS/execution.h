@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 16:17:43 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/14 22:20:19 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/15 00:08:48 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 # define EXECUTION_H
 #include "../HDRS/structure.h"
 
-char	*_give_strerror(t_data *args, t_index *lst, char *str);
+char	*_give_strerror_dir(t_data *args, char *str);
+char	*_give_strerror_cmd(t_data *args, char *str);
+char	*_give_strerror_identifier(t_data *args, t_index *lst, char *str);
+
 _Bool	_egal_present(t_data *args, t_section *s_cmd, t_index **lst, int i_args);
 
 _Bool	_fd_handler(t_data *args, t_section *s_cmd, int id);

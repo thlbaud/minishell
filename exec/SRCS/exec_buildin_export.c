@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:19:58 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/14 22:49:02 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/15 00:03:49 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static inline _Bool	_export_args(char *str, size_t n)
 	{
 		if ((str[index] >= 48 && str[index] <= 57) 
 			|| (str[index] >= 65 && str[index] <= 90) 
-			|| (str[index] >= 97 && str[index] <= 122)) 
+			|| (str[index] >= 97 && str[index] <= 122)
+			|| str[index] == 95) 
 			++index;
 		else
 			return (0);
@@ -99,16 +100,17 @@ static inline void	_set_export(t_data *args, t_section *s_cmd)
 			&& s_cmd->path_cmd[i_args][0] <= '9')
 			|| s_cmd->path_cmd[i_args][0] == 0)
 		{
-			str_err = _give_strerror(args, lst, s_cmd->path_cmd[i_args]);
+			str_err = _give_strerror_identifier(args, lst, s_cmd->path_cmd[i_args]);
 			_on_error(args, str_err, 1, WRITE);
-			return ;
 		}
 		else if (ft_strrchr(s_cmd->path_cmd[i_args], '='))
 		{
 			if (_egal_present(args, s_cmd, &lst, i_args) == 0)
 				return ;
+			_add_to_env_history(args, s_cmd->path_cmd[i_args]);
 		}
-		_add_to_env_history(args, s_cmd->path_cmd[i_args]);
+		else
+			_add_to_env_history(args, s_cmd->path_cmd[i_args]);
 		++i_args;
 	}
 	_export_str(args, s_cmd, lst);

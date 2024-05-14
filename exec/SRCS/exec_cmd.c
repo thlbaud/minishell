@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:49:18 by thibaud           #+#    #+#             */
-/*   Updated: 2024/05/14 00:33:18 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/15 00:24:03 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ static void	_exec_cmd(t_data *args, t_section *s_cmd, int id)
 		s_cmd->function_ptr(args, s_cmd);
 		_on_success(args, s_cmd, ALL);
 	}
-	_pathfinder(args, s_cmd->path_cmd);
+	if (!ft_strchr(s_cmd->path_cmd[0], '/'))
+		_pathfinder(args, s_cmd->path_cmd);
 	to_exec = _on_success(args, s_cmd, PARTIAL);
 	execve(to_exec[0], to_exec, args->env);
 	_exec_failed(to_exec, args->env, to_exec[0]);

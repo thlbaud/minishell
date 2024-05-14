@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 17:13:48 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/14 20:33:15 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/15 00:00:39 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,6 @@
 #include <unistd.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
-
-inline char	*_give_strerror(t_data *args, t_index *lst, char *str)
-{
-	char	*res;
-	char	*temp;
-	
-	temp = ft_strjoin("bash: export: '", str);
-	if (!temp)
-	{
-		_lstfree(lst, INDEX_LST);
-		_exit_failure(args);
-	}
-	res = ft_strjoin(temp, "': not a valid identifier\n");
-	free (temp);
-	if (!res)
-	{
-		_lstfree(lst, INDEX_LST);
-		_exit_failure(args);
-	}
-	return (res);
-}
 
 static inline int	_check_exist(t_index **lst, char **path_cmd, int i_args)
 {

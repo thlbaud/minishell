@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:52:42 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/14 00:38:38 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/14 23:58:42 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,36 +18,6 @@
 #include <fcntl.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
-
-static inline char	*_give_strerror_cmd(t_data *args, char *str)
-{
-	char	*res;
-	char	*temp;
-	
-	temp = ft_strjoin("bash: ", str);
-	if (!temp)
-		_exit_failure(args);
-	res = ft_strjoin(temp, ": command not found\n");
-	free (temp);
-	if (!res)
-		_exit_failure(args);
-	return (res);
-}
-
-static inline char	*_give_strerror_dir(t_data *args, char *str)
-{
-	char	*res;
-	char	*temp;
-	
-	temp = ft_strjoin("bash: ", str);
-	if (!temp)
-		_exit_failure(args);
-	res = ft_strjoin(temp, ": Is a directory\n");
-	free (temp);
-	if (!res)
-		_exit_failure(args);
-	return (res);
-}
 
 static char	**_env_check(t_data *args)
 {
@@ -105,12 +75,14 @@ void	_pathfinder(t_data *args, char **cmd)
 	DIR		*dir_path;
 
 	env_path = _env_check(args);
+	if (!env_path)
+		return ;
 	dir_path = opendir(cmd[0]);
 	if (dir_path != NULL)
 	{
 		if (closedir(dir_path) == -1)
 			_exit_failure(args);
-		_on_error(args, _give_strerror_dir(args, cmd[0]), 126, WRITE);
+		_on_error(args, _give_strerror_cmd(args, cmd[0]), 126, WRITE);
 	}
 	if (access(cmd[0], X_OK) == 0 || !env_path)
 		return ;
