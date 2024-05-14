@@ -120,8 +120,10 @@ Etre plus explicite sur les errors synthax, genre quand c est newline ca met '' 
 revoir
 il faut gerer les flags sur les build ins (jsp si je le fait pour ceux qui n en prennent pas en mode ca fait rien s il est la mais s il est mal ecrit ca rend une erreur synthax)
 cd : le message d erreur est pas dans le bon sens, le message d erreur "too many args" trop court
-rm : la cmd segfault
-double free sur la command history
+rm : la cmd segfault lorsque utilise dans cd, on cree un fichier a, puis un fichier a/b on cd a/b et on rm -r ../../a 
+petit pb sur cd, lorsqu on envoi une variable vide un message d erreur apparait
+double free sur la command history,
+si on lance en env -i et on lance minishell c est pas ouf
 --------------------------------------------------------------------------------------------------
 FAIT :
 

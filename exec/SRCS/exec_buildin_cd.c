@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_cd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:37:51 by thibaud           #+#    #+#             */
-/*   Updated: 2024/05/13 04:30:12 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/15 00:49:04 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static inline _Bool	_spe_case(t_data *args, t_section *s_cmd, char *search,
 static inline _Bool	_handling_spe(t_data *args, t_section *s_cmd)
 {
 	if (ft_strncmp(s_cmd->path_cmd[1], "~", 2) == 0
-		|| ft_strncmp(s_cmd->path_cmd[1], "~/", 2) == 0
+		|| ft_strncmp(s_cmd->path_cmd[1], "~/", 3) == 0
 		|| !s_cmd->path_cmd[1])
 	{
 		if (_spe_case(args, s_cmd, _getenv(args->env, "HOME="), HOME) == 0)
@@ -105,9 +105,12 @@ static inline _Bool	_check_args(t_data *args, t_section *s_cmd)
 void	_bi_cd(t_data *args, t_section *s_cmd)
 {
 	char	*old_pwd;
-
+	
 	if (_check_args(args, s_cmd) == 0)
 		return ;
+	if (s_cmd->path_cmd[1])
+		if (!s_cmd->path_cmd[1][0])
+			return ;
 	old_pwd = _define_cwd();
 	if (!old_pwd)
 		_exit_failure(args);

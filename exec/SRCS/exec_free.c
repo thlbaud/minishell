@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:47:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/15 00:11:02 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/15 00:59:29 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,15 @@ void	_freeint(int **tab, int size)
 
 void	_exec_failed(char **cmd, char **env, char *not_found)
 {
-	char	*res;
 	char	*temp;
-	int		wr;
 	
 	temp = ft_strjoin("bash: ", not_found);
 	_freetab(cmd);
 	_freetab(env);
 	if (!temp)
 		exit (1);
-	res = ft_strjoin(temp, ": No such file or directory\n");
+	perror(temp);
 	free (temp);
-	if (!res)
-		exit (1);
-	wr = write(2, res, ft_strlen(res, 0));
-	free (res);
-	if (wr == -1)
-		exit (1);
 	g_err = 127;
 	exit (127);
 }

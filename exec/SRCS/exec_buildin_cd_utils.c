@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_cd_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 03:31:26 by thibaud           #+#    #+#             */
-/*   Updated: 2024/04/29 04:45:50 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/15 00:42:18 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ inline void	_change_dir(t_data *args, t_section *s_cmd, char *old_pwd)
 
 	if (chdir(s_cmd->path_cmd[1]) == -1)
 	{
-		temp = ft_strjoin("bash: cd: ", s_cmd->path_cmd[1]);
+		temp = ft_strjoin("bash: cd ", s_cmd->path_cmd[1]);
 		free (old_pwd);
 		if (!temp)
 			_exit_failure(args);
