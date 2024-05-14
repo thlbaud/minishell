@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 16:17:43 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/09 05:09:28 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/14 22:20:19 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,20 @@
 # define EXECUTION_H
 #include "../HDRS/structure.h"
 
-_Bool	_egal_notpresent(t_data *args, t_section *s_cmd, t_index *lst, int i_args);
+char	*_give_strerror(t_data *args, t_index *lst, char *str);
 _Bool	_egal_present(t_data *args, t_section *s_cmd, t_index **lst, int i_args);
 
 _Bool	_fd_handler(t_data *args, t_section *s_cmd, int id);
 void	fork_n_exec(t_data *args, t_section *cmd);
 _Bool	_write_env(char **env, char *pre_str);
 
+void	_add_to_env_history(t_data *args, char *new_cmd);
 void	_pathfinder(t_data *args, char **cmd);
 
 void	_on_error(t_data *args, char *str, int err, e_write write_id);
 char	**_on_success(t_data *args, t_section *s_cmd, e_from from_id);
-_Bool	_str_no_spe_char(char *str, size_t n);
 char	**_map_cpy(char **map);
+int		_size_map(char **map);
 void	_exec_failed(char **cmd, char **env, char *not_found);
 char	*_getenv(char **env, char *asked);
 char	*_get_str(t_data *args, char *base);

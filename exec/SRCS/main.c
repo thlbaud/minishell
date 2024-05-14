@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/13 22:44:24 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/14 22:20:10 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,12 +181,22 @@ void	_looper(t_data *args)
 int	main(int argc, char **argv, char **env)
 {
 	t_data	args;
+	int		i;
 	
 	(void)argc;
 	(void)argv;
 	g_err = 0;
 	args.pipe = NULL;
 	args.env = _map_cpy(env);
+	args.env_history = NULL;
+	i = 0;
+	while (args.env[i])
+	{
+		_add_to_env_history(&args, args.env[i]);
+		++i;
+	}
+	// for (int index = 0; args.env_history[index]; index++)
+	// 	printf("test %s\n", args.env_history[index]);
 	if (!args.env)
 		return (-1);
 	if (_get_path_history(&args) == -1)

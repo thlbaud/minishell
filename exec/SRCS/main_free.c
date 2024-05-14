@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:06:50 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/13 05:14:30 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/14 22:26:29 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ void	_exit_failure(t_data *args)
 		free (args->path_history);
 	if (args->env)
 		_freetab(args->env);
+	if (args->env_history)
+		_freetab(args->env_history);
 	if (args->pipe)
 		_freeint(args->pipe, args->count);
 	perror(NULL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:47:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/13 05:48:28 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/14 22:25:48 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	_on_error(t_data *args, char *str, int err, e_write write_id)
 		free (args->pid);
 	else
 		return ;
+	if (args->env_history)
+		_freetab(args->env_history);
 	if (args->head)
 		_lstfree(args->head, SECTION_LST);
 	if (args->path_history)
@@ -86,6 +88,8 @@ char	**_on_success(t_data *args, t_section *s_cmd, e_from from_id)
 		free (args->pid);
 	if (args->path_history)
 		free (args->path_history);
+	if (args->env_history)
+		_freetab (args->env_history);
 	if (from_id == ALL)
 	{
 		if (args->head)

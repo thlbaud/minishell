@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:19:58 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/30 19:33:25 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/14 22:49:02 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,23 @@
 #include <unistd.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
+
+static inline _Bool	_export_args(char *str, size_t n)
+{
+	size_t	index;
+
+	index = 0;
+	while (str[index] && index < n)
+	{
+		if ((str[index] >= 48 && str[index] <= 57) 
+			|| (str[index] >= 65 && str[index] <= 90) 
+			|| (str[index] >= 97 && str[index] <= 122)) 
+			++index;
+		else
+			return (0);
+	}
+	return (1);
+}
 
 static inline void	_search_n_replace(t_data *args, t_index *lst, char *temp)
 {
@@ -68,20 +85,30 @@ static inline void	_export_str(t_data *args, t_section *s_cmd, t_index *lst)
 static inline void	_set_export(t_data *args, t_section *s_cmd)
 {
 	t_index	*lst;
+	char	*str_err;
 	int		i_args;
 
 	i_args = 1;
 	lst = NULL;
 	while (s_cmd->path_cmd[i_args])
 	{
-		if (ft_strrchr(s_cmd->path_cmd[i_args], '='))
+		if (_export_args(s_cmd->path_cmd[i_args],
+			ft_strlen(s_cmd->path_cmd[i_args], '=')) == 0
+			|| s_cmd->path_cmd[i_args][0] == '='
+			|| (s_cmd->path_cmd[i_args][0] >= '0'
+			&& s_cmd->path_cmd[i_args][0] <= '9')
+			|| s_cmd->path_cmd[i_args][0] == 0)
+		{
+			str_err = _give_strerror(args, lst, s_cmd->path_cmd[i_args]);
+			_on_error(args, str_err, 1, WRITE);
+			return ;
+		}
+		else if (ft_strrchr(s_cmd->path_cmd[i_args], '='))
 		{
 			if (_egal_present(args, s_cmd, &lst, i_args) == 0)
 				return ;
 		}
-		else
-			if (_egal_notpresent(args, s_cmd, lst, i_args) == 0)
-				return ;
+		_add_to_env_history(args, s_cmd->path_cmd[i_args]);
 		++i_args;
 	}
 	_export_str(args, s_cmd, lst);
@@ -89,15 +116,8 @@ static inline void	_set_export(t_data *args, t_section *s_cmd)
 
 void	_bi_export(t_data *args, t_section *s_cmd)
 {
-	int		res;
-
-	res = 2;
 	if (!s_cmd->path_cmd[1])
-	{
-	 	res = _write_env(args->env, "declare -x");
-		_close_pipe(args);
-		if (res == 0)
+	 	if (_write_env(args->env_history, NULL) == 0)
 			_exit_failure(args);
-	}
 	_set_export(args, s_cmd);
 }

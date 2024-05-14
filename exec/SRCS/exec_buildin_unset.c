@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:11:54 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/13 21:43:41 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/14 19:32:45 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,6 @@
 #include <unistd.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
-#include <stdio.h>
-static inline int	_size_map(char **map)
-{
-	int	i;
-
-	i = 0;
-	while (map[i])
-		++i;
-	return (i);
-}
 
 static inline void	_erase_args(t_data *args, int skip)
 {

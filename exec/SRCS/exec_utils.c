@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:49:10 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/13 23:22:49 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/14 19:32:10 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <unistd.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
-#include <stdio.h>
 
 inline char	*_get_str(t_data *args, char *base)
 {
@@ -38,21 +37,6 @@ char	*_getenv(char **env, char *asked)
 		++index;
 	}
 	return (NULL);
-}
-
-_Bool	_str_no_spe_char(char *str, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i] && i < n)
-	{
-		if ((str[i] >= 48 && str[i] <= 57) || (str[i] >= 65 && str[i] <= 90) || (str[i] >= 97 && str[i] <= 122))
-			++i;
-		else
-			return (0);
-	}
-	return (1);
 }
 
 char	**_map_cpy(char **map)

@@ -111,20 +111,21 @@ J ai ajouté a cd :
     la gestion de "cd ~", "cd -", "cd ~/"(fonctionne pas lui faut que je patch)
 
 
+
 A FIX :
 
 PB avec la protection dans les heredocs : que ca soit "$HOME", '$HOME' ou $HOME le delimiteur est $HOME et pas sa version expand
 
 Etre plus explicite sur les errors synthax, genre quand c est newline ca met '' au lieu de 'newline'
-I̶l̶ f̶a̶u̶t̶ s̶e̶ p̶e̶n̶c̶h̶e̶r̶ s̶u̶r̶ l̶e̶s̶ \̶
-U̶n̶s̶e̶t̶ s̶u̶p̶p̶r̶i̶m̶e̶ t̶r̶o̶p̶ d̶e̶ c̶h̶o̶s̶e̶s̶
 il faut gerer les flags sur les build ins (jsp si je le fait pour ceux qui n en prennent pas en mode ca fait rien s il est la mais s il est mal ecrit ca rend une erreur synthax)
-r̶a̶j̶o̶u̶t̶e̶r̶ u̶n̶e̶ o̶p̶t̶i̶o̶n̶ d̶ e̶r̶r̶e̶u̶r̶ p̶o̶u̶r̶ l̶ e̶x̶e̶c̶ s̶a̶n̶s̶ e̶n̶v̶ 
-revoir export et la signification du declare -x (surement son historique )
 cd : le message d erreur est pas dans le bon sens, le message d erreur "too many args" trop court
 rm : la cmd segfault
 
+--------------------------------------------------------------------------------------------------
+FAIT :
 
-Ajout dans pars_init : l39,40 initialisation d une variable
+Unset fixed; 
+Export a un historique;
+
 
  
