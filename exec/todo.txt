@@ -124,11 +124,9 @@ rm : la cmd segfault lorsque utilise dans cd, on cree un fichier a, puis un fich
 petit pb sur cd, lorsqu on envoi une variable vide un message d erreur apparait
 double free sur la command history,
 si on lance en env -i et on lance minishell c est pas ouf
+check l histoire de _ dans env
+whoami | grep $USER > /tmp/bonjour : crash surement lié a la fermeture du fichier
 --------------------------------------------------------------------------------------------------
-FAIT :
-
-Unset fixed; 
-Export a un historique;
 
 
  
