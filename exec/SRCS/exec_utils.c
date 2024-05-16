@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:49:10 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/16 02:26:42 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/16 20:02:45 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,29 +65,29 @@ char	**_map_cpy(char **map)
 
 inline void	_close_file(t_data *args, int *fd, int id)
 {
-	if (args->count == 1)
+	if (args->count == 1 && fd[0] != 0)  
+		close (fd[0]);
+	if (args->count == 1 && fd[1] != 1)
+		close (fd[1]);
+	if (args->count > 1 && id == 0)
 	{
 		if (fd[0] != 0)  
 			close (fd[0]);
-		if (fd[1] != 1)
+		if (fd[1] != 1 && fd[1] != args->pipe[0][1])
 			close (fd[1]);
 	}
-	else
+	else if (args->count > 1)
 	{
-		if (id == 0)
+		if (fd[0] != 0 && fd[1] != args->pipe[id - 1][0])  
+			close (fd[0]);
+		if (id != args->count - 1)
 		{
-			if (fd[0] != 0)  
-				close (fd[0]);
-			if (fd[1] != 1 && fd[1] != args->pipe[0][1])
-				close (fd[1]);
-		}
-		else
-		{
-			if (fd[0] != 0 && fd[1] != args->pipe[id - 1][0])  
-				close (fd[0]);
 			if (fd[1] != 1 && fd[1] != args->pipe[id][1])
 				close (fd[1]);
 		}
+		else
+			if (fd[1] != 1)
+				close (fd[1]);
 	}
 }
 

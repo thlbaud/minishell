@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 00:45:01 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/08 17:30:05 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/16 21:13:54 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static inline _Bool   _write_history(char **history, int limit)
 			return (0);
 		++i;
 	}
-	_freetab(history);
 	return (1);
 }
 
@@ -100,9 +99,7 @@ void	_bi_history(t_data *args, t_section *s_cmd)
 	
 	res = _check_args_history(args, s_cmd);
 	if (res == -1)
-	{
 		return ;
-	}
 	if (_get_history(args->path_history, res) == 0)
 		_exit_failure(args);
 }

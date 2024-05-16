@@ -105,7 +105,7 @@ A TEST :
 
 env -i ./minishell
 
-ls -l >oui | <Makefile grep "SRCS" >>non | echo '        '$"$HOME"$
+ls -l >oui | <Makefile grep "SRCS" >>non | echo '        '$"$HOME"$ -> fonctionne nickel
 
 J ai ajouté a cd :
     la gestion de "cd ~", "cd -", "cd ~/"(fonctionne pas lui faut que je patch)
@@ -117,16 +117,11 @@ A FIX :
 PB avec la protection dans les heredocs : que ca soit "$HOME", '$HOME' ou $HOME le delimiteur est $HOME et pas sa version expand
 
 Etre plus explicite sur les errors synthax, genre quand c est newline ca met '' au lieu de 'newline'
-revoir
 il faut gerer les flags sur les build ins (jsp si je le fait pour ceux qui n en prennent pas en mode ca fait rien s il est la mais s il est mal ecrit ca rend une erreur synthax)
 cd : le message d erreur est pas dans le bon sens, le message d erreur "too many args" trop court
 rm : la cmd segfault lorsque utilise dans cd, on cree un fichier a, puis un fichier a/b on cd a/b et on rm -r ../../a 
 petit pb sur cd, lorsqu on envoi une variable vide un message d erreur apparait
-double free sur la command history,
 si on lance en env -i et on lance minishell c est pas ouf
 check l histoire de _ dans env
-whoami | grep $USER > /tmp/bonjour : crash surement lié a la fermeture du fichier
+echo " $HOLA " | cat -e -> il semble qu il y a un probleme avec la facon donc l expand est fait avec le "", pb qui se retrouve dans le heredoc
 --------------------------------------------------------------------------------------------------
-
-
- 
