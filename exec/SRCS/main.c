@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/16 18:54:22 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/20 22:15:16 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,13 @@ static inline void	_execution(t_data *args)
 	_close_pipe(args);
 	i = -1;
 	while (++i < args->count)
-		waitpid(args->pid[i], &wstatus, 0);
-	if (WIFSIGNALED(wstatus) && WTERMSIG(wstatus))
 	{
-		if (write(2, "Quit (core         dumped)\n", 28) == -1)
+		waitpid(args->pid[i], &wstatus, 0);
+		args->exit_status = WEXITSTATUS(wstatus);
+	}
+	if (WIFSIGNALED(wstatus) && WTERMSIG(wstatus) == 3)
+	{
+		if (write(2, "Quit (core dumped)\n", 18) == -1)
 			_exit_failure(args);
 	}
 	if (args->pid)
@@ -163,6 +166,8 @@ void	_looper(t_data *args)
 		args->count = 1;
 		temp_stdin = dup(0);
 		temp_stdout = dup(1);
+		close (temp_stdin);
+		close (temp_stdout);
 		if (_fd_handler(args, args->head, 0) == 1)
 			args->head->function_ptr(args, args->head);
 		if (args->head->file)
@@ -187,6 +192,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	g_err = 0;
+	args.exit_status = 0;
 	args.pipe = NULL;
 	args.env = _map_cpy(env);
 	args.env_history = NULL;

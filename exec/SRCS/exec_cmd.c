@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:49:18 by thibaud           #+#    #+#             */
-/*   Updated: 2024/05/16 19:35:12 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/20 22:37:53 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	_exec_cmd(t_data *args, t_section *s_cmd, int id)
 		_pathfinder(args, s_cmd->path_cmd);
 	to_exec = _on_success(args, s_cmd, PARTIAL);
 	execve(to_exec[0], to_exec, args->env);
-	_exec_failed(to_exec, args->env, to_exec[0]);
+	_exec_failed(to_exec, args->env, to_exec[0], args->exit_status);
 }
 
 static void	_open_pipe(t_data *args)
@@ -42,6 +42,8 @@ static void	_open_pipe(t_data *args)
 	int	index;
 
 	index = 0;
+	if (args->count == 1)
+		 return ;
 	args->pipe = ft_calloc(sizeof(int *), args->count - 1);
 	if (!args->pipe)
 		_exit_failure(args);

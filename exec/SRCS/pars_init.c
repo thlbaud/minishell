@@ -73,5 +73,10 @@ void	parsing(char *line, char **env, t_data *data)
 		command(data->head, env);
 	}
 	else
+	{
+		data->exit_status = 2;
+		if (line && !line[0])
+			data->exit_status = 0;
 		data->head = NULL;
+	}
 }

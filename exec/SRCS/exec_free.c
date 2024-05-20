@@ -30,7 +30,7 @@ void	_freeint(int **tab, int size)
 	free (tab);
 }
 
-void	_exec_failed(char **cmd, char **env, char *not_found)
+void	_exec_failed(char **cmd, char **env, char *not_found, int exit_status)
 {
 	char	*temp;
 	
@@ -41,15 +41,14 @@ void	_exec_failed(char **cmd, char **env, char *not_found)
 		exit (1);
 	perror(temp);
 	free (temp);
-	g_err = 127;
-	exit (127);
+	exit (exit_status);
 }
 
 void	_on_error(t_data *args, char *str, int err, e_write write_id)
 {
 	int	err_handling;
-	
-	g_err = err;
+
+	args->exit_status = err;
 	err_handling = 1;
 	if (write_id == WRITE)
 		err_handling = write(2, str, ft_strlen(str, 0));
@@ -73,15 +72,14 @@ void	_on_error(t_data *args, char *str, int err, e_write write_id)
 		free (args->path_history);
 	if (args->env)
 		_freetab(args->env);
-	exit (g_err);
+	exit (args->exit_status);
 }
 
 
 char	**_on_success(t_data *args, t_section *s_cmd, e_from from_id)
 {
 	char	**new;
-	
-	g_err = 0;
+
 	if (args->pipe)
 		_freeint(args->pipe, args->count);
 	if (args->pid)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:06:50 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/14 22:26:29 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/20 18:04:14 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ void	_lstfree(void *lst, e_type typelst)
 
 void	_exit_failure(t_data *args)
 {
-	g_err = errno;
 	if (args->pid)
 		free (args->pid);
 	if (args->head)

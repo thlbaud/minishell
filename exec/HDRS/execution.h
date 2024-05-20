@@ -31,7 +31,7 @@ void	_on_error(t_data *args, char *str, int err, e_write write_id);
 char	**_on_success(t_data *args, t_section *s_cmd, e_from from_id);
 char	**_map_cpy(char **map);
 int		_size_map(char **map);
-void	_exec_failed(char **cmd, char **env, char *not_found);
+void	_exec_failed(char **cmd, char **env, char *not_found, int exit_status);
 char	*_getenv(char **env, char *asked);
 char	*_get_str(t_data *args, char *base);
 

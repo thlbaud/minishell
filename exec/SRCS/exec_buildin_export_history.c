@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_export_history.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 19:21:00 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/14 22:22:53 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/20 22:13:45 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,38 +16,38 @@
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
 
+static inline void	_strncpy(char *dst, char *src, int *index, int n)
+{
+	int	i;
+
+	i = 0;
+	while (src[*index] && i < n)
+	{
+		dst[index[1]] = src[index[0]];
+		++index[0];
+		++index[1];
+		++i;
+	}
+}
+
 static inline char	*_add_quote(t_data *args, char *cmd)
 {
 	char	*temp;
-	int		i_cmd;
-	int		i_temp;
-	
+	int		index[2];
+
 	temp = ft_calloc(sizeof(char), ft_strlen(cmd, 0) + 3);
 	if (!temp)
 	{
 		free (cmd);
 		_exit_failure(args);
 	}
-	i_cmd = 0;
-	i_temp = 0;
-	while (cmd[i_cmd] != '=')
-	{
-		temp[i_temp] = cmd[i_cmd];
-		++i_temp;
-		++i_cmd;
-	}
-	temp[i_temp] = cmd[i_cmd];
-	++i_temp;
-	++i_cmd;
-	temp[i_temp] = '"';
-	++i_temp;
-	while (cmd[i_cmd])
-	{
-		temp[i_temp] = cmd[i_cmd];
-		++i_temp;
-		++i_cmd;
-	}
-	temp[i_temp] = '"';
+	index[0] = 0;
+	index[1] = 0;
+	_strncpy(temp, cmd, index, ft_strlen(cmd, '=') + 1);
+	temp[index[1]] = '"';
+	++index[1];
+	_strncpy(temp, cmd, index, ft_strlen(&cmd[index[0]], 0));
+	temp[index[1]] = '"';
 	free (cmd);
 	return (temp);
 }

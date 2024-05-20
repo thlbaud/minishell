@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 20:25:47 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/16 01:25:25 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/20 22:17:40 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static inline void	_exit_error(t_data *args, char *error, char *bad_args,
 	if (id_error == NOT_NUMERIC)
 	{
 		_on_error(args, res, 2, WRITE);
-		exit (g_err);
+		exit (args->exit_status);
 	}
 	_on_error(args, res, 1, WRITE);
 }
@@ -76,11 +76,11 @@ static inline int	_check_args(t_data *args, t_section *s_cmd)
 	}
 	if (i_args == 1)
 	{
-		g_err = 0;
+		args->exit_status = 0;
 		res = 0;
 	}
 	if (res != EXIT_ERROR)
-		g_err = res;
+		args->exit_status = res;
 	return (res);
 }
 
@@ -99,5 +99,7 @@ void	_bi_exit(t_data *args, t_section *s_cmd)
 		free (args->path_history);
 	if (args->env)
 		_freetab(args->env);
-	exit (g_err);
+	if (args->env_history)
+		_freetab(args->env_history);
+	exit (args->exit_status);
 }

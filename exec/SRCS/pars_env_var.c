@@ -82,7 +82,8 @@ char	*apply_var(char *token, char **env, int *i)
 
 	len_name = 0;
 	if (token[*i + 1] == '?')
-		return (str_modify(token, *i, 2, ft_itoa(g_err)));
+//		return (str_modify(token, *i, 2, ft_itoa(g_err)));
+		return (ft_strdup("0"));
 	while ((token[*i + len_name + 1] < 91 && token[*i + len_name + 1] > 64)
 		|| (token[*i + len_name + 1] < 123 && token[*i + len_name + 1] > 96)
 		|| (token[*i + len_name + 1] < 58 && token[*i + len_name + 1] > 47))

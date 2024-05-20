@@ -18,8 +18,6 @@
 #include "structure.h"
 #define EXIT_ERROR 360
 
-extern int	g_err;
-
 typedef struct s_index
 {
 	int					i;
@@ -41,6 +39,7 @@ typedef struct s_data
 {
 	int					**pipe;
 	int					count;
+	int					exit_status;
 	char				*path_history;
 	char				**env;
 	char				**env_history;

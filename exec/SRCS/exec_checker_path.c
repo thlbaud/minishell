@@ -55,8 +55,12 @@ static char	*_give_path(t_data *args, char **path, char *cmd)
 			free (temp);
 			_exit_failure(args);
 		}
-		if (access(path_cmd, X_OK) == 0)
+		if (access(path_cmd, F_OK) == 0)
+		{
+			if (access(path_cmd, X_OK) == -1)
+				args->exit_status = 126;
 			break ;
+		}
 		free (path_cmd);
 		++i;
 	}
@@ -82,7 +86,7 @@ void	_pathfinder(t_data *args, char **cmd)
 	{
 		if (closedir(dir_path) == -1)
 			_exit_failure(args);
-		_on_error(args, _give_strerror_cmd(args, cmd[0]), 126, WRITE);
+		_on_error(args, _give_strerror_cmd(args, cmd[0]), args->exit_status, WRITE);
 	}
 	if (access(cmd[0], X_OK) == 0 || !env_path)
 		return ;
