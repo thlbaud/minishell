@@ -120,11 +120,28 @@ echo " $HOLA " | cat -e -> il semble qu il y a un probleme avec la facon donc l 
 
 1-
 Pb avec is a Directory a revoir 
-on cree un fichier a, puis un fichier a/b on cd a/b et on rm -r ../../a -> cas tres special qui fait segfault execve, il faudrait le cut avant mais jsp trop ca fait un cas trop précis c est deg
+on cree un fichier a, puis un fichier a/b on cd a/b et on rm -r ../../a -> pb de pwd
+	reset pwd apres un cd dans env.
 
 2-
+refaire l env si lance avec env -i
 check l histoire de _ dans env
 
 3-
 il faut gerer les flags sur les build ins (jsp si je le fait pour ceux qui n en prennent pas en mode ca fait rien s il est la mais s il est mal ecrit ca rend une erreur synthax)
+
+
+
+leak->
+
+leak cd :
+64 bytes in 1 blocks are definitely lost in loss record 19 of 68
+==20254==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==20254==    by 0x49DC22E: getcwd (getcwd.c:68)
+==20254==    by 0x10F9F7: _define_cwd (exec_buildin_utils.c:28)
+==20254==    by 0x10F165: _bi_cd (exec_buildin_cd.c:114)
+==20254==    by 0x1098C5: _looper (main.c:169)
+==20254==    by 0x109A18: main (main.c:207)
+
+
 --------------------------------------------------------------------------------------------------

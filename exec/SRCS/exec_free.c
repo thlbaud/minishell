@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:47:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/15 00:59:29 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/21 18:49:28 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	_exec_failed(char **cmd, char **env, char *not_found, int exit_status)
 	_freetab(cmd);
 	_freetab(env);
 	if (!temp)
-		exit (1);
+		exit (EXIT_FAILURE);
 	perror(temp);
 	free (temp);
 	exit (exit_status);

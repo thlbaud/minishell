@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 03:31:26 by thibaud           #+#    #+#             */
-/*   Updated: 2024/05/16 21:01:08 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/21 23:28:48 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,31 +28,35 @@ inline void	_change_dir(t_data *args, t_section *s_cmd, char *old_pwd)
 		_on_error(args, temp, 1, AUTO);
 	}
 	else
-		_export_oldpwd(args, ft_strjoin("OLDPWD=", old_pwd));
+	{
+		temp = ft_strjoin("OLDPWD=", old_pwd);
+		free (old_pwd);
+		_export_pwd(args, temp);
+	}
 }
 
-inline void	_export_oldpwd(t_data *args, char *old_pwd)
+inline void	_export_pwd(t_data *args, char *pwd)
 {
 	char	**new_env;
 	int		i;
 
-	if (!old_pwd)
+	if (!pwd)
 		_exit_failure(args);
 	i = 0;
 	while (args->env[i])
 	{
-		if (ft_strncmp(old_pwd, args->env[i], 7) == 0)
+		if (ft_strncmp(pwd, args->env[i], ft_strlen(pwd, '=')) == 0)
 		{
 			free (args->env[i]);
-			args->env[i] = old_pwd;
+			args->env[i] = pwd;
 			break ;
 		}
-		if (!args->env[++i])
+		if (!args->env[++i] && !ft_strncmp(pwd, "PWD=", 4) == 0)
 		{
-			new_env = ft_stradd(args->env, old_pwd);
+			new_env = ft_stradd(args->env, pwd);
 			if (!new_env)
 			{
-				free (old_pwd);
+				free (pwd);
 				_exit_failure(args);
 			}
 			args->env = new_env;

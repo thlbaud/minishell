@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:06:50 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/20 18:04:14 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/21 19:12:43 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	_freetab(char **tab)
 		return ;
 	while (tab[i])
 	{
-		free (tab[i]);
+		if (tab[i][0])
+			free (tab[i]);
 		++i;
 	}
 	free (tab);

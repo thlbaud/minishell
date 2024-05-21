@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:37:51 by thibaud           #+#    #+#             */
-/*   Updated: 2024/05/15 00:49:04 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/21 23:04:48 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,17 +104,24 @@ static inline _Bool	_check_args(t_data *args, t_section *s_cmd)
 
 void	_bi_cd(t_data *args, t_section *s_cmd)
 {
-	char	*old_pwd;
+	char	*temp;
+	char	*pwd;
 	
 	if (_check_args(args, s_cmd) == 0)
 		return ;
 	if (s_cmd->path_cmd[1])
 		if (!s_cmd->path_cmd[1][0])
 			return ;
-	old_pwd = _define_cwd();
-	if (!old_pwd)
+	pwd = _define_cwd();
+	if (!pwd)
 		_exit_failure(args);
 	if (_handling_spe(args, s_cmd) == 0)
 		return ;
-	_change_dir(args, s_cmd, old_pwd);
+	_change_dir(args, s_cmd, pwd);
+	pwd = _define_cwd();
+	if (!pwd)
+		_exit_failure(args);
+	temp = ft_strjoin("PWD=", pwd);
+	free (pwd);
+	_export_pwd(args, temp);
 }

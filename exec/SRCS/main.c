@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/20 22:15:16 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/21 21:21:52 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,9 +113,6 @@ static inline void	_execution(t_data *args)
 		if (write(2, "Quit (core dumped)\n", 18) == -1)
 			_exit_failure(args);
 	}
-	if (args->pid)
-		free (args->pid);
-	args->pid = NULL;
 }
 
 static inline char	*prompt(char *pwd, t_data *args)
@@ -126,7 +123,8 @@ static inline char	*prompt(char *pwd, t_data *args)
 	sig_int(0);
 	sig_quit(0);
 	temp = ft_strjoin (pwd, "$ ");
-	free (pwd);
+	if (!temp)
+		_exit_failure(args);
 	line = readline(temp);
 	sig_int(1);
 	free (temp);
@@ -154,7 +152,7 @@ void	_looper(t_data *args)
 	
 	args->pid = NULL;
 	args->pipe = NULL;
-	pwd = _define_cwd();
+	pwd = _getenv(args->env, "PWD");
 	if (!pwd)
 		_exit_failure(args);
 	line = prompt(pwd, args);
@@ -180,8 +178,9 @@ void	_looper(t_data *args)
 		_execution(args);
 	if (args->pid)
 		free (args->pid);
-	if (args->head)
-		_lstfree(args->head, SECTION_LST);
+	// if (args->head)
+	// 	_lstfree(args->head, SECTION_LST);
+	args->head = NULL;
 }
 
 int	main(int argc, char **argv, char **env)
