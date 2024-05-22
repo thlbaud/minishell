@@ -57,7 +57,7 @@ static inline void	_add_line_history(t_data *args, char **env_history, char *cmd
 	char	**new_env_history;
 	int		size_history;
 	int		i;
-	
+
 	size_history = _size_map(env_history);
 	new_env_history = ft_calloc(sizeof(char *), size_history + 2);
 	if (!new_env_history)
@@ -71,7 +71,7 @@ static inline void	_add_line_history(t_data *args, char **env_history, char *cmd
 	while (i < size_history)
 	{
 		new_env_history[i] = env_history[i];
-		++i; 
+		++i;
 	}
 	new_env_history[i] = cmd;
 	if (env_history)

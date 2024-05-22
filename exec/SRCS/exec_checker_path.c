@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_checker_path.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: avaldin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:52:42 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/14 23:58:42 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/22 12:25:56 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ void	_pathfinder(t_data *args, char **cmd)
 	{
 		if (closedir(dir_path) == -1)
 			_exit_failure(args);
-		_on_error(args, _give_strerror_cmd(args, cmd[0]), args->exit_status, WRITE);
+		_on_error(args, _give_strerror_cmd(args, cmd[0]),
+			args->exit_status, WRITE);
 	}
 	if (access(cmd[0], X_OK) == 0 || !env_path)
 		return ;

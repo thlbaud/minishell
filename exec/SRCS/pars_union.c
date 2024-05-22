@@ -57,7 +57,7 @@ char	*temp_join(t_file *red)
 		if (red->temp[i] && red->temp[i][0])
 		{
 			file = str_modify(file, (int) ft_strlen(file, 0), 0,
-						_strdup(red->temp[i], 0, -1));
+					_strdup(red->temp[i], 0, -1));
 		}
 		i++;
 	}

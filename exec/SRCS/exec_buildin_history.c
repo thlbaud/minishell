@@ -16,13 +16,13 @@
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
 
-static inline int   _get_file_size(char *path)
+static inline int	_get_file_size(char *path)
 {
 	char	buff[1000];
 	int		temp;
 	int		size;
 	int		fd;	
-	
+
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		return (-1);
@@ -38,10 +38,11 @@ static inline int   _get_file_size(char *path)
 	close (fd);
 	return (size);
 }
-static inline _Bool   _write_history(char **history, int limit)
+
+static inline _Bool	_write_history(char **history, int limit)
 {
 	int	i;
-	
+
 	i = 0;
 	if (limit != -2)
 	{
@@ -65,15 +66,15 @@ static inline _Bool   _write_history(char **history, int limit)
 	return (1);
 }
 
-static inline int   _get_history(char *path, int limit)
+static inline int	_get_history(char *path, int limit)
 {
 	char	**history;
 	char	*buff;
 	int		size;
 	int		fd;
-	
+
 	size = _get_file_size(path);
-	if  (size == -1)
+	if (size == -1)
 		return (0);
 	buff = ft_calloc(sizeof(char), size + 1);
 	if (!buff)
@@ -90,13 +91,13 @@ static inline int   _get_history(char *path, int limit)
 		return (0);
 	if (_write_history(history, limit) == 0)
 		return (_freetab(history), 0);
-	return (_freetab(history) ,1);
+	return (_freetab(history), 1);
 }
 
 void	_bi_history(t_data *args, t_section *s_cmd)
 {
 	int	res;
-	
+
 	res = _check_args_history(args, s_cmd);
 	if (res == -1)
 		return ;

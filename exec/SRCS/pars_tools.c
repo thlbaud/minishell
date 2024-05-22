@@ -61,7 +61,7 @@ char	*str_cut(char *line, int start, int end)
 		return (free(line), NULL);
 	new_line = ft_calloc(ft_strlen(line, 0) - end + start + 1, sizeof(char));
 	if (!new_line)
-		exit(3); //pas ok
+		exit(1);
 	while (i < start)
 	{
 		new_line[i] = line[i];
@@ -111,7 +111,7 @@ char	*str_modify(char *str, int i, int len, char *add)
 	new_str = ft_calloc(ft_strlen(str, 0) - len + ft_strlen(add, 0) + 1,
 			sizeof(char));
 	if (!new_str)
-		exit (24);   //pas ok
+		exit (1);
 	j = -1;
 	k = -1;
 	while (++j < i)

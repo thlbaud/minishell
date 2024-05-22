@@ -12,8 +12,8 @@
 
 #ifndef PARSING_H
 # define PARSING_H
-#include "structure.h"
-#include <stdlib.h>
+# include "structure.h"
+# include <stdlib.h>
 
 void		ft_redclear(t_file *lst);
 void		ft_sectclear(t_section *lst);
@@ -25,19 +25,18 @@ void		red_process_var(t_section *first, char **env);
 
 int			skip_space(char *line);
 int			skip_quote(char *line);
-int 		write_quote(char *line, char *dest);
+int			write_quote(char *line, char *dest);
 char		*_strdup(const char *s, int start, int len);
 
 void		cleaning_cmd(t_section *sect, char *line);
 char		*apply_var(char *token, char **env, int *i);
-void	    red_quote_expender(t_section *sect);
-void	    redirection(t_data *data, char **env);
+void		red_quote_expender(t_section *sect);
+void		redirection(t_data *data, char **env);
 void		command(t_section *first, char **env);
 
 int			checking(char *line);
 int			red_syntax(char *line);
 char		*str_cut(char *line, int start, int end);
-// char		*pars_red(char *line, t_section *sect);
 void		cleaning_cmd(t_section *sect, char *line);
 char		*str_modify(char *str, int i, int len, char *add);
 

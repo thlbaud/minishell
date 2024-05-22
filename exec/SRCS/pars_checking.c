@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_checking.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: avaldin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 08:33:29 by avaldin           #+#    #+#             */
-/*   Updated: 2024/04/17 18:14:56 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/22 11:11:54 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,24 +72,18 @@ int	checking(char *line)
 
 	i = -1;
 	if (!paire_of_quote(line))
+		return (printf("not enough quote\n"), 1);
+	if (red_syntax(line) || pipe_syntax(line) != -1)
 	{
-		printf("not enough quote\n");
-		return (1);
-	}
-	if (red_syntax(line))
-	{
-		printf("bash: syntax error near unexpected token '%c'\n",
-			line[red_syntax(line)]);
+		if (!line[red_syntax(line)])
+			printf("bash: syntax error near unexpected token `newline'\n");
+		else
+			printf("bash: syntax error near unexpected token `%c'\n",
+				line[red_syntax(line)]);
 		return (2);
-	}
-	if (pipe_syntax(line) != -1)
-	{
-		printf("bash: syntax error near unexpected token '%c'\n",
-			line[pipe_syntax(line)]);
-		return (3);
 	}
 	while (line[++i])
 		if (line[i] == '$' && line[i + 1] == '$')
-			return (4);
+			return (printf("two consecutive $\n"), 4);
 	return (0);
 }

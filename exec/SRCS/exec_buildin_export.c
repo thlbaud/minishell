@@ -23,10 +23,10 @@ static inline _Bool	_export_args(char *str, size_t n)
 	index = 0;
 	while (str[index] && index < n)
 	{
-		if ((str[index] >= 48 && str[index] <= 57) 
-			|| (str[index] >= 65 && str[index] <= 90) 
+		if ((str[index] >= 48 && str[index] <= 57)
+			|| (str[index] >= 65 && str[index] <= 90)
 			|| (str[index] >= 97 && str[index] <= 122)
-			|| str[index] == 95) 
+			|| str[index] == 95)
 			++index;
 		else
 			return (0);
@@ -94,13 +94,14 @@ static inline void	_set_export(t_data *args, t_section *s_cmd)
 	while (s_cmd->path_cmd[i_args])
 	{
 		if (_export_args(s_cmd->path_cmd[i_args],
-			ft_strlen(s_cmd->path_cmd[i_args], '=')) == 0
+				ft_strlen(s_cmd->path_cmd[i_args], '=')) == 0
 			|| s_cmd->path_cmd[i_args][0] == '='
 			|| (s_cmd->path_cmd[i_args][0] >= '0'
 			&& s_cmd->path_cmd[i_args][0] <= '9')
 			|| s_cmd->path_cmd[i_args][0] == 0)
 		{
-			str_err = _give_strerror_identifier(args, lst, s_cmd->path_cmd[i_args]);
+			str_err = _give_strerror_identifier(args, lst,
+					s_cmd->path_cmd[i_args]);
 			_on_error(args, str_err, 1, WRITE);
 		}
 		else if (ft_strrchr(s_cmd->path_cmd[i_args], '='))
@@ -119,7 +120,7 @@ static inline void	_set_export(t_data *args, t_section *s_cmd)
 void	_bi_export(t_data *args, t_section *s_cmd)
 {
 	if (!s_cmd->path_cmd[1])
-	 	if (_write_env(args->env_history, NULL) == 0)
+		if (_write_env(args->env_history, NULL) == 0)
 			_exit_failure(args);
 	_set_export(args, s_cmd);
 }

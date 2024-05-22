@@ -106,7 +106,7 @@ void	_bi_cd(t_data *args, t_section *s_cmd)
 {
 	char	*temp;
 	char	*pwd;
-	
+
 	if (_check_args(args, s_cmd) == 0)
 		return ;
 	if (s_cmd->path_cmd[1])

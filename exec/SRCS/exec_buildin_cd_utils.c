@@ -51,7 +51,7 @@ inline void	_export_pwd(t_data *args, char *pwd)
 			args->env[i] = pwd;
 			break ;
 		}
-		if (!args->env[++i] && !ft_strncmp(pwd, "PWD=", 4) == 0)
+		if (!args->env[++i] && (!ft_strncmp(pwd, "PWD=", 4)) == 0)
 		{
 			new_env = ft_stradd(args->env, pwd);
 			if (!new_env)

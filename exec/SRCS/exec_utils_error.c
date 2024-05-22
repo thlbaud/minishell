@@ -20,7 +20,7 @@ inline char	*_give_strerror_identifier(t_data *args, t_index *lst, char *str)
 {
 	char	*res;
 	char	*temp;
-	
+
 	temp = ft_strjoin("bash: export: '", str);
 	if (!temp)
 	{
@@ -41,7 +41,7 @@ inline char	*_give_strerror_cmd(t_data *args, char *str)
 {
 	char	*res;
 	char	*temp;
-	
+
 	temp = ft_strjoin("bash: ", str);
 	if (!temp)
 		_exit_failure(args);
@@ -56,7 +56,7 @@ inline char	*_give_strerror_dir(t_data *args, char *str)
 {
 	char	*res;
 	char	*temp;
-	
+
 	temp = ft_strjoin("bash: ", str);
 	if (!temp)
 		_exit_failure(args);

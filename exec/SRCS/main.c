@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/21 21:21:52 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/22 21:46:35 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
 
-int	g_err;
+int	g_sig = 0;
 
 static inline void	_add_history(t_data *args, char *line)
 {
@@ -38,7 +38,7 @@ static inline void	_add_history(t_data *args, char *line)
 	fd = open(args->path_history, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 		_exit_failure(args);
-	if (write(fd, line, ft_strlen(line, 0)) == -1 
+	if (write(fd, line, ft_strlen(line, 0)) == -1
 		|| write(fd, "\n", 1) == -1)
 	{
 		close (fd);
@@ -93,10 +93,10 @@ static inline int	_how_many_cmd(t_section *cmd)
 static inline void	_execution(t_data *args)
 {
 	int	i;
-	int wstatus;
+	int	wstatus;
 
 	wstatus = 0;
-	args->count = _how_many_cmd(args->head);	
+	args->count = _how_many_cmd(args->head);
 	args->pid = malloc(sizeof(pid_t) * args->count);
 	if (!args->pid)
 		exit (EXIT_FAILURE);
@@ -112,6 +112,7 @@ static inline void	_execution(t_data *args)
 	{
 		if (write(2, "Quit (core dumped)\n", 18) == -1)
 			_exit_failure(args);
+		args->exit_status = 131;
 	}
 }
 
@@ -122,9 +123,13 @@ static inline char	*prompt(char *pwd, t_data *args)
 
 	sig_int(0);
 	sig_quit(0);
+	if (g_sig)
+		args->exit_status = g_sig;
+	g_sig = 0;
 	temp = ft_strjoin (pwd, "$ ");
 	if (!temp)
 		_exit_failure(args);
+	printf("exit status = %d\n", args->exit_status);
 	line = readline(temp);
 	sig_int(1);
 	free (temp);
@@ -149,10 +154,10 @@ void	_looper(t_data *args)
 	int					temp_stdout;
 	char				*pwd;
 	char				*line;
-	
+
 	args->pid = NULL;
 	args->pipe = NULL;
-	pwd = _getenv(args->env, "PWD");
+	pwd = _getenv(args->env, "PWD"); // si rien dans le PWD, try getcwd si tj rien il faut mettre un .
 	if (!pwd)
 		_exit_failure(args);
 	line = prompt(pwd, args);
@@ -176,10 +181,9 @@ void	_looper(t_data *args)
 	}
 	else
 		_execution(args);
+	_lstfree(args->head, SECTION_LST);
 	if (args->pid)
 		free (args->pid);
-	// if (args->head)
-	// 	_lstfree(args->head, SECTION_LST);
 	args->head = NULL;
 }
 
@@ -187,13 +191,14 @@ int	main(int argc, char **argv, char **env)
 {
 	t_data	args;
 	int		i;
-	
+
 	(void)argc;
 	(void)argv;
-	g_err = 0;
 	args.exit_status = 0;
 	args.pipe = NULL;
-	args.env = _map_cpy(env);
+	args.env = _set_env(env);
+	if (!args.env)
+		return (1);
 	args.env_history = NULL;
 	i = 0;
 	while (args.env[i])
@@ -209,4 +214,3 @@ int	main(int argc, char **argv, char **env)
 		_looper(&args);
 	return (0);
 }
- 

@@ -76,7 +76,8 @@ static void	create_red(t_section *sect)
 			red->name = ft_calloc(3, sizeof(char *));
 			if (!red->name)
 				clean_exit(sect->data);
-			sect->pipe = str_cut(sect->pipe, i, i + extract_red(red, &sect->pipe[i], sect->data) - 1);
+			sect->pipe = str_cut(sect->pipe, i, i
+					+ extract_red(red, &sect->pipe[i], sect->data) - 1);
 			i = 0;
 			sect->file = ft_redadd_back(sect->file, red);
 		}

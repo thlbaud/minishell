@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:47:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/21 18:49:28 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/22 19:46:28 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include <unistd.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
-#include <stdio.h>
 
 void	_freeint(int **tab, int size)
 {
@@ -33,7 +32,7 @@ void	_freeint(int **tab, int size)
 void	_exec_failed(char **cmd, char **env, char *not_found, int exit_status)
 {
 	char	*temp;
-	
+
 	temp = ft_strjoin("bash: ", not_found);
 	_freetab(cmd);
 	_freetab(env);
@@ -74,7 +73,6 @@ void	_on_error(t_data *args, char *str, int err, e_write write_id)
 		_freetab(args->env);
 	exit (args->exit_status);
 }
-
 
 char	**_on_success(t_data *args, t_section *s_cmd, e_from from_id)
 {

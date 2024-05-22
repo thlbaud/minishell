@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_stradd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 19:11:41 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/02 20:12:54 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/22 20:47:33 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	**ft_stradd(char **map, char *add)
 	int		i;
 	
 	i = 0;
+	if (!add)
+		return (NULL);
 	while (map[i])
 		++i;
 	new = ft_calloc(sizeof(char *), (i + 2));

@@ -6,7 +6,7 @@
 /*   By: avaldin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 13:07:34 by avaldin           #+#    #+#             */
-/*   Updated: 2024/04/24 12:41:14 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/05/22 10:19:20 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <readline/history.h>
 #include <readline/readline.h>
 #include "../HDRS/parsing.h"
+#include "../HDRS/structure.h"
 
 static void	*ft_memset(void *s, int c, size_t n)
 {
@@ -34,6 +35,7 @@ void	handle_sig_b(int sig)
 {
 	if (sig == SIGINT)
 	{
+		g_sig = 130;
 		write(1, "\n", 2);
 		rl_redisplay();
 	}
@@ -43,6 +45,7 @@ void	handle_sig_a(int sig)
 {
 	if (sig == SIGINT)
 	{
+		g_sig = 130;
 		rl_on_new_line();
 		rl_replace_line("", 1);
 		printf("\n");

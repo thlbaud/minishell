@@ -16,11 +16,11 @@
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
 
-static inline void _history_error(t_data *args, char *error, char *bad_args)
+static inline void	_history_error(t_data *args, char *error, char *bad_args)
 {
 	char	*res;
 	char	*temp;
-	
+
 	temp = ft_strjoin("bash: history: ", bad_args);
 	if (!temp)
 		_exit_failure(args);
@@ -52,7 +52,7 @@ static inline int	_numeric_args_history(t_data *args, char *str)
 inline int	_check_args_history(t_data *args, t_section *s_cmd)
 {
 	int		i_args;
-	int 	res;
+	int		res;
 
 	i_args = 1;
 	res = -2;

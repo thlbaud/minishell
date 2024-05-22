@@ -17,12 +17,12 @@
 
 inline char	*_get_str(t_data *args, char *base)
 {
-	char *str_error;
+	char	*str_error;
 
 	str_error = ft_strdup(base);
 	if (!str_error)
 		_exit_failure(args);
-	return (str_error);	
+	return (str_error);
 }
 
 char	*_getenv(char **env, char *asked)
@@ -65,20 +65,20 @@ char	**_map_cpy(char **map)
 
 inline void	_close_file(t_data *args, int *fd, int id)
 {
-	if (args->count == 1 && fd[0] != 0)  
+	if (args->count == 1 && fd[0] != 0)
 		close (fd[0]);
 	if (args->count == 1 && fd[1] != 1)
 		close (fd[1]);
 	if (args->count > 1 && id == 0)
 	{
-		if (fd[0] != 0)  
+		if (fd[0] != 0)
 			close (fd[0]);
 		if (fd[1] != 1 && fd[1] != args->pipe[0][1])
 			close (fd[1]);
 	}
 	else if (args->count > 1)
 	{
-		if (fd[0] != 0 && fd[1] != args->pipe[id - 1][0])  
+		if (fd[0] != 0 && fd[1] != args->pipe[id - 1][0])
 			close (fd[0]);
 		if (id != args->count - 1)
 		{

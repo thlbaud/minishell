@@ -61,7 +61,7 @@ void	_lstfree(void *lst, e_type typelst)
 	while (lst)
 	{
 		temp = lst;
-		if (typelst == INDEX_LST)	
+		if (typelst == INDEX_LST)
 			lst = ((t_index *)lst)->next;
 		else if (typelst == FILE_LST)
 		{
@@ -94,5 +94,3 @@ void	_exit_failure(t_data *args)
 	perror(NULL);
 	exit(EXIT_FAILURE);
 }
-
-

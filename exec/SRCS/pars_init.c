@@ -13,19 +13,6 @@
 #include "../HDRS/parsing.h"
 #include "../include/libft/libft.h"
 
-/*char	*pars_section(char *line, t_section **first)
-{
-	t_section	*new_sect;
-
-	new_sect = ft_calloc(1, sizeof(t_section));
-	if (!new_sect)
-		return (NULL);  // pas ok
-	line = pars_red(line, new_sect);
-	cleaning_cmd(new_sect, line);
-	*first = ft_sectadd_back(*first, new_sect);
-	return (line);
-}*/
-
 static void	add_section(t_data *data, char *line, int start, int end)
 {
 	t_section	*sect;

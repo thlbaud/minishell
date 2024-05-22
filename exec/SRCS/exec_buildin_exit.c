@@ -84,7 +84,7 @@ static inline int	_check_args(t_data *args, t_section *s_cmd)
 	return (res);
 }
 
-void	_bi_exit(t_data *args, t_section *s_cmd)	
+void	_bi_exit(t_data *args, t_section *s_cmd)
 {
 	if (_check_args(args, s_cmd) == EXIT_ERROR)
 		return ;

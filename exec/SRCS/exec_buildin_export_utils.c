@@ -39,7 +39,7 @@ static inline int	_check_exist(t_index **lst, char **path_cmd, int i_args)
 _Bool	_egal_present(t_data *args, t_section *s_cmd, t_index **lst, int i_args)
 {
 	t_index	*temp;
-	
+
 	temp = NULL;
 	if (_check_exist(lst, s_cmd->path_cmd, i_args) == 1)
 	{

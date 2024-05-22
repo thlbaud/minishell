@@ -58,7 +58,7 @@ static int	_heredoc_handling(t_data *args, char **name)
 		if (name)
 		if (ft_strncmp(line, name[1], name_len + 1) == 0)
 			break ;
-		if (write(pipe_heredoc[1], line, ft_strlen(line, 0)) == -1 
+		if (write(pipe_heredoc[1], line, ft_strlen(line, 0)) == -1
 			|| write(pipe_heredoc[1], "\n", 1) == -1)
 		{
 			close (pipe_heredoc[0]);
@@ -85,7 +85,7 @@ static inline void	_opener(t_data *args, t_file *file, int *fd_f)
 static _Bool	_open_file(t_data *args, t_file *file, int *fd_f)
 {
 	char	*str_error;
-	
+
 	while (file)
 	{
 		if (fd_f[0] != 0 && file->redirect < 0)
@@ -129,7 +129,7 @@ _Bool	_fd_handler(t_data *args, t_section *s_cmd, int id)
 	if (s_cmd->file)
 		_close_file(args, s_cmd->fd_f, id);
 	_close_pipe(args);
-	if (res[0] == -1|| res[1] == -1)
+	if (res[0] == -1 || res[1] == -1)
 		_exit_failure(args);
 	return (1);
 }

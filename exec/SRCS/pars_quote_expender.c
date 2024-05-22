@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_quote_expender.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: avaldin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 09:38:27 by avaldin           #+#    #+#             */
-/*   Updated: 2024/04/17 18:01:52 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/22 10:34:37 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,19 @@ static int	temp_filling(t_file *red)
 	return (1);
 }
 
+void	heredoc_protec(t_section *sect, t_file *red)
+{
+	int	i;
+
+	i = 0;
+	while (i < red->tmp_len)
+	{
+		if (red->protection[i])
+			sect->heredoc_protec = 1;
+		i++;
+	}
+}
+
 void	red_quote_expender(t_section *sect)
 {
 	t_file	*red;
@@ -80,6 +93,8 @@ void	red_quote_expender(t_section *sect)
 			clean_exit(sect->data);
 		if (!temp_filling(red))
 			clean_exit(sect->data);
+		if (!red->next)
+			heredoc_protec(sect, red);
 		red = red->next;
 	}
 }
