@@ -63,7 +63,7 @@ static int	temp_filling(t_file *red)
 	return (1);
 }
 
-void	heredoc_protec(t_section *sect, t_file *red)
+void	heredoc_protec(t_file *red)
 {
 	int	i;
 
@@ -71,7 +71,7 @@ void	heredoc_protec(t_section *sect, t_file *red)
 	while (i < red->tmp_len)
 	{
 		if (red->protection[i])
-			sect->heredoc_protec = 1;
+			red->heredoc_protec = 1;
 		i++;
 	}
 }
@@ -94,7 +94,7 @@ void	red_quote_expender(t_section *sect)
 		if (!temp_filling(red))
 			clean_exit(sect->data);
 		if (!red->next)
-			heredoc_protec(sect, red);
+			heredoc_protec(red);
 		red = red->next;
 	}
 }

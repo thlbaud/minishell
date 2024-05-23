@@ -45,7 +45,7 @@ static void	cmd_process_var(t_section *sect, char **env)
 		if (sect->pipe[i] == 39 && flag == -1)
 			i += skip_quote(&sect->pipe[i]) + 2;
 		else if (sect->pipe[i] == '$')
-			sect->pipe = apply_var(sect->pipe, env, &i);
+			sect->pipe = apply_var(sect->pipe, env, &i, sect);
 		else
 			i++;
 	}

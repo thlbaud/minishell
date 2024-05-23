@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_export.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:19:58 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/16 20:28:23 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/23 03:27:24 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,4 +123,5 @@ void	_bi_export(t_data *args, t_section *s_cmd)
 		if (_write_env(args->env_history, NULL) == 0)
 			_exit_failure(args);
 	_set_export(args, s_cmd);
+	args->exit_status = 0;
 }

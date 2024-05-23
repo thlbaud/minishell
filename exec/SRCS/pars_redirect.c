@@ -89,7 +89,9 @@ static void	create_red(t_section *sect)
 void	redirection(t_data *data, char **env)
 {
 	t_section	*sect;
+	//int	i;
 
+	//i = -1;
 	sect = data->head;
 	while (sect)
 	{
@@ -97,6 +99,9 @@ void	redirection(t_data *data, char **env)
 		red_quote_expender(sect);
 		red_process_var(sect, env);
 		red_union(sect);
+//		while (sect->file && sect->file->temp && ++i < sect->file->tmp_len)
+//			if (sect->file->temp[i])
+//				free(sect->file->temp[i]);
 		sect = sect->next;
 	}
 }

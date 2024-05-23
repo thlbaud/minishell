@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_open.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 18:12:53 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/16 19:35:05 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/23 03:35:15 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static _Bool	_check_redirect(t_data *args, char **name)
 	return (0);
 }
 
-static int	_heredoc_handling(t_data *args, char **name)
+static int	_heredoc_handling(t_data *args, t_file *file)
 {
 	char	*line;
 	int		name_len;
@@ -49,15 +49,15 @@ static int	_heredoc_handling(t_data *args, char **name)
 
 	if (pipe(pipe_heredoc) == -1)
 		_exit_failure(args);
-	name_len = ft_strlen(name[1], 0);
+	name_len = ft_strlen(file->name[1], 0);
 	while (42)
 	{
 		line = readline("> ");
 		if (!line)
 			_exit_failure(args);
-		if (name)
-		if (ft_strncmp(line, name[1], name_len + 1) == 0)
+		if (file->name && ft_strncmp(line, file->name[1], name_len + 1) == 0)
 			break ;
+		line = _pars_heredoc(args, file, line);
 		if (write(pipe_heredoc[1], line, ft_strlen(line, 0)) == -1
 			|| write(pipe_heredoc[1], "\n", 1) == -1)
 		{
@@ -79,7 +79,7 @@ static inline void	_opener(t_data *args, t_file *file, int *fd_f)
 	else if (file->redirect == -1)
 		fd_f[0] = open(file->name[1], O_RDONLY);
 	else if (file->redirect == -2)
-		fd_f[0] = _heredoc_handling(args, file->name);
+		fd_f[0] = _heredoc_handling(args, file);
 }
 
 static _Bool	_open_file(t_data *args, t_file *file, int *fd_f)

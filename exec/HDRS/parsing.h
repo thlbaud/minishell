@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 19:03:40 by tmouche           #+#    #+#             */
-/*   Updated: 2024/04/17 18:15:35 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/23 03:08:44 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int			write_quote(char *line, char *dest);
 char		*_strdup(const char *s, int start, int len);
 
 void		cleaning_cmd(t_section *sect, char *line);
-char		*apply_var(char *token, char **env, int *i);
+char		*apply_var(char *token, char **env, int *i, t_section *sect);
+char		*find_var(char *name, char **env, int len);
 void		red_quote_expender(t_section *sect);
 void		redirection(t_data *data, char **env);
 void		command(t_section *first, char **env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structure.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avaldin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 18:55:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/22 12:46:22 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/05/23 03:10:56 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_file
 	int					tmp_len;
 	int					redirect;
 	int					*protection;
+	int					heredoc_protec;
 	char				**name;
 	char				**temp;
 	struct s_file		*next;
@@ -53,7 +54,6 @@ typedef struct s_section
 {
 	int					fd_f[2];
 	char				**path_cmd;
-	int					heredoc_protec;
 	char				*pipe;
 	t_file				*file;
 	void				(*function_ptr)(t_data *, struct s_section *);

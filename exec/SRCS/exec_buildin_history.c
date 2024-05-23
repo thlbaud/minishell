@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_history.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 00:45:01 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/16 21:13:54 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/23 03:27:55 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,5 @@ void	_bi_history(t_data *args, t_section *s_cmd)
 		return ;
 	if (_get_history(args->path_history, res) == 0)
 		_exit_failure(args);
+	args->exit_status = 0;
 }

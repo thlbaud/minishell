@@ -13,7 +13,7 @@
 #include "../HDRS/parsing.h"
 #include "../include/libft/libft.h"
 
-static char	*find_var(char *name, char **env, int len)
+char	*find_var(char *name, char **env, int len)
 {
 	int	i;
 
@@ -53,7 +53,7 @@ static int	ambigous_var(t_file *red, char **env, int i, int j)
 	return (0);
 }
 
-static void	check_var(t_file *red, char **env, int i)
+static void	check_var(t_file *red, char **env, int i, t_section *sect)
 {
 	int		j;
 
@@ -68,22 +68,21 @@ static void	check_var(t_file *red, char **env, int i)
 			else if (ambigous_var(red, env, i, j))
 				return ;
 			else
-				red->temp[i] = apply_var(red->temp[i], env, &j);
+				red->temp[i] = apply_var(red->temp[i], env, &j, sect);
 		}
 		else
 			j++;
 	}
 }
 
-char	*apply_var(char *token, char **env, int *i)
+char	*apply_var(char *token, char **env, int *i, t_section *sect)
 {
 	char	*var;
 	int		len_name;
 
 	len_name = 0;
 	if (token[*i + 1] == '?')
-//		return (str_modify(token, *i, 2, ft_itoa(g_err)));
-		return (ft_strdup("0"));
+		return (str_modify(token, *i, 2, ft_itoa(sect->data->exit_status)));
 	while ((token[*i + len_name + 1] < 91 && token[*i + len_name + 1] > 64)
 		|| (token[*i + len_name + 1] < 123 && token[*i + len_name + 1] > 96)
 		|| (token[*i + len_name + 1] < 58 && token[*i + len_name + 1] > 47))
@@ -115,7 +114,7 @@ void	red_process_var(t_section *first, char **env)
 			i = -1;
 			while (red->temp && red->temp[++i])
 				if (red->protection[i] != 2)
-					check_var(red, env, i);
+					check_var(red, env, i, sect);
 			red = red->next;
 		}
 		sect = sect->next;

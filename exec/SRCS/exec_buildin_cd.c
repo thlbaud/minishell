@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_cd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:37:51 by thibaud           #+#    #+#             */
-/*   Updated: 2024/05/21 23:04:48 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/23 03:16:29 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,4 +124,5 @@ void	_bi_cd(t_data *args, t_section *s_cmd)
 	temp = ft_strjoin("PWD=", pwd);
 	free (pwd);
 	_export_pwd(args, temp);
+	args->exit_status = 0;
 }
