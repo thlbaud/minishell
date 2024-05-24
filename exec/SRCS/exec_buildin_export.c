@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_export.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:19:58 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/23 03:27:24 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/24 15:18:54 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static inline void	_search_n_replace(t_data *args, t_index *lst, char *temp)
 				_lstfree(lst, INDEX_LST);
 				_exit_failure(args);
 			}
+			free (args->env);
 			args->env = new_env;
 			return ;
 		}

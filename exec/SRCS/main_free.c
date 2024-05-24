@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:06:50 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/21 19:12:43 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/24 14:58:01 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ void	_freetab(char **tab)
 		return ;
 	while (tab[i])
 	{
-		if (tab[i][0])
-			free (tab[i]);
+		free (tab[i]);
 		++i;
 	}
 	free (tab);

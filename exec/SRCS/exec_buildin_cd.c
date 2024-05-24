@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_cd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:37:51 by thibaud           #+#    #+#             */
-/*   Updated: 2024/05/24 01:00:22 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/24 13:24:23 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static inline _Bool	_spe_case(t_data *args, t_section *s_cmd, char *search,
 		else if (id_search == OLDPWD)
 			_on_error(args, _get_str(args, "bash: cd: OLDPWD not set\n"),
 				1, WRITE);
-		return (0);
+		return (-1);
 	}
 	new_path = ft_calloc(sizeof(char *), 3);
 	if (!new_path)
@@ -74,26 +74,20 @@ static inline _Bool	_spe_case(t_data *args, t_section *s_cmd, char *search,
 
 static inline _Bool	_handling_spe(t_data *args, t_section *s_cmd, char *old_pwd)
 {
-	char	*temp;
 	int		res;
 
 	res = 0;
-	if (ft_strncmp(s_cmd->path_cmd[1], "~", 2) == 0
-		|| ft_strncmp(s_cmd->path_cmd[1], "~/", 3) == 0
-		|| !s_cmd->path_cmd[1])
+	if (!s_cmd->path_cmd[1]
+		|| (ft_strncmp(s_cmd->path_cmd[1], "~", 2) == 0
+		|| ft_strncmp(s_cmd->path_cmd[1], "~/", 3) == 0))
 		res = _spe_case(args, s_cmd, _getenv(args->env, "HOME="), HOME);
-	else if (ft_strncmp(s_cmd->path_cmd[1], "-", 2) == 0)
+	else if (s_cmd->path_cmd[1] && ft_strncmp(s_cmd->path_cmd[1], "-", 2) == 0)
 		res = _spe_case(args, s_cmd, _getenv(args->env, "OLDPWD="), OLDPWD);
 	else
 		return (1);
-	if (res == 1)
-	{
-		temp = ft_strjoin("PWD=", old_pwd);
-		if (old_pwd)
-			free (old_pwd);
-		_export_pwd(args, temp);
-	}
-	return (-1);
+	if (res != 1 && old_pwd)
+		free (old_pwd);
+	return (res);
 }
 
 static inline _Bool	_check_args(t_data *args, t_section *s_cmd)
@@ -130,7 +124,6 @@ void	_bi_cd(t_data *args, t_section *s_cmd)
 	else if (!pwd)
 		return ;
 	temp = ft_strjoin("PWD=", pwd);
-	free (pwd);
 	_export_pwd(args, temp);
 	args->exit_status = 0;
 }

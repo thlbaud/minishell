@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_export_history.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 19:21:00 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/20 22:13:45 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/24 16:07:52 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,31 +52,31 @@ static inline char	*_add_quote(t_data *args, char *cmd)
 	return (temp);
 }
 
-static inline void	_add_line_history(t_data *args, char **env_history, char *cmd)
+static inline void	_add_line_history(t_data *args, char *cmd)
 {
-	char	**new_env_history;
-	int		size_history;
+	char	**new_env;
 	int		i;
 
-	size_history = _size_map(env_history);
-	new_env_history = ft_calloc(sizeof(char *), size_history + 2);
-	if (!new_env_history)
+	i = 0;
+	while (args->env_history[i])
+	{
+		if (ft_strncmp(args->env_history[i], cmd, ft_strlen(cmd, '=') + 1) == 0)
+		{
+			free (args->env_history[i]);
+			args->env_history[i] = cmd;
+			return ;
+		}
+		++i;
+	}
+	new_env = ft_stradd(args->env_history, cmd);
+	if (!new_env)
 	{
 		free (cmd);
 		_exit_failure(args);
 	}
-	if (ft_strrchr(cmd, '='))
-		cmd = _add_quote(args, cmd);
-	i = 0;
-	while (i < size_history)
-	{
-		new_env_history[i] = env_history[i];
-		++i;
-	}
-	new_env_history[i] = cmd;
-	if (env_history)
-		free (env_history);
-	args->env_history = new_env_history;
+	free (args->env_history);
+	args->env_history = new_env;
+	return ;
 }
 
 void	_add_to_env_history(t_data *args, char *new_cmd)
@@ -91,5 +91,17 @@ void	_add_to_env_history(t_data *args, char *new_cmd)
 	free (declare);
 	if (!expand_cmd)
 		_exit_failure(args);
-	_add_line_history(args, args->env_history, expand_cmd);
+	if (ft_strrchr(expand_cmd, '='))
+		expand_cmd = _add_quote(args, expand_cmd);
+	if (!args->env_history)
+	{
+		args->env_history = ft_stradd(NULL, expand_cmd);
+		if (!args->env_history)
+		{
+			free (expand_cmd);
+			_exit_failure(args);
+		}
+	}
+	else
+		_add_line_history(args, expand_cmd);
 }

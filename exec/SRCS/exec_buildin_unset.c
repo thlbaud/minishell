@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_unset.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:11:54 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/24 04:52:16 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/24 16:21:52 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,53 +49,63 @@ static inline _Bool	_unset_args(char *str)
 	return (1);
 }
 
-static inline void	_erase_args(t_data *args, int skip)
+static inline char	**_erase_args(t_data *args, char **map, int skip)
 {
 	char	**new_env;
 	int		i_new;
 	int		i_old;
 
-	new_env = ft_calloc(sizeof(char *), _size_map(args->env));
+	if (skip < 0)
+		return (map);
+	new_env = ft_calloc(sizeof(char *), _size_map(map));
 	if (!new_env)
 		_exit_failure(args);
 	i_new = 0;
 	i_old = 0;
-	while (args->env[i_old])
+	while (map[i_old])
 	{
 		if (i_old != skip)
 		{
-			new_env[i_new] = args->env[i_old];
+			new_env[i_new] = map[i_old];
 			++i_old;
 			++i_new;
 		}
 		else
-			free (args->env[i_old++]);
+			free (map[i_old++]);
 	}
-	free (args->env);
-	args->env = new_env;
+	free (map);
+	return (new_env);
+}
+
+static inline int	_search_env(char **env, char *search, e_senv from)
+{
+	int	i_env;
+
+	i_env = 0;
+	while (env[i_env])
+	{
+		if (from == ENV)
+			if (ft_strncmp(search, env[i_env], ft_strlen(search, 0)) == 0)
+				return (i_env);
+		if (from == HISTORY)
+			if (ft_strncmp(search, &env[i_env][ft_strlen(env[i_env], ' ') + 1], ft_strlen(search, 0)) == 0)
+				return (i_env);
+		++i_env;
+	}
+	return (-1);
 }
 
 void	_bi_unset(t_data *args, t_section *s_cmd)
 {
 	int		i_args;
-	int		i_env;
 
 	i_args = 1;
 	while (s_cmd->path_cmd[i_args])
 	{
-		i_env = 0;
 		if (_unset_args(s_cmd->path_cmd[i_args]) == 0)
 			_on_error(args, _give_strerror_id(args, s_cmd->path_cmd[i_args]), 1, WRITE);
-		while (args->env[i_env])
-		{
-			if (ft_strncmp(s_cmd->path_cmd[i_args], args->env[i_env],
-					ft_strlen(s_cmd->path_cmd[i_args], 0)) == 0)
-			{
-				_erase_args(args, i_env);
-				break ;
-			}
-			++i_env;
-		}
+		args->env = _erase_args(args, args->env, _search_env(args->env, s_cmd->path_cmd[i_args], ENV));
+		args->env_history = _erase_args(args, args->env_history, _search_env(args->env_history, s_cmd->path_cmd[i_args], HISTORY));
 		++i_args;
 	}
 	args->exit_status = 0;

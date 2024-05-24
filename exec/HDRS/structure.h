@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structure.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 18:55:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/23 03:10:56 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/24 16:19:02 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,12 @@ typedef enum
 	HOME,
 	OLDPWD
 }				e_cdenv;
+
+typedef enum
+{
+	ENV,
+	HISTORY
+}				e_senv;
 
 void	sig_int(int mode);
 void	sig_quit(int mode);
