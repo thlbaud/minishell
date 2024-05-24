@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_open.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 18:12:53 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/23 03:35:15 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/24 12:50:58 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	_heredoc_handling(t_data *args, t_file *file)
 	{
 		line = readline("> ");
 		if (!line)
-			_exit_failure(args);
+			break ;
 		if (file->name && ft_strncmp(line, file->name[1], name_len + 1) == 0)
 			break ;
 		line = _pars_heredoc(args, file, line);
