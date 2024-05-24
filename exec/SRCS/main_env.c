@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 19:46:14 by thibaud           #+#    #+#             */
-/*   Updated: 2024/05/22 22:08:49 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/24 04:10:04 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,6 @@
 #include <unistd.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
-
-// static char	**_create_env(void)
-// {
-// 	char	**new_env;
-// 	char	*pwd;
-	
-// 	new_env = ft_calloc(sizeof(char *), 3);
-// 	if (!new_env)
-// 		return(NULL);
-// 	pwd = _define_cwd();
-// 	new_env[0] = 
-// }
 
 static char	*_define_shlvl(char *target)
 {
@@ -51,6 +39,31 @@ static char	*_define_shlvl(char *target)
 	return (line_shlvl);
 }
 
+static char	**_create_env(void)
+{
+	char	**new_env;
+	char	*pwd;
+	
+	new_env = ft_calloc(sizeof(char *), 4);
+	if (!new_env)
+		return(NULL);
+	pwd = _define_cwd();
+	if (!pwd)
+		return (free (new_env), NULL);
+	new_env[0] = ft_strjoin("PWD=", pwd);
+	if (new_env[0])
+	{
+		new_env[1] = _define_shlvl(NULL);
+		if (new_env[1])
+		{
+			new_env[2] = ft_strjoin("_=", pwd);
+			if (new_env[2])
+				return (free (pwd), new_env);
+		}
+	}
+	return (free (pwd), _freetab(new_env), NULL);
+}
+
 char	**_set_env(char **env)
 {
 	char	**new_env;
@@ -58,8 +71,8 @@ char	**_set_env(char **env)
 	char	*shlvl;
 	int		i;
 	
-	// if (!env)
-	// 	return (_create_env());
+	if (!env || !env[0])
+	 	return (_create_env());
 	new_env = _map_cpy(env);
 	if (!new_env)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:37:51 by thibaud           #+#    #+#             */
-/*   Updated: 2024/05/23 03:16:29 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/24 01:00:22 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,21 +72,28 @@ static inline _Bool	_spe_case(t_data *args, t_section *s_cmd, char *search,
 	return (1);
 }
 
-static inline _Bool	_handling_spe(t_data *args, t_section *s_cmd)
+static inline _Bool	_handling_spe(t_data *args, t_section *s_cmd, char *old_pwd)
 {
+	char	*temp;
+	int		res;
+
+	res = 0;
 	if (ft_strncmp(s_cmd->path_cmd[1], "~", 2) == 0
 		|| ft_strncmp(s_cmd->path_cmd[1], "~/", 3) == 0
 		|| !s_cmd->path_cmd[1])
-	{
-		if (_spe_case(args, s_cmd, _getenv(args->env, "HOME="), HOME) == 0)
-			return (0);
-	}
+		res = _spe_case(args, s_cmd, _getenv(args->env, "HOME="), HOME);
 	else if (ft_strncmp(s_cmd->path_cmd[1], "-", 2) == 0)
+		res = _spe_case(args, s_cmd, _getenv(args->env, "OLDPWD="), OLDPWD);
+	else
+		return (1);
+	if (res == 1)
 	{
-		if (_spe_case(args, s_cmd, _getenv(args->env, "OLDPWD="), OLDPWD) == 0)
-			return (0);
+		temp = ft_strjoin("PWD=", old_pwd);
+		if (old_pwd)
+			free (old_pwd);
+		_export_pwd(args, temp);
 	}
-	return (1);
+	return (-1);
 }
 
 static inline _Bool	_check_args(t_data *args, t_section *s_cmd)
@@ -113,14 +120,15 @@ void	_bi_cd(t_data *args, t_section *s_cmd)
 		if (!s_cmd->path_cmd[1][0])
 			return ;
 	pwd = _define_cwd();
-	if (!pwd)
+	if (!pwd && errno != ENOENT && errno != EACCES)
 		_exit_failure(args);
-	if (_handling_spe(args, s_cmd) == 0)
-		return ;
-	_change_dir(args, s_cmd, pwd);
+	if (_handling_spe(args, s_cmd, pwd) == 1)
+		_change_dir(args, s_cmd, pwd);
 	pwd = _define_cwd();
-	if (!pwd)
+	if (!pwd && errno != ENOENT && errno != EACCES)
 		_exit_failure(args);
+	else if (!pwd)
+		return ;
 	temp = ft_strjoin("PWD=", pwd);
 	free (pwd);
 	_export_pwd(args, temp);

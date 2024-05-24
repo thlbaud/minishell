@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 16:17:43 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/23 03:12:38 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/23 22:26:30 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,8 @@ void	_close_file(t_data *args, int *fd, int id);
 int		_check_args_history(t_data *args, t_section *s_cmd);
 
 char	**_set_env(char **env);
+
+char	*prompt(char *pwd, t_data *args);
+void	_looper(t_data *args);
 
 #endif

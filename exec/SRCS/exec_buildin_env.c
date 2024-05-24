@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:58:59 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/23 03:26:26 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/24 03:54:08 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	_bi_env(t_data *args, t_section *s_cmd)
 	char	*error;
 	int		res;
 
-	printf("open past\n");
 	if (s_cmd->path_cmd[1])
 	{
 		_close_pipe(args);

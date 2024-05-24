@@ -6,13 +6,13 @@
 #    By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/18 10:53:51 by tmouche           #+#    #+#              #
-#    Updated: 2024/05/22 20:56:18 by thibaud          ###   ########.fr        #
+#    Updated: 2024/05/23 20:03:55 by thibaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 HDRS	:= execution.h parsing.h structure.h
 
-SRCS	:=	main.c main_free.c main_env.c\
+SRCS	:=	main.c main_free.c main_env.c main_loop.c main_prompt.c\
 			pars_checking.c pars_cmd_split.c pars_cmd.c pars_data_clear.c pars_env_var.c pars_ft_lstadd_back.c pars_init.c pars_quote_expender.c pars_red_syntax.c pars_redirect.c \
 			pars_tools.c pars_union.c \
 			exec_checker_path.c exec_cmd.c exec_utils.c exec_utils_2.c\
