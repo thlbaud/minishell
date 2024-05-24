@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildin_echo.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 17:49:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/23 03:25:43 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/24 19:24:18 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
 
-static inline _Bool _srch_flag(char *path)
+static inline _Bool	_srch_flag(char *path)
 {
 	if (!path)
 		return (0);
@@ -28,7 +28,7 @@ static inline _Bool _srch_flag(char *path)
 
 static inline _Bool	_write_echo(char **path_cmd)
 {
-	int res_flag;
+	int	res_flag;
 	int	i;
 
 	res_flag = _srch_flag(path_cmd[1]);

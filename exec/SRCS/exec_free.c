@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:47:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/22 19:46:28 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/24 19:02:53 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	_exec_failed(char **cmd, char **env, char *not_found, int exit_status)
 	exit (exit_status);
 }
 
-void	_on_error(t_data *args, char *str, int err, e_write write_id)
+void	_on_error(t_data *args, char *str, int err, t_write write_id)
 {
 	int	err_handling;
 
@@ -63,18 +63,16 @@ void	_on_error(t_data *args, char *str, int err, e_write write_id)
 		free (args->pid);
 	else
 		return ;
-	if (args->env_history)
-		_freetab(args->env_history);
 	if (args->head)
 		_lstfree(args->head, SECTION_LST);
 	if (args->path_history)
 		free (args->path_history);
-	if (args->env)
-		_freetab(args->env);
+	_freetab(args->env);
+	_freetab(args->env_history);
 	exit (args->exit_status);
 }
 
-char	**_on_success(t_data *args, t_section *s_cmd, e_from from_id)
+char	**_on_success(t_data *args, t_section *s_cmd, t_from from_id)
 {
 	char	**new;
 

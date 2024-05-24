@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:27:07 by thibaud           #+#    #+#             */
-/*   Updated: 2024/05/24 18:16:17 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/24 18:45:26 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	_exec_nofork(t_data *args)
 {
 	int	temp_stdin;
 	int	temp_stdout;
-	
+
 	args->count = 1;
 	temp_stdin = dup(0);
 	temp_stdout = dup(1);

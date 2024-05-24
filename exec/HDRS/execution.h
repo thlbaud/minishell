@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 16:17:43 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/24 17:02:23 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/24 19:14:21 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ char	*_give_strerror_dir(t_data *args, char *str);
 char	*_give_strerror_cmd(t_data *args, char *str);
 char	*_give_strerror_identifier(t_data *args, t_index *lst, char *str);
 
+void	_export_str(t_data *args, t_section *s_cmd, t_index *lst);
 _Bool	_egal_present(t_data *args, t_section *s_cmd, t_index **lst,
 			int i_args);
 
@@ -31,8 +32,8 @@ char	*_pars_heredoc(t_data *args, t_file *file, char *line);
 void	_add_to_env_history(t_data *args, char *new_cmd);
 void	_pathfinder(t_data *args, char **cmd);
 
-void	_on_error(t_data *args, char *str, int err, e_write write_id);
-char	**_on_success(t_data *args, t_section *s_cmd, e_from from_id);
+void	_on_error(t_data *args, char *str, int err, t_write write_id);
+char	**_on_success(t_data *args, t_section *s_cmd, t_from from_id);
 char	**_map_cpy(char **map);
 int		_size_map(char **map);
 void	_exec_failed(char **cmd, char **env, char *not_found, int exit_status);

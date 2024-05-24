@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 17:13:48 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/15 00:00:39 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/24 19:14:04 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,53 @@
 #include <unistd.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
+
+static inline void	_search_n_replace(t_data *args, t_index *lst, char *temp)
+{
+	char	**new_env;
+	int		i;
+
+	i = 0;
+	while (args->env[i])
+	{
+		if (ft_strncmp(args->env[i], temp, ft_strlen(temp, '=') + 1) == 0)
+		{
+			free (args->env[i]);
+			args->env[i] = temp;
+			return ;
+		}
+		++i;
+	}
+	new_env = ft_stradd(args->env, temp);
+	if (!new_env)
+	{
+		free (temp);
+		_lstfree(lst, INDEX_LST);
+		_exit_failure(args);
+	}
+	free (args->env);
+	args->env = new_env;
+}
+
+inline void	_export_str(t_data *args, t_section *s_cmd, t_index *lst)
+{
+	t_index	*to_free;
+	char	*temp;
+
+	while (lst)
+	{
+		temp = ft_strdup(s_cmd->path_cmd[lst->i]);
+		if (!temp)
+		{
+			_lstfree(lst, INDEX_LST);
+			_exit_failure(args);
+		}
+		_search_n_replace(args, lst, temp);
+		to_free = lst->next;
+		free(lst);
+		lst = to_free;
+	}
+}
 
 static inline int	_check_exist(t_index **lst, char **path_cmd, int i_args)
 {

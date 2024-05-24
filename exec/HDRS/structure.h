@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 18:55:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/24 16:19:02 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/24 18:35:56 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,42 +62,42 @@ typedef struct s_section
 	struct s_section	*next;
 }				t_section;
 
-typedef enum
+typedef enum e_type
 {
 	INDEX_LST,
 	FILE_LST,
 	SECTION_LST
-}		e_type;
+}		t_type;
 
-typedef enum
+typedef enum e_write
 {
 	WRITE,
 	AUTO	
-}				e_write;
+}				t_write;
 
-typedef enum
+typedef enum t_from
 {
 	ALL,
 	PARTIAL	
-}				e_from;
+}				t_from;
 
-typedef enum
+typedef enum e_err
 {
 	TOO_MANY,
 	NOT_NUMERIC
-}				e_err;
+}				t_err;
 
-typedef enum
+typedef enum e_cdenv
 {
 	HOME,
 	OLDPWD
-}				e_cdenv;
+}				t_cdenv;
 
-typedef enum
+typedef enum e_senv
 {
 	ENV,
 	HISTORY
-}				e_senv;
+}				t_senv;
 
 void	sig_int(int mode);
 void	sig_quit(int mode);
@@ -106,7 +106,7 @@ void	_looper(t_data *args);
 
 void	_freetab(char **tab);
 void	_freeint(int **tab, int size);
-void	_lstfree(void *lst, e_type typelst);
+void	_lstfree(void *lst, t_type typelst);
 void	_exit_failure(t_data *args);
 
 #endif

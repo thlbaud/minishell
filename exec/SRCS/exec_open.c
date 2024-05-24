@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 18:12:53 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/24 18:06:28 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/24 19:05:05 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	_heredoc_handling(t_data *args, t_file *file)
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
 			_exit_failure(args);
-		if (file->name && ft_strncmp(line, file->name[1], name_len + 1) == 0) // version avec -1 jsp pq, a test
+		if (file->name && ft_strncmp(line, file->name[1], name_len + 1) == 0)
 			break ;
 		line = _pars_heredoc(args, file, line);
 		if (write(pipe_heredoc[1], line, ft_strlen(line, 0)) == -1)

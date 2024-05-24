@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_checker_path.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:52:42 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/23 03:32:40 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/24 19:01:32 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,26 @@ static char	**_env_check(t_data *args)
 	return (path);
 }
 
+static char	*_path_test(t_data *args, char **path, char *temp, int i)
+{
+	char	*path_cmd;
+
+	path_cmd = ft_strjoin(path[i], temp);
+	if (!path_cmd)
+	{
+		free (temp);
+		_exit_failure(args);
+	}
+	if (access(path_cmd, F_OK) == 0)
+	{
+		if (access(path_cmd, X_OK) == -1)
+			args->exit_status = 126;
+		return (path_cmd);
+	}
+	free (path_cmd);
+	return (NULL);
+}
+
 static char	*_give_path(t_data *args, char **path, char *cmd)
 {
 	char	*path_cmd;
@@ -49,19 +69,9 @@ static char	*_give_path(t_data *args, char **path, char *cmd)
 		_exit_failure(args);
 	while (path[i])
 	{
-		path_cmd = ft_strjoin(path[i], temp);
-		if (!path_cmd)
-		{
-			free (temp);
-			_exit_failure(args);
-		}
-		if (access(path_cmd, F_OK) == 0)
-		{
-			if (access(path_cmd, X_OK) == -1)
-				args->exit_status = 126;
+		path_cmd = _path_test(args, path, temp, i);
+		if (path_cmd)
 			break ;
-		}
-		free (path_cmd);
 		++i;
 	}
 	free (temp);

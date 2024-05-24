@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:37:51 by thibaud           #+#    #+#             */
-/*   Updated: 2024/05/24 13:24:23 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/24 18:45:47 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static inline void	_home_case(t_data *args, t_section *s_cmd, char **new_path,
 }
 
 static inline _Bool	_spe_case(t_data *args, t_section *s_cmd, char *search,
-	e_cdenv id_search)
+	t_cdenv id_search)
 {
 	char	**new_path;
 
@@ -79,7 +79,7 @@ static inline _Bool	_handling_spe(t_data *args, t_section *s_cmd, char *old_pwd)
 	res = 0;
 	if (!s_cmd->path_cmd[1]
 		|| (ft_strncmp(s_cmd->path_cmd[1], "~", 2) == 0
-		|| ft_strncmp(s_cmd->path_cmd[1], "~/", 3) == 0))
+			|| ft_strncmp(s_cmd->path_cmd[1], "~/", 3) == 0))
 		res = _spe_case(args, s_cmd, _getenv(args->env, "HOME="), HOME);
 	else if (s_cmd->path_cmd[1] && ft_strncmp(s_cmd->path_cmd[1], "-", 2) == 0)
 		res = _spe_case(args, s_cmd, _getenv(args->env, "OLDPWD="), OLDPWD);

@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:11:54 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/24 16:56:30 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/24 18:36:58 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static inline char	**_erase_args(t_data *args, char **map, int skip)
 	return (new_env);
 }
 
-static inline int	_search_env(char **env, char *search, e_senv from)
+static inline int	_search_env(char **env, char *search, t_senv from)
 {
 	int	i_env;
 
