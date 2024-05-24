@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:27:07 by thibaud           #+#    #+#             */
-/*   Updated: 2024/05/23 23:51:33 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/24 18:16:17 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,22 +57,25 @@ static inline int	_how_many_cmd(t_section *cmd)
 static inline void	_execution(t_data *args)
 {
 	int	i;
-	int	wstatus;
+	int	wstatus[2];
 
-	wstatus = 0;
+	wstatus[0] = 0;
+	wstatus[1] = 0;
 	args->count = _how_many_cmd(args->head);
 	args->pid = malloc(sizeof(pid_t) * args->count);
 	if (!args->pid)
 		exit (EXIT_FAILURE);
 	fork_n_exec(args, args->head);
 	_close_pipe(args);
-	i = -1;
-	while (++i < args->count)
+	i = 0;
+	while (i != -1 || errno == EINTR)
 	{
-		waitpid(args->pid[i], &wstatus, 0);
-		args->exit_status = WEXITSTATUS(wstatus);
+		i = waitpid(0, &wstatus[0], 0);
+		if (i == args->pid[args->count - 1])
+			wstatus[1] = wstatus[0];
 	}
-	if (WIFSIGNALED(wstatus) && WTERMSIG(wstatus) == 3)
+	args->exit_status = WEXITSTATUS(wstatus[1]);
+	if (WIFSIGNALED(wstatus[1]) && WTERMSIG(wstatus[1]) == 3)
 	{
 		if (write(2, "Quit (core dumped)\n", 18) == -1)
 			_exit_failure(args);

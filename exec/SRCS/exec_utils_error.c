@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils_error.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 23:59:19 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/24 04:50:17 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/24 17:03:14 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 #include <unistd.h>
 #include "../HDRS/execution.h"
 #include "../include/libft/libft.h"
+
+inline int	_write_cwd_error(void)
+{
+	write(2, "job-working-directory: error retrieving current directory:\
+			getcwd: cannot access parent directories:\
+			No such file or directory\n", 127);
+	return (-1);
+}
 
 inline char	*_give_strerror_identifier(t_data *args, t_index *lst, char *str)
 {

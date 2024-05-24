@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 18:12:53 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/24 12:50:58 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/24 18:06:28 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <readline/history.h>
 #include <readline/readline.h>
 #include "../HDRS/execution.h"
+#include "../HDRS/get_next_line.h"
 #include "../include/libft/libft.h"
 
 static _Bool	_check_redirect(t_data *args, char **name)
@@ -47,19 +48,19 @@ static int	_heredoc_handling(t_data *args, t_file *file)
 	int		name_len;
 	int		pipe_heredoc[2];
 
+	sig_int(2);
 	if (pipe(pipe_heredoc) == -1)
 		_exit_failure(args);
 	name_len = ft_strlen(file->name[1], 0);
 	while (42)
 	{
-		line = readline("> ");
+		line = get_next_line(STDIN_FILENO);
 		if (!line)
-			break ;
-		if (file->name && ft_strncmp(line, file->name[1], name_len + 1) == 0)
+			_exit_failure(args);
+		if (file->name && ft_strncmp(line, file->name[1], name_len + 1) == 0) // version avec -1 jsp pq, a test
 			break ;
 		line = _pars_heredoc(args, file, line);
-		if (write(pipe_heredoc[1], line, ft_strlen(line, 0)) == -1
-			|| write(pipe_heredoc[1], "\n", 1) == -1)
+		if (write(pipe_heredoc[1], line, ft_strlen(line, 0)) == -1)
 		{
 			close (pipe_heredoc[0]);
 			close (pipe_heredoc[1]);

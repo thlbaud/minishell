@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 16:17:43 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/23 22:26:30 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/24 17:02:23 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define EXECUTION_H
 # include "../HDRS/structure.h"
 
+int		_write_cwd_error(void);
 char	*_give_strerror_dir(t_data *args, char *str);
 char	*_give_strerror_cmd(t_data *args, char *str);
 char	*_give_strerror_identifier(t_data *args, t_index *lst, char *str);

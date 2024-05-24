@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_prompt.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:38:50 by thibaud           #+#    #+#             */
-/*   Updated: 2024/05/23 20:08:18 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/24 18:18:14 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ char	*prompt(char *pwd, t_data *args)
 	if (!temp)
 		_exit_failure(args);
 	free (pwd);
-	printf("exit status = %d\n", args->exit_status);
 	line = readline(temp);
 	sig_int(1);
 	free (temp);

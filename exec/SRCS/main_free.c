@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:06:50 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/24 14:58:01 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/24 18:13:53 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	_exit_failure(t_data *args)
 		_freetab(args->env_history);
 	if (args->pipe)
 		_freeint(args->pipe, args->count);
-	perror(NULL);
+	if (errno != EINTR)
+		perror(NULL);
 	exit(EXIT_FAILURE);
 }

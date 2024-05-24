@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 19:32:03 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/23 20:13:44 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/24 17:02:00 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ static char	*apply_var_heredoc(char *token, char **env, int *i, t_data *args)
 	if (token[*i + 1] == '?')
 		return (str_modify(token, *i, 2, ft_itoa(args->exit_status)));
 	while (((token[*i + len_name + 1] < 91 && token[*i + len_name + 1] > 64)
-		   || (token[*i + len_name + 1] < 123 && token[*i + len_name + 1] > 96)
-		   || (token[*i + len_name + 1] < 58 && token[*i + len_name + 1] > 47))
-			&& token[*i + len_name + 1] != '"' && token[*i + len_name + 1] != 39)
+			|| (token[*i + len_name + 1] < 123 && token[*i + len_name + 1] > 96)
+			|| (token[*i + len_name + 1] < 58 && token[*i + len_name + 1] > 47))
+		&& token[*i + len_name + 1] != '"' && token[*i + len_name + 1] != 39)
 		len_name++;
 	if (!len_name)
 		return ((*i)++, token);

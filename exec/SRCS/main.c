@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:35:44 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/24 04:53:38 by thibaud          ###   ########.fr       */
+/*   Updated: 2024/05/24 18:12:14 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include "../include/libft/libft.h"
 
 int	g_sig = 0;
+struct sigaction	sa; // ATTENTION DEUX GLOBALES
 
 static inline int	_get_path_history(t_data *args)
 {
@@ -32,12 +33,7 @@ static inline int	_get_path_history(t_data *args)
 
 	temp = _define_cwd();
 	if (!temp)
-	{
-		write(2, "job-working-directory: error retrieving current directory:\
-			 getcwd: cannot access parent directories:\
-			 No such file or directory\n", 127);
-		return (-1);
-	}
+		return (_write_cwd_error());
 	i = 2;
 	i += ft_strlen(&temp[i], '/');
 	++i;

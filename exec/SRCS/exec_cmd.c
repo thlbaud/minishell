@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avaldin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:49:18 by thibaud           #+#    #+#             */
-/*   Updated: 2024/05/22 12:15:45 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/05/24 16:37:51 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ static void	_exec_cmd(t_data *args, t_section *s_cmd, int id)
 		s_cmd->function_ptr(args, s_cmd);
 		_on_success(args, s_cmd, ALL);
 	}
-	if (!ft_strchr(s_cmd->path_cmd[0], '/'))
-		_pathfinder(args, s_cmd->path_cmd);
+	_pathfinder(args, s_cmd->path_cmd);
 	to_exec = _on_success(args, s_cmd, PARTIAL);
 	execve(to_exec[0], to_exec, args->env);
 	_exec_failed(to_exec, args->env, to_exec[0], args->exit_status);

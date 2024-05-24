@@ -1,0 +1,21 @@
+{
+	"files.associations": {
+		"execution.h": "c",
+		"wait.h": "c",
+		"stdlib.h": "c",
+		"errno.h": "c",
+		"stdio.h": "c",
+		"libft.h": "c",
+		"structure.h": "c",
+		"unistd.h": "c",
+		"readline.h": "c",
+		"signal.h": "c",
+		"stddef.h": "c",
+		"fcntl.h": "c",
+		"stdint.h": "c",
+		"thread": "c",
+		"bitset": "c",
+		"chrono": "c",
+		"algorithm": "c"
+	}
+}

@@ -36,16 +36,9 @@ Etre plus explicite sur les errors synthax, genre quand c est newline ca met '' 
 echo " $HOLA " | cat -e -> il semble qu il y a un probleme avec la facon donc l expand est fait avec le "", pb qui se retrouve dans le heredoc   (je vois pas le pb dans sans heredoc, tu me diras)
 
 1-
-Pb avec is a Directory a revoir 
 on cree un fichier a, puis un fichier a/b on cd a/b et on rm -r ../../a -> pb de pwd
 	reset pwd apres un cd dans env.
 
-2-
-refaire l env si lance avec env -i
-check l histoire de _ dans env
-
-3-
-il faut gerer les flags sur les build ins (jsp si je le fait pour ceux qui n en prennent pas en mode ca fait rien s il est la mais s il est mal ecrit ca rend une erreur synthax)
 
 4-
 << hehe cat --> ctrl-D pas le bon exit status, et un success qui vient de jsp ou

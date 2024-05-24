@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:11:54 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/24 16:21:52 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/24 16:56:30 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ static inline int	_search_env(char **env, char *search, e_senv from)
 			if (ft_strncmp(search, env[i_env], ft_strlen(search, 0)) == 0)
 				return (i_env);
 		if (from == HISTORY)
-			if (ft_strncmp(search, &env[i_env][ft_strlen(env[i_env], ' ') + 1], ft_strlen(search, 0)) == 0)
+			if (ft_strncmp(search, &env[i_env][ft_strlen(env[i_env], ' ') + 1]
+				, ft_strlen(search, 0)) == 0)
 				return (i_env);
 		++i_env;
 	}
@@ -103,9 +104,13 @@ void	_bi_unset(t_data *args, t_section *s_cmd)
 	while (s_cmd->path_cmd[i_args])
 	{
 		if (_unset_args(s_cmd->path_cmd[i_args]) == 0)
-			_on_error(args, _give_strerror_id(args, s_cmd->path_cmd[i_args]), 1, WRITE);
-		args->env = _erase_args(args, args->env, _search_env(args->env, s_cmd->path_cmd[i_args], ENV));
-		args->env_history = _erase_args(args, args->env_history, _search_env(args->env_history, s_cmd->path_cmd[i_args], HISTORY));
+			_on_error(args, _give_strerror_id(args, s_cmd->path_cmd[i_args]),
+				1, WRITE);
+		args->env = _erase_args(args, args->env, _search_env(args->env,
+					s_cmd->path_cmd[i_args], ENV));
+		args->env_history = _erase_args(args, args->env_history,
+				_search_env(args->env_history,
+					s_cmd->path_cmd[i_args], HISTORY));
 		++i_args;
 	}
 	args->exit_status = 0;
