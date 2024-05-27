@@ -86,13 +86,13 @@ void	red_quote_expender(t_section *sect)
 		red->temp = ft_calloc(2 * quote_count(red->name[0]) + 2,
 				sizeof(char *));
 		if (!red->temp)
-			clean_exit(sect->data);
+			_exit_failure(sect->data);
 		red->protection = ft_calloc(2 * quote_count(red->name[0]) + 2,
 				sizeof(int));
 		if (!red->protection)
-			clean_exit(sect->data);
+			_exit_failure(sect->data);
 		if (!temp_filling(red))
-			clean_exit(sect->data);
+			_exit_failure(sect->data);
 		if (!red->next)
 			heredoc_protec(red);
 		red = red->next;

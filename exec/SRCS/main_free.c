@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
+/*   By: avaldin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:06:50 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/24 18:37:36 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/27 11:57:30 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	_exit_failure(t_data *args)
 		_freetab(args->env_history);
 	if (args->pipe)
 		_freeint(args->pipe, args->count);
-	if (errno != EINTR)
+	if (errno != EINTR && errno != 0)
 		perror(NULL);
 	exit(EXIT_FAILURE);
 }

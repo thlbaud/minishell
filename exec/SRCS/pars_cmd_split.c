@@ -95,14 +95,14 @@ void	cleaning_cmd(t_section *sect, char *line)
 	i_cmd = 0;
 	cmd = ft_calloc(cmd_count(line) + 1, sizeof(char *));
 	if (!cmd)
-		clean_exit(sect->data);
+		_exit_failure(sect->data);
 	while (line[i])
 	{
 		if (line[i] != ' ' && line[i] != '	')
 		{
 			cmd[i_cmd] = ft_calloc(cmd_len(&line[i]) + 1, sizeof(char));
 			if (!cmd[i_cmd])
-				clean_exit(sect->data);
+				_exit_failure(sect->data);
 			i += add_cmd(&line[i], cmd[i_cmd]);
 			i_cmd++;
 		}

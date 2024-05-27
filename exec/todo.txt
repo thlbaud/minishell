@@ -70,3 +70,32 @@ leak cd :
 --------------------------------------------------------------------------------------------------
 
 revoir export
+
+
+ctrl-d leaks :
+
+/home/avaldin/422/git_42/42-minishell/42-minishell/exec$ ls
+HDRS  include  Makefile  minishell  OBJS  SRCS  supp.supp  todo.txt
+/home/avaldin/422/git_42/42-minishell/42-minishell/exec$
+exit
+==456525==
+==456525== FILE DESCRIPTORS: 3 open (3 std) at exit.
+==456525==
+==456525== HEAP SUMMARY:
+==456525==     in use at exit: 212,856 bytes in 288 blocks
+==456525==   total heap usage: 786 allocs, 498 frees, 260,905 bytes allocated
+==456525==
+==456525== 4,578 bytes in 64 blocks are definitely lost in loss record 51 of 65
+==456525==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==456525==    by 0x40A9CD: ft_calloc (in /home/avaldin/422/git_42/42-minishell/42-minishell/exec/minishell)
+==456525==    by 0x407E9B: _add_quote (exec_buildin_export_history.c:38)
+==456525==    by 0x407E09: _add_to_env_history (exec_buildin_export_history.c:95)
+==456525==    by 0x401381: main (main.c:73)
+
+
+
+
+ << hehe cat    puis ctrl-d donne exit status = 1
+
+ export pete un plomb et leaks
+

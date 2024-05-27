@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 18:55:51 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/24 18:35:56 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/27 15:38:14 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define STRUCTURE_H
 # include <fcntl.h>
 # include <signal.h>
-# include <stdio.h>
 # include "structure.h"
 # define EXIT_ERROR 360
 
@@ -75,7 +74,7 @@ typedef enum e_write
 	AUTO	
 }				t_write;
 
-typedef enum t_from
+typedef enum e_from
 {
 	ALL,
 	PARTIAL	
@@ -98,6 +97,12 @@ typedef enum e_senv
 	ENV,
 	HISTORY
 }				t_senv;
+
+typedef enum e_eof
+{
+	HEREDOC,
+	PROMPT,
+}			t_eof;
 
 void	sig_int(int mode);
 void	sig_quit(int mode);

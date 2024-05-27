@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   exec_gnl.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: avaldin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 21:33:13 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/24 15:38:41 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/05/27 11:54:15 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,11 @@ char	*get_next_line(int fd)
 	static char	buff[BUFFER_SIZE + 1] = "\0";
 	char		*line;
 
+	line = NULL;
 	if (buff[0] == 0)
 	{
 		if (read(fd, buff, BUFFER_SIZE) < 0)
-			return (ft_reset_buff(buff), NULL);
+			return (free(line), ft_reset_buff(buff), NULL);
 		if (buff[0] == 0)
 			return (ft_reset_buff(buff), NULL);
 		buff[BUFFER_SIZE] = 0;
@@ -100,8 +101,7 @@ char	*get_next_line(int fd)
 		line = ft_strcpy_limit(buff, gnl_strchr(buff, BUFFER_SIZE));
 		if (!line)
 			return (NULL);
-		ft_fill_buff(buff);
-		return (line);
+		return (ft_fill_buff(buff), line);
 	}
 	line = NULL;
 	line = ft_to_create_line(fd, buff, line);

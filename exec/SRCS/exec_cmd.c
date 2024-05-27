@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:49:18 by thibaud           #+#    #+#             */
-/*   Updated: 2024/05/24 19:28:08 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/27 15:37:58 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ static void	_exec_cmd(t_data *args, t_section *s_cmd, int id)
 	char	**to_exec;
 
 	_fd_handler(args, s_cmd, id);
-	if (_is_a_buildin(s_cmd) == 1)
+	if (_is_a_buildin(s_cmd) == 1 || !s_cmd->path_cmd[0])
 	{
-		s_cmd->function_ptr(args, s_cmd);
+		if (s_cmd->function_ptr)
+			s_cmd->function_ptr(args, s_cmd);
 		_on_success(args, s_cmd, ALL);
 	}
 	_pathfinder(args, s_cmd->path_cmd);

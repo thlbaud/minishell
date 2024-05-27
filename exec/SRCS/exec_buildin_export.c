@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:19:58 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/24 19:18:44 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/27 14:53:37 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ static inline _Bool	_export_args(char *str, size_t n)
 	return (1);
 }
 
-static inline _Bool	_do_args(t_data *args, t_section *s_cmd,
-		t_index *lst, int i_args)
+static inline void	_do_args(t_data *args, t_section *s_cmd,
+		t_index **lst, int i_args)
 {
 	char	*str_err;
 
@@ -46,19 +46,19 @@ static inline _Bool	_do_args(t_data *args, t_section *s_cmd,
 		&& s_cmd->path_cmd[i_args][0] <= '9')
 		|| s_cmd->path_cmd[i_args][0] == 0)
 	{
-		str_err = _give_strerror_identifier(args, lst,
+		str_err = _give_strerror_identifier(args, *lst,
 				s_cmd->path_cmd[i_args]);
 		_on_error(args, str_err, 1, WRITE);
 	}
 	else if (ft_strrchr(s_cmd->path_cmd[i_args], '='))
 	{
-		if (_egal_present(args, s_cmd, &lst, i_args) == 0)
-			return (1);
+		if (_egal_present(args, s_cmd, lst, i_args) == 0)
+			return ;
 		_add_to_env_history(args, s_cmd->path_cmd[i_args]);
 	}
 	else
 		_add_to_env_history(args, s_cmd->path_cmd[i_args]);
-	return (0);
+	return ;
 }
 
 static inline void	_set_export(t_data *args, t_section *s_cmd)
@@ -70,8 +70,7 @@ static inline void	_set_export(t_data *args, t_section *s_cmd)
 	lst = NULL;
 	while (s_cmd->path_cmd[i_args])
 	{
-		if (_do_args(args, s_cmd, lst, i_args) == 1)
-			return ;
+		_do_args(args, s_cmd, &lst, i_args);
 		++i_args;
 	}
 	_export_str(args, s_cmd, lst);

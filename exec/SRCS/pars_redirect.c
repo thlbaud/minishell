@@ -52,8 +52,8 @@ static int	extract_red(t_file *red, char *line, t_data *data)
 	while (line[i] && (line[i] == ' ' || line[i] == '	'))
 		i++;
 	red->name[0] = _strdup(line, i, red_length(&line[red_count]));
-		if (!red->name[0])
-			clean_exit(data);
+	if (!red->name[0])
+		_exit_failure(data);
 	return (i + red_length(&line[red_count]));
 }
 
@@ -72,10 +72,10 @@ static void	create_red(t_section *sect)
 		{
 			red = ft_calloc(1, sizeof(t_file));
 			if (!red)
-				clean_exit(sect->data);
+				_exit_failure(sect->data);
 			red->name = ft_calloc(3, sizeof(char *));
 			if (!red->name)
-				clean_exit(sect->data);
+				_exit_failure(sect->data);
 			sect->pipe = str_cut(sect->pipe, i, i
 					+ extract_red(red, &sect->pipe[i], sect->data) - 1);
 			i = 0;
@@ -89,9 +89,7 @@ static void	create_red(t_section *sect)
 void	redirection(t_data *data, char **env)
 {
 	t_section	*sect;
-	//int	i;
 
-	//i = -1;
 	sect = data->head;
 	while (sect)
 	{
@@ -99,9 +97,6 @@ void	redirection(t_data *data, char **env)
 		red_quote_expender(sect);
 		red_process_var(sect, env);
 		red_union(sect);
-//		while (sect->file && sect->file->temp && ++i < sect->file->tmp_len)
-//			if (sect->file->temp[i])
-//				free(sect->file->temp[i]);
 		sect = sect->next;
 	}
 }

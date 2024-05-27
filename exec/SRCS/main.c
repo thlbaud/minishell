@@ -23,7 +23,6 @@
 #include "../include/libft/libft.h"
 
 int	g_sig = 0;
-struct sigaction	sa; // ATTENTION DEUX GLOBALES
 
 static inline int	_get_path_history(t_data *args)
 {

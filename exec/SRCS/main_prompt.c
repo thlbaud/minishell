@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:38:50 by thibaud           #+#    #+#             */
-/*   Updated: 2024/05/24 19:03:52 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/27 15:25:18 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,10 @@ static inline void	_line_error(t_data *args)
 	free (args->pid);
 	free (args->path_history);
 	_freetab(args->env);
+	_freetab(args->env_history);
 	if (write (2, "exit\n", 6) == -1)
 		_exit_failure(args);
-	exit (24);
+	exit (0);
 }
 
 char	*prompt(char *pwd, t_data *args)

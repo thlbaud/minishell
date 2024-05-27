@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 16:17:43 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/24 19:14:21 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/05/27 15:46:16 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ _Bool	_fd_handler(t_data *args, t_section *s_cmd, int id);
 void	fork_n_exec(t_data *args, t_section *cmd);
 _Bool	_write_env(char **env, char *pre_str);
 
-char	*_pars_heredoc(t_data *args, t_file *file, char *line);
+int		_heredoc_handling(t_data *args, t_file *file, char *line);
 
 void	_add_to_env_history(t_data *args, char *new_cmd);
 void	_pathfinder(t_data *args, char **cmd);
