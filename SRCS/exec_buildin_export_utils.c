@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 17:13:48 by tmouche           #+#    #+#             */
-/*   Updated: 2024/05/24 19:14:04 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/06/14 13:00:30 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,10 @@ static inline int	_check_exist(t_index **lst, char **path_cmd, int i_args)
 		if (ft_strncmp(path_cmd[i], path_cmd[i_args],
 				ft_strlen(path_cmd[i_args], '=')) == 0)
 		{
-			while ((*lst)->i != i)
+			while ((*lst) && (*lst)->i != i)
 				(*lst) = (*lst)->next;
-			(*lst)->i = i_args;
+			if (*lst)
+				(*lst)->i = i_args;
 			return (0);
 		}
 		++i;

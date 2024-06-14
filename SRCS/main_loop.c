@@ -6,7 +6,7 @@
 /*   By: tmouche <tmouche@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:27:07 by thibaud           #+#    #+#             */
-/*   Updated: 2024/05/27 15:40:44 by tmouche          ###   ########.fr       */
+/*   Updated: 2024/06/14 13:22:31 by tmouche          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ static void	_exec_nofork(t_data *args)
 	temp_stdout = dup(1);
 	if (temp_stdin == -1 || temp_stdout == -1)
 		_exit_failure(args);
-	close (temp_stdin);
-	close (temp_stdout);
 	if (_fd_handler(args, args->head, 0) == 1)
 		args->head->function_ptr(args, args->head);
 	if (args->head->file)
